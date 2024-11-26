@@ -17,11 +17,12 @@ class TaskRender {
     }
   }
   
+  // Метод получает значения из формы
   getValue() {
-    let inputs = this.inputs;
-    
-    let formData = {};
+    let inputs = this.inputs; // Инпуты формы
+    let formData = {}; // Объект для значений формы
 
+    // Обойдём каждый инпут и получим значения. Добавим в formData
     for (const data in inputs) {
       const input = inputs[data];
       formData[data] = input.value;
@@ -30,15 +31,18 @@ class TaskRender {
     return formData;
   }
 
+  // Метод устанавливает значения в форму
   setValue(task) {
-    const inputs = this.inputs;
-    const options = this.options;
+    const inputs = this.inputs; // инпуты формы
+    const options = this.options; // опции селекта
 
+    // Установим значения в поля формы
     inputs.name.value = task.full_name;
     inputs.phone.value = task.phone;
     inputs.email.value = task.email;
 
-    let selectedProduct;
+    let selectedProduct; // Переменная для выбранного продукта
+
     // Обойдем селект и найдем нужный продукт. 
     for (const item in options) {
       const option = options[item];
@@ -51,15 +55,12 @@ class TaskRender {
     selectedProduct.setAttribute('selected', '');
   }
 
+  // Метод показывает ошибки
   setError() {
 
   }
-
-  
 }
 
-const taskRender = new TaskRender();
-let array = taskRender.getValue();
-console.log(array);
+
 
 export { TaskRender }

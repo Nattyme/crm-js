@@ -10,13 +10,12 @@ const init = function () {
   console.log(manager.getAll());
   console.log(testData);
 
+  
   const task = new model.Task(id, {...testData}); // Создадим задачу, передадим в класс ID и случайные данные
-  const render = new view.TaskRender();
-  // Добавим задачу в массив
-  manager.addNewData(task);
-  console.log(task);
-  render.setValue(task);
-  console.log(render.setValue(task));
+  manager.addNewData(task); // Добавим задачу в массив
+
+  const render = new view.TaskRender(); // создадим рендера задачи
+  render.setValue(task); // Заполним форму значениями задачи
 }
 
 // Запустим программу
