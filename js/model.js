@@ -7,6 +7,7 @@ const dateFormatter = function (timestamp, formatter) {
   return date;
 }
 
+// Класс управляет задачами (добав-е, удал-е, поиск и т д)
 class TaskManager {
   constructor () {
     this.data = [];
@@ -19,26 +20,26 @@ class TaskManager {
 
   // Метод возвращает случ. запись
   getData(id) {
+    // В массиве data найдём нужную по ID
     let data = this.data.find(task => task.id === id);
     console.log(data);
     
+    // Если ID не найден
     if (!data) return console.error(`Запись не найдена в ${this.data}`);
 
-    const dataCopy = {...data};
-    console.log(dataCopy);
-    
-    dataCopy.date = this.getFormattedData( dataCopy.timestamp);
+    const dataCopy = {...data};     // Создадим копию массива
+    dataCopy.date = this.getFormattedData( dataCopy.timestamp); // Добавим св-во дата в нужно формате
     console.log('Запись, вовращённая getData: ');
     console.log(dataCopy);
     
-    // Вернём случ. запись
-    return dataCopy;
+    return dataCopy;  // Вернём запись
   }
 
+  // Метод хранит формат и форматирует временную метку
   getFormattedData (timestamp) {
     const formatter = new Intl.DateTimeFormat('ru-RU', {
       year: 'numeric',
-      month: 'long',
+      month: 'numeric',
       day: 'numeric',
     });
 
@@ -47,12 +48,10 @@ class TaskManager {
 
   // Метод добавляет запись
   addNewData(record) {
-    console.log(record);
-    
     let isValid = true;
 
     for ( const data in record) {
-      console.log(record[data] );
+  
       if ( record[data] === null || record[data] === undefined) {
         
         console.log('Ошибка данных. Запись не добавленна.');
@@ -92,6 +91,7 @@ class TaskManager {
 
 }
 
+// Класс создаёт задачу, валидирует св-ва
 class Task {
   constructor ( id, {full_name, product, email, phone}) {
     this.id = id,
@@ -104,9 +104,7 @@ class Task {
  
   setProperty ( value, validate) {
     const result = validate(value);
-    console.log(result.value);
-    
-    console.log(result.valid);
+   
     if(!result.valid) {
       console.log(result.error);
       return null;

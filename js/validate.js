@@ -30,7 +30,7 @@ const validate = {
   // Метод проверяет знач-е поля phone
   phone(phone) {
     const phoneValid = String(phone).trim(); // Преобразуем в строку, удалим пробелы
-    const phoneRegex = /^\+?[0-9\s\-()]{18,}$/; // Проверка номера
+    const phoneRegex = /^\+?[0-9\s\-()]{11,}$/; // Проверка номера
 
     // Проверка на пустую строку
     if( phone === '') {

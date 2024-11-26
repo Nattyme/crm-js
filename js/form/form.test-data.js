@@ -3,61 +3,61 @@ const getTestData = function () {
   const testData = [
     {
       "full_name" : "Екатерина М",
-      "product" : "php курс",
+      "product" : "Курс по JavaScript",
       "email" : "justkate@google.com",
       "phone" : "89253458675"
     },
     {
       "full_name" : "Екатерина М",
-      "product" : "php курс",
+      "product" : "Курс по VUE JS",
       "email" : "justkate@google.com",
       "phone" : "89253458675"
     },
     {
-      "full_name" : "Sofi Braz",
-      "product" : "js курс",
-      "email" : "sofi@outlook.com",
+      "full_name" : "Sofie Braz",
+      "product" : "Курс по WordPress",
+      "email" : "sofie@outlook.com",
       "phone" : "89245600000"
     },
     {
       "full_name" : "Alexander B",
-      "product" : "html курс",
+      "product" : "Курс по PHP",
       "email" : "@mail.ru",
       "phone" : "89253458675"
     },
     {
       "full_name" : "Екатерина С",
-      "product" : "php курс",
+      "product" : "Курс по VUE JS",
       "email" : "justkate@google",
       "phone" : "89253458675"
     },
     {
       "full_name" : "Анатолий",
-      "product" : "php курс",
+      "product" : "Курс по VUE JS",
       "email" : "anatol@google.com",
       "phone" : "89253458675"
     },
     {
       "full_name" : "Stepanova Polina Vladimirovna",
-      "product" : "php курс",
+      "product" : "Курс по PHP",
       "email" : "polly777@google.com",
       "phone" : "89253555555"
     },
     {
       "full_name" : "Stepanova Polina Vladimirovna",
-      "product" : "кулинарный курс",
+      "product" : "Курс по VUE JS",
       "email" : "polly777@google.com",
       "phone" : "89253555555"
     },
     {
       "full_name" : "Stepanova Polina Vladimirovna",
-      "product" : "кулинарный курс",
+      "product" : "Курс по JavaScript",
       "email" : "polly777@google.com",
       "phone" : ""
     },
     {
       "full_name" : "99 Pavel [//>>{}]",
-      "product" : "кулинарный курс",
+      "product" : "Курс по VUE JS",
       "email" : "polly777@google.com",
       "phone" : ""
     },
