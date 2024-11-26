@@ -1,12 +1,12 @@
 import * as model from '../model.js';
 import * as view from './form.view.js';
-import { getTestData } from './form.test-data.js';
+import { TestDataFactory } from './form.test-data.js';
 
 const init = function () {
   const manager = new model.TaskManager(); // Создадим менеджера для обработки задач
   const id = manager.calcID( manager.getAll() ); // Менеджер получит все задачи и посчитает ID
-  const testData = getTestData(); // Получим случайные тестовые данные
-
+  const testData = TestDataFactory.createRandomRecord();; // Получим случайные тестовые данные
+ 
   console.log(manager.getAll());
   console.log(testData);
 
