@@ -11,10 +11,12 @@ const init = function () {
   console.log(testData);
 
   const task = new model.Task(id, {...testData}); // Создадим задачу, передадим в класс ID и случайные данные
-
+  const render = new view.TaskRender();
   // Добавим задачу в массив
   manager.addNewData(task);
   console.log(task);
+  render.setValue(task);
+  console.log(render.setValue(task));
 }
 
 // Запустим программу
