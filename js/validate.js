@@ -3,7 +3,7 @@ const validate = {
   name(full_name) {
     const nameValid = String(full_name).trim();
     const nameRegex = /^[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+$/;
-    // const nameRegex = /^[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+$/;
+    const threeNameRegex = /^[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+$/;
 
     if( nameValid === '' ) {
       return {
@@ -12,7 +12,7 @@ const validate = {
       } 
     }  
 
-    if( !nameRegex.test(nameValid) ) {
+    if( !nameRegex.test(nameValid) && !threeNameRegex.test(nameValid)) {
       return {
         valid: false, 
         error: 'Ошибка. Неверный формат имени. Введите имя и фамилию в текстовом формате.'
