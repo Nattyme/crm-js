@@ -18,7 +18,7 @@ class TaskRender {
   }
   
   // Метод получает значения из формы
-  getValue() {
+  getValues() {
     let inputs = this.inputs; // Инпуты формы
     let formData = {}; // Объект для значений формы
 
@@ -60,7 +60,5 @@ class TaskRender {
 
   }
 }
-
-
 
 export { TaskRender }

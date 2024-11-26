@@ -11,6 +11,8 @@ const dateFormatter = function (timestamp, formatter) {
 class TaskManager {
   constructor () {
     this.data = [];
+    console.log(this.data);
+    
   }
 
   // Метод возвращает все данные
@@ -47,7 +49,7 @@ class TaskManager {
   }
 
   // Метод добавляет запись
-  addNewData(record) {
+  addNewData(id, record) {
     let isValid = true;
 
     for ( const data in record) {
@@ -61,7 +63,12 @@ class TaskManager {
     }
 
     if (isValid === true) {
+      record.id = id;
+      console.log(id);
+      
       this.data.push(record);
+      console.log(record);
+      
     };
 
     return record;
@@ -93,8 +100,8 @@ class TaskManager {
 
 // Класс создаёт задачу, валидирует св-ва
 class Task {
-  constructor ( id, {full_name, product, email, phone}) {
-    this.id = id,
+  constructor ( {full_name, product, email, phone}) {
+    // this.id = id,
     this.timestamp = Date.now();
     this.full_name = this.setProperty( full_name, validate.name),
     this.product = product,

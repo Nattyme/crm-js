@@ -1,7 +1,9 @@
 class TestDataFactory {
   static createRecord (data) {
+    console.log(data);
+    
     return {
-      full_name : data.name,
+      full_name : data.full_name,
       product : data.product,
       email : data.email,
       phone : data.phone
