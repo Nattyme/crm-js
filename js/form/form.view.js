@@ -3,10 +3,10 @@ class TaskRender {
     this.form = document.querySelector('#form'),
     this.select = this.form.querySelector('#product'),
     this.inputs = {
-      name  : this.form.querySelector('#name'),
+      full_name  : this.form.querySelector('#name'),
       phone : this.form.querySelector('#phone'),
       email : this.form.querySelector('#email'),
-      email : this.form.querySelector('#email')
+      product : this.form.querySelector('#product')
     }
     this.options = {
       html : this.select.querySelector('[value = "course-html"]'),
@@ -20,11 +20,16 @@ class TaskRender {
   // Метод получает значения из формы
   getValues() {
     let inputs = this.inputs; // Инпуты формы
+    console.log('all input: ', inputs);
     let formData = {}; // Объект для значений формы
 
     // Обойдём каждый инпут и получим значения. Добавим в formData
     for (const data in inputs) {
       const input = inputs[data];
+      console.log('input: ', input);
+      console.log('input data: ', input[data]);
+      console.log('input value: ', input.value);
+      
       formData[data] = input.value;
     }
 
@@ -37,7 +42,7 @@ class TaskRender {
     const options = this.options; // опции селекта
 
     // Установим значения в поля формы
-    inputs.name.value = task.full_name;
+    inputs.full_name.value = task.full_name;
     inputs.phone.value = task.phone;
     inputs.email.value = task.email;
 

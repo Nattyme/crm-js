@@ -2,11 +2,21 @@ const validate = {
 
   // Метод проверяет знач-е поля name
   name(full_name) {
+    // if(!full_name) {
+    //   return {
+    //     valid : false,
+    //     error : 'Ошибка.Поле full_name пустое или некорректно заполнено'
+    //   };
+    // } 
+ 
+
     const nameValid = String(full_name).trim(); // Преобразуем в строку, удалим пробелы
     
-    const nameRegex = /^[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввел фамилию и имя
-    const threeNameRegex = /^[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+\s[a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввёл ФИО
-
+    const nameRegex = /^[a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввел фамилию и имя
+    const threeNameRegex = /^[a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввёл ФИО
+    console.log('Name after trim:', nameValid);
+    console.log('Regex 2 words match:', nameRegex.test(nameValid));
+    console.log('Regex 3 words match:', threeNameRegex.test(nameValid));
     // Проверка на пустую строку
     if( nameValid === '' ) {
       return {
@@ -17,6 +27,8 @@ const validate = {
 
     // Проверка на рег. выражения
     if( !nameRegex.test(nameValid) && !threeNameRegex.test(nameValid)) {
+      console.log(nameValid);
+      console.log('unvalid');
       return {
         valid: false, 
         error: 'Ошибка. Неверный формат имени. Введите имя и фамилию в текстовом формате.'

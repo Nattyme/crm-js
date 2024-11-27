@@ -15,69 +15,69 @@ class TestDataFactory {
     const testData = [
       {
         "full_name" : "Екатерина М",
-        "product" : "Курс по JavaScript",
+        "phone" : "89253458675",
         "email" : "justkate@google.com",
-        "phone" : "89253458675"
+        "product" : "Курс по JavaScript"
       },
       {
         "full_name" : "Екатерина М",
-        "product" : "Курс по VUE JS",
+        "phone" : "89253458675",
         "email" : "justkate@google.com",
-        "phone" : "89253458675"
+        "product" : "Курс по VUE JS"
       },
       {
         "full_name" : "Sofie Braz",
-        "product" : "Курс по WordPress",
+        "phone" : "89245600000",
         "email" : "sofie@outlook.com",
-        "phone" : "89245600000"
+        "product" : "Курс по WordPress",
       },
       {
         "full_name" : "Alexander B",
+        "phone" : "89253458675",
+        "email" : "al@mail.ru",
         "product" : "Курс по PHP",
-        "email" : "@mail.ru",
-        "phone" : "89253458675"
       },
       {
         "full_name" : "Екатерина С",
-        "product" : "Курс по VUE JS",
-        "email" : "justkate@google",
-        "phone" : "89253458675"
+        "phone" : "89253458675",
+        "email" : "justkate@google.com",
+        "product" : "Курс по VUE JS"
       },
       {
         "full_name" : "Анатолий",
-        "product" : "Курс по VUE JS",
+        "phone" : "89253458675",
         "email" : "anatol@google.com",
-        "phone" : "89253458675"
-      },
-      {
-        "full_name" : "Stepanova Polina Vladimirovna",
-        "product" : "Курс по PHP",
-        "email" : "polly777@google.com",
-        "phone" : "89253555555"
-      },
-      {
-        "full_name" : "Stepanova Polina Vladimirovna",
         "product" : "Курс по VUE JS",
-        "email" : "polly777@google.com",
-        "phone" : "89253555555"
       },
       {
         "full_name" : "Stepanova Polina Vladimirovna",
+        "phone" : "89253555555",
+        "email" : "polly777@google.com",
+        "product" : "Курс по PHP"
+      },
+      {
+        "full_name" : "Stepanova Polina Vladimirovna",
+        "phone" : "89253555555",
+        "email" : "polly777@google.com",
+        "product" : "Курс по VUE JS"
+      },
+      {
+        "full_name" : "Stepanova Polina Vladimirovna",
+        "phone" : "89253555555",
+        "email" : "polly777@google.com",
         "product" : "Курс по JavaScript",
-        "email" : "polly777@google.com",
-        "phone" : ""
       },
       {
-        "full_name" : "99 Pavel [//>>{}]",
-        "product" : "Курс по VUE JS",
+        "full_name" : "Pavel L",
+        "phone" : "89253555555",
         "email" : "polly777@google.com",
-        "phone" : ""
+        "product" : "Курс по VUE JS"
       },
       {
         "full_name" : "",
-        "product" : "",
+        "phone" : "",
         "email" : "",
-        "phone" : ""
+        "product" : ""
       }
     ];
 

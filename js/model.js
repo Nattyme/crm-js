@@ -1,5 +1,4 @@
 import { validate } from './validate.js';
-
 // Ф-ция форматирует временную метку
 const dateFormatter = function (timestamp, formatter) {
   const date = formatter.format( new Date(timestamp) );
@@ -9,9 +8,38 @@ const dateFormatter = function (timestamp, formatter) {
 
 // Класс управляет задачами (добав-е, удал-е, поиск и т д)
 class TaskManager {
-  constructor () {
+  constructor (eventBus) {
     this.data = [];
-    console.log(this.data);
+    this.eventBus = eventBus; // общий EventBus
+
+    // Подписка на события
+    this.eventBus.on('tasks:load', this.loadFromStorage.bind(this));
+    this.eventBus.on('tasks:save', this.saveToStorage.bind(this));
+    this.eventBus.on('tasks:clear', this.clearStorage.bind(this));
+    
+    console.log('DATA ',this.data); 
+  }
+
+  // Метод загружает данные из localStorage
+  loadFromStorage () {
+    const storedData = localStorage.getItem('tasksData');
+    this.data = storedData ? JSON.parse(storedData) : [];
+    console.log('Задачи получены из localStorage');
+  }
+
+  // Метод сохраняет данные в localStorage
+  saveToStorage() {
+    localStorage.setItem('tasksData', JSON.stringify(this.data));
+    console.log('Данные сохранены в local storage');
+    
+  }
+
+  // Метод очищает local storage
+  clearStorage() {
+    localStorage.removeItem('tasksData');
+    this.data = [];
+    this.eventBus.emit('tasks:save'); // Уведомлие об изменениях
+    console.log('Данные удалены из local storage. Массив data пуст');
     
   }
 
@@ -50,27 +78,21 @@ class TaskManager {
 
   // Метод добавляет запись
   addNewData(id, record) {
-    let isValid = true;
-
-    for ( const data in record) {
+    // Обходим св-ва в массиве, ищем пустые знач-я
+    for ( const field in record) {
   
-      if ( record[data] === null || record[data] === undefined) {
-        
-        console.log('Ошибка данных. Запись не добавленна.');
-        isValid = false;
+      if ( record[field] === null || record[field] === undefined) {
+        console.log('Ошибка данных. Запись не добавлена.');
         return;
       }
     }
 
-    if (isValid === true) {
-      record.id = id;
-      console.log(id);
-      
-      this.data.push(record);
-      console.log(record);
-      
-    };
+    record.id = id; // Запишем ID в задачу
+    this.data.push(record); // Добавим задачу в массив
+console.log('DATA at ADDNEW', this.data);
 
+    // Событие сохранения
+    this.eventBus.emit('tasks:save');
     return record;
   }
 
@@ -100,7 +122,12 @@ class TaskManager {
 
 // Класс создаёт задачу, валидирует св-ва
 class Task {
-  constructor ( {full_name, product, email, phone}) {
+  constructor ( {full_name, phone, email, product}) {
+    console.log('Task', full_name);
+    console.log('Task', product);
+    console.log('Task', email);
+    console.log('Task', phone);
+    
     // this.id = id,
     this.timestamp = Date.now();
     this.full_name = this.setProperty( full_name, validate.name),
@@ -111,6 +138,10 @@ class Task {
  
   setProperty ( value, validate) {
     const result = validate(value);
+   console.log('value: ', value);
+   console.log('validate', validate);
+   console.log('result: ', result);
+   console.log('!result.valid: ', !result.valid);
    
     if(!result.valid) {
       console.log(result.error);
@@ -122,8 +153,40 @@ class Task {
 
 }
 
+// Просулшивание событий
+class EventBus {
+  constructor () {
+    this.listeners = {} // объект хранит события и подписчиков
+  }
 
-export { TaskManager, Task, dateFormatter }
+  // Метод для подписки на события
+  on(event, callback) {
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+
+    this.listeners[event].push(callback);
+  }
+
+  // Метод для 'отписки' от события
+  off (event, callback) {
+    if ( !this.listeners[event]) return;
+
+    this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
+  }
+
+  // Методы вызывает событие
+  emit ( event, data) {
+    if ( !this.listeners[event]) return;
+    this.listeners[event].forEach(callback => callback(data));
+  }
+}
+
+// Единый экз-р EventBus
+const eventBus = new EventBus();
+
+
+export { TaskManager, Task, EventBus, dateFormatter, eventBus}
 
 
 
