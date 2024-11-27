@@ -12,11 +12,10 @@ class Controller {
 
   setInit () {
     this.setEventListeners();
-    this.eventBus.emit('tasks:load');
+    this.eventBus.emit(NAMES.TASKS_LOAD);
 
     const status = new model.Status();
-    console.log( status.getType(NAMES.set) );
-    
+    console.log( status.getStatus(NAMES.set) );
   }
 
   setRows () {

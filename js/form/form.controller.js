@@ -1,6 +1,7 @@
 import * as model from '../model.js';
 import * as view from './form.view.js';
 import { TestDataFactory } from './form.test-data.js';
+import { NAMES } from '../config.js';
 
 /**
  * Контроллер для обработки логики формы задач.
@@ -43,7 +44,7 @@ class Controller {
    */
   setInit() {
     this.setEventListeners();
-    this.eventBus.emit('tasks:load');
+    this.eventBus.emit(NAMES.TASKS_LOAD);
 
     // this.manager.loadFromStorage();
     const testData = this.setRandomData(); // Получим случайные данные
@@ -68,7 +69,7 @@ class Controller {
     const task = new model.Task({ ...taskData }); // Создадим задачу
 
     this.manager.addNewData(id, task); // добавим задачу в массив
-    this.eventBus.emit('tasks:save'); // вызываем событие сохранения
+    this.eventBus.emit(NAMES.TASKS_SAVE); // вызываем событие сохранения
   }
 
   /**

@@ -23,9 +23,9 @@ class TaskManager {
     this.eventBus = eventBus; // общий EventBus
 
     // Подписка на события
-    this.eventBus.on('tasks:load', this.loadFromStorage.bind(this));
-    this.eventBus.on('tasks:save', this.saveToStorage.bind(this));
-    this.eventBus.on('tasks:clear', this.clearStorage.bind(this));
+    this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
+    this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
+    this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
 
     // Получим данные из localStorage
     this.loadFromStorage();
@@ -40,7 +40,7 @@ class TaskManager {
    * @memberof TaskManager
    */
   loadFromStorage () {
-    const storedData = localStorage.getItem('tasksData');
+    const storedData = localStorage.getItem(NAMES.TASKS_DATA);
     this.data = storedData ? JSON.parse(storedData) : [];
     console.log('Задачи получены из localStorage');
   }
@@ -52,7 +52,7 @@ class TaskManager {
    * @memberof TaskManager
    */
   saveToStorage() {
-    localStorage.setItem('tasksData', JSON.stringify(this.data));
+    localStorage.setItem(NAMES.TASKS_DATA, JSON.stringify(this.data));
     console.log('Данные сохранены (обновлены) в local storage');
   }
 
@@ -63,9 +63,9 @@ class TaskManager {
    * @memberof TaskManager
    */
   clearStorage() {
-    localStorage.removeItem('tasksData');
+    localStorage.removeItem(NAMES.TASKS_DATA);
     this.data = [];
-    this.eventBus.emit('tasks:save'); // Уведомлие об изменениях
+    this.eventBus.emit(NAMES.TASKS_SAVE); // Уведом-е об изменениях
     console.log('Данные удалены из local storage. Массив data пуст');
   }
 
@@ -146,7 +146,7 @@ class TaskManager {
     console.log('DATA after ADD NEW DATA', this.data);
 
     // Событие сохранения
-    this.eventBus.emit('tasks:save');
+    this.eventBus.emit(NAMES.TASKS_SAVE);
     return record;
   }
 
@@ -201,10 +201,11 @@ class Task {
     this.full_name = this.setProperty( full_name, validate.name),
     this.product = product,
     this.email = this.setProperty( email, validate.email),
-    this.phone = this.setProperty( phone, validate.phone)
+    this.phone = this.setProperty( phone, validate.phone),
+    this.status = this.setStatus();
   }
 
-   /**
+  /**
    * Валидирует значение с использованием соответствующей функции.
    *
    * @method setProperty
@@ -222,6 +223,10 @@ class Task {
     } 
     
     return result.value;
+  }
+
+  setStatus(name = NAMES.NEW) {
+    return name;
   }
 
 }
@@ -308,15 +313,12 @@ class Status {
     return this.data;
   }
 
-  getType(name) {
+  getStatus(name) {
     for (let type in this.types) {
-      return name === type ? this.types[type] : 'Статус не найден';
+      return name === type ? this.types[type] : null;
     }
   }
 
-  getStatus(type) {
-    console.log(this.data);
-  }
 }
 
 // Единый экз-р EventBus
