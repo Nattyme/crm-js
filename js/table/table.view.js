@@ -46,7 +46,7 @@ class TableRowFactory {
     const idCell = document.createElement('td');
     idCell.textContent = task.id;
 
-    const dateCell = document.createElement('td');    idCell.textContent = task.id;
+    const dateCell = document.createElement('td'); 
     dateCell.textContent = task.date;
 
     const productCell = document.createElement('td');
@@ -77,6 +77,7 @@ class TableRowFactory {
     row.appendChild(statusCell);
 
     console.log(row);
+    return row;
     
   }
 }

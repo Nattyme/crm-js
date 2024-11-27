@@ -96,7 +96,7 @@ class TaskManager {
     // Если ID не найден
     if (!data) return console.error(`Запись не найдена в ${this.data}`);
 
-    const dataCopy = {...data};     // Создадим копию массива
+    const dataCopy = {...data};     // Создадим копию объекта
     dataCopy.date = this.getFormattedData( dataCopy.timestamp); // Добавим св-во дата в нужно формате
     console.log('Запись, вовращённая getData: ');
     console.log(dataCopy);

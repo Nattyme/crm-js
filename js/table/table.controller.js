@@ -22,18 +22,20 @@ class Controller {
 
   setRows () {
     const data = this.manager.getAll(); // Получим данные всех задач и массива data
-    console.log(data);
-    
+    const dataCopy = [...data];     // Создадим копию массива
+
     let rows = [];
 
-    for ( const task of data) {
-      const row =  view.TableRowFactory.createTableRow(task); // Получим разметку и по очереди подставим данные каждой задачи массива
-    console.log(row);
+    for ( const task of dataCopy) {
+      task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
+  
+      let row =  view.TableRowFactory.createTableRow(task); // Получим разметку и по очереди подставим данные каждой задачи массива
+      console.log(row);
       
       rows.push(row); // Добавим задачу на страницу
 
     }
-   
+    console.log(rows);
   }
 
   setEventListeners () {
