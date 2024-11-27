@@ -16,7 +16,10 @@ class TaskManager {
     this.eventBus.on('tasks:load', this.loadFromStorage.bind(this));
     this.eventBus.on('tasks:save', this.saveToStorage.bind(this));
     this.eventBus.on('tasks:clear', this.clearStorage.bind(this));
-    
+
+    // Получим данные из localStorage
+    this.loadFromStorage();
+
     console.log('DATA ',this.data); 
   }
 

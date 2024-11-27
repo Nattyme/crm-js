@@ -18,9 +18,9 @@ class Controller {
 
   setInit() {
     this.setEventListeners();
-    // eventBus.emit('tasks:load');
+    this.eventBus.emit('tasks:load');
 
-    this.manager.loadFromStorage();
+    // this.manager.loadFromStorage();
     const testData = this.setRandomData(); // Получим случайные данные
     const task = new model.Task( {...testData} ); // создадим задачу случ-ые данные
     console.log(task);
