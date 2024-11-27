@@ -29,7 +29,7 @@ class TaskManager {
     // Получим данные из localStorage
     this.loadFromStorage();
 
-    console.log('DATA AT THE START: ',this.data); 
+    console.log('DATA FROM THE START: ', this.data); 
   }
 
   /**

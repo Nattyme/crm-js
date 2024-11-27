@@ -1,5 +1,23 @@
+/**
+ * Класс для создания тестовых данных.
+ * Этот класс генерирует случайные записи для тестирования с использованием заранее подготовленных данных.
+ * 
+ * @class
+ * @see TaskManager
+ */
 class TestDataFactory {
-  // Метож получает случайную запись и форм-т объект задачи
+  /**
+   * Создаёт объект задачи на основе переданных данных.
+   * 
+   * @param {Object} data Данные для создания записи.
+   * @param {string} data.full_name Полное имя пользователя.
+   * @param {string} data.product Продукт или курс.
+   * @param {string} data.email Адрес электронной почты.
+   * @param {string} data.phone Номер телефона.
+   * 
+   * @returns {Object} Объект задачи, содержащий данные для заполнения формы.
+   * @see TaskRender#setValue
+   */
   static createRecord (data) {
     return {
       full_name : data.full_name,
@@ -9,7 +27,13 @@ class TestDataFactory {
     };
   }
 
-  // Метод хранит массив данных и возвращает случайную запись
+  /**
+   * Возвращает случайную запись из предустановленных тестовых данных.
+   * Этот метод выбирает случайный элемент из массива и создаёт объект записи с использованием метода {@link TestDataFactory#createRecord}.
+   * 
+   * @returns {Object} Случайно выбранный объект задачи.
+   * @see TestDataFactory#createRecord
+   */
   static createRandomRecord () {
      // Тестовые данные
     const testData = [

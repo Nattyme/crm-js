@@ -1,4 +1,16 @@
+/**
+ * Класс для рендеринга формы задачи.
+ * Этот класс управляет взаимодействием с формой, включая получение и установку значений, а также работу с ошибками.
+ * 
+ * @class
+ * @see TaskManager
+ */
 class TaskRender {
+  /**
+   * Создаёт экземпляр класса TaskRender.
+   * Находит форму и элементы формы на странице.
+   * @constructor
+   */
   constructor () {
     this.form = document.querySelector('#form'),
     this.select = this.form.querySelector('#product'),
@@ -17,7 +29,13 @@ class TaskRender {
     }
   }
   
-  // Метод получает значения из формы
+  /**
+   * Получает значения из формы.
+   * Пробегает все инпуты формы и возвращает объект с их значениями.
+   * 
+   * @returns {Object} Объект с данными из формы, где ключи — это имена полей формы, а значения — введённые данные.
+   * @see Task
+   */
   getValues() {
     let inputs = this.inputs; // Инпуты формы
     let formData = {}; // Объект для значений формы
@@ -31,7 +49,17 @@ class TaskRender {
     return formData;
   }
 
-  // Метод устанавливает значения в форму
+  /**
+   * Устанавливает значения в форму.
+   * Заполняет поля формы значениями из переданного объекта задачи.
+   * 
+   * @param {Object} task Объект задачи, который содержит данные для заполнения формы.
+   * @param {string} task.full_name Полное имя пользователя.
+   * @param {string} task.phone Номер телефона.
+   * @param {string} task.email Адрес электронной почты.
+   * @param {string} task.product Выбранный продукт.
+   * @see TaskRender#getValues
+   */
   setValue(task) {
     const inputs = this.inputs; // инпуты формы
     const options = this.options; // опции селекта
@@ -56,7 +84,10 @@ class TaskRender {
     
   }
 
-  // Метод показывает ошибки
+  /**
+   * Метод для отображения ошибок.
+   * @todo Реализовать отображение ошибок на форме.
+   */
   setError() {
 
   }
