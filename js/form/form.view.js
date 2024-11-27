@@ -18,7 +18,6 @@ class TaskRender {
       full_name  : this.form.querySelector('#name'),
       phone : this.form.querySelector('#phone'),
       email : this.form.querySelector('#email'),
-      product : this.form.querySelector('#product')
     }
     this.options = {
       html : this.select.querySelector('[value = "course-html"]'),
@@ -36,8 +35,9 @@ class TaskRender {
    * @returns {Object} Объект с данными из формы, где ключи — это имена полей формы, а значения — введённые данные.
    * @see Task
    */
-  getValues() {
-    let inputs = this.inputs; // Инпуты формы
+  collectFormValues() {
+    const inputs = this.inputs; // Инпуты формы
+    const select = this.select; // Селект формы
     let formData = {}; // Объект для значений формы
 
     // Обойдём каждый инпут и получим значения. Добавим в formData
@@ -46,6 +46,16 @@ class TaskRender {
       formData[data] = input.value;
     }
 
+    // Обойдем опции в селекте и получим нужную
+    const selectedProduct = select.options[ select.selectedIndex ]; // получем выбранную опцию
+    console.log(selectedProduct.value);
+    
+    // запишем текст опции в formData
+    formData['product'] = { 
+      value : selectedProduct.value, 
+      text : selectedProduct.textContent
+    }; 
+    
     return formData;
   }
 
@@ -58,9 +68,10 @@ class TaskRender {
    * @param {string} task.phone Номер телефона.
    * @param {string} task.email Адрес электронной почты.
    * @param {string} task.product Выбранный продукт.
-   * @see TaskRender#getValues
+   * @see TaskRender#fillOutForm
    */
-  setValue(task) {
+
+  fillOutForm (task) {
     const inputs = this.inputs; // инпуты формы
     const options = this.options; // опции селекта
 

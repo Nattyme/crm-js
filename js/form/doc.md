@@ -61,7 +61,7 @@ class TaskRender {
    * @param {string} task.product Выбранный продукт.
    * @see TaskRender#getValues
    */
-  setValue(task) {
+  fillOutForm(task) {
     const inputs = this.inputs; // инпуты формы
     const options = this.options; // опции селекта
 
