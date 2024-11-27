@@ -68,7 +68,7 @@ class TestDataFactory {
         "product" : "Курс по VUE JS"
       },
       {
-        "full_name" : "Анатолий",
+        "full_name" : "Анатолий Ш",
         "phone" : "89253458675",
         "email" : "anatol@google.com",
         "product" : "Курс по VUE JS",

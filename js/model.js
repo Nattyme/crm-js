@@ -1,3 +1,4 @@
+import { NAMES } from './config.js';
 import { validate } from './validate.js';
 
 
@@ -185,7 +186,6 @@ class TaskManager {
     }
     return recordID;
   }
-
 }
 
 /**
@@ -281,7 +281,43 @@ class EventBus {
   }
 }
 
+class Status {
+  constructor () {
+    this.data = {
+      NEW : {
+        type : 'new',
+        text : 'Новый'
+      },
+  
+      DOING : {
+        type : 'processing',
+        text : 'В работе'
+      },
+  
+      DONE : {
+        type : 'succeed',
+        text : 'Завершенный'
+      }
+    };
 
+    this.types = this.setTypes();
+  }
+  
+  setTypes() {
+    console.log(this.data)
+    return this.data;
+  }
+
+  getType(name) {
+    for (let type in this.types) {
+      return name === type ? this.types[type] : 'Статус не найден';
+    }
+  }
+
+  getStatus(type) {
+    console.log(this.data);
+  }
+}
 
 // Единый экз-р EventBus
 const eventBus = new EventBus();
@@ -312,7 +348,7 @@ const dateFormatter = function (timestamp, formatter) {
  * @exports {EventBus} - Класс для управления событиями.
  * @exports {dateFormatter} - Функция для форматирования временных меток.
   */
-export { TaskManager, Task, EventBus, dateFormatter, eventBus}
+export { TaskManager, Task, EventBus, Status, dateFormatter, eventBus}
 
 
 
