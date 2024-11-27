@@ -46,12 +46,10 @@ class TaskRender {
       formData[data] = input.value;
     }
 
-    // Обойдем опции в селекте и получим нужную
     const selectedProduct = select.options[ select.selectedIndex ]; // получем выбранную опцию
-    console.log(selectedProduct.value);
-    
-    // запишем текст опции в formData
-    formData['product'] = { 
+
+    // запишем текст опции селекта в formData
+    formData[select.name] = { 
       value : selectedProduct.value, 
       text : selectedProduct.textContent
     }; 
@@ -80,15 +78,12 @@ class TaskRender {
     inputs.phone.value = task.phone;
     inputs.email.value = task.email;
 
-    let selectedProduct; // Переменная для выбранного продукта
+    // const selectedProduct = this.select.options[ this.select.selectedIndex ]; // получем выбранную опцию
 
-    // Обойдем селект и найдем нужный продукт. 
-    for (const item in options) {
-      const option = options[item];
-      if (option.textContent === task.product) {
-        selectedProduct = option;
-      }
-    }
+    // Найдем нужный продукт. 
+    // let product = this.select.options[task.product.text];
+    console.log( task.text);
+    
 
     // Если продукт получен - установим для него атрибут selected
     if ( selectedProduct) {selectedProduct.setAttribute('selected', ''); }
