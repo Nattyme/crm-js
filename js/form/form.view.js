@@ -36,8 +36,7 @@ class TaskRender {
    * @see Task
    */
   collectFormValues() {
-    const inputs = this.inputs; // Инпуты формы
-    const select = this.select; // Селект формы
+    const inputs = this.inputs; // инпуты формы
     let formData = {}; // Объект для значений формы
 
     // Обойдём каждый инпут и получим значения. Добавим в formData
@@ -46,14 +45,11 @@ class TaskRender {
       formData[data] = input.value;
     }
 
-    const selectedProduct = select.options[ select.selectedIndex ]; // получем выбранную опцию
+    const selectedProduct = this.select.options[ this.select.selectedIndex ]; // получем выбранную опцию
 
     // запишем текст опции селекта в formData
-    formData[select.name] = { 
-      value : selectedProduct.value, 
-      text : selectedProduct.textContent
-    }; 
-    
+    formData[this.select.name] = selectedProduct.textContent; 
+
     return formData;
   }
 
@@ -78,16 +74,18 @@ class TaskRender {
     inputs.phone.value = task.phone;
     inputs.email.value = task.email;
 
-    // const selectedProduct = this.select.options[ this.select.selectedIndex ]; // получем выбранную опцию
+    let selectedProduct; // Переменная для выбранного продукта
 
-    // Найдем нужный продукт. 
-    // let product = this.select.options[task.product.text];
-    console.log( task.text);
-    
+    // Обойдем селект и найдем нужный продукт. 
+    for (const item in options) {
+      const option = options[item];
+      if (option.textContent === task.product) {
+        selectedProduct = option;
+      }
+    }
 
     // Если продукт получен - установим для него атрибут selected
     if ( selectedProduct) {selectedProduct.setAttribute('selected', ''); }
-    
   }
 
   /**

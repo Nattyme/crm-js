@@ -134,7 +134,6 @@ class TaskManager {
   addNewData(id, record) {
     // Обходим св-ва в массиве, ищем пустые знач-я
     for ( const field in record) {
-  
       if ( record[field] === null || record[field] === undefined) {
         console.log('Ошибка данных. Запись не добавлена.');
         return;
