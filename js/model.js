@@ -321,6 +321,27 @@ class Status {
 
 }
 
+class Table {
+  constructor (totalRows) {
+    this.rowsTTL = totalRows;
+    this.rowsOnPage = this.setRowsNum();
+    this.page = this.setNumber();
+    this.pageTTL = this.getPageTTL();
+  }
+
+  getPageTTL() {
+    return this.rowsTTL / this.rowsOnPage;
+  }
+
+  getPageNum (currentRowId, pagesTTL, rowsOnPage) {
+
+  }
+
+  getAll () {
+    return this.rowsTTL;
+  }
+}
+
 // Единый экз-р EventBus
 const eventBus = new EventBus();
 
@@ -350,7 +371,7 @@ const dateFormatter = function (timestamp, formatter) {
  * @exports {EventBus} - Класс для управления событиями.
  * @exports {dateFormatter} - Функция для форматирования временных меток.
   */
-export { TaskManager, Task, EventBus, Status, dateFormatter, eventBus}
+export { TaskManager, Task, EventBus, Status, Table, dateFormatter, eventBus}
 
 
 

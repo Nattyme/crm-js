@@ -1,27 +1,10 @@
-class Table {
-  constructor (totalRows) {
-    this.rowsTTL = totalRows;
-    this.rowsOnPage = this.setRowsNum();
-    this.page = this.setNumber();
-    this.pageTTL = this.getPageTTL();
-  }
-
-  getPageTTL() {
-    return this.rowsTTL / this.rowsOnPage;
-  }
-
-  getPageNum (currentRowId, pagesTTL, rowsOnPage) {
-
-  }
-
-  getAll () {
-    return this.rowsTTL;
-  }
-}
-
-class TableRow {
+class TableRender {
   constructor (taskData) {
-    this.html = ``;
+    this.row = setRowHTML();
+  }
+
+  setRowHTML() {
+
   }
 
   setData (taskData) {
@@ -55,4 +38,61 @@ class TableRow {
   }
 }
 
-export { TableRow }
+class TableRowFactory {
+  static createTableRow(task) {
+    const row = document.createElement('th');
+    
+    // Создадим ячейки таблицы
+    const idCell = document.createElement('td');
+    idCell.textContent = task.id;
+
+    const dateCell = document.createElement('td');    idCell.textContent = task.id;
+    dateCell.textContent = task.date;
+
+    const productCell = document.createElement('td');
+    productCell.textContent = task.product;
+
+    const nameCell = document.createElement('td');
+    nameCell.textContent = task.full_name;
+
+    const emailCell = document.createElement('td');
+    emailCell.textContent = task.email;
+
+    const phoneCell = document.createElement('td');
+    phoneCell.textContent = task.phone;
+
+    const statusCell = document.createElement('td');
+    statusCell.textContent = task.status;
+
+    const buttonCell = document.createElement('td');
+    // buttonCell.textContent = task.button;
+
+    // Добавляем ячейки в строку
+    row.appendChild(idCell);
+    row.appendChild(dateCell);
+    row.appendChild(productCell);
+    row.appendChild(nameCell);
+    row.appendChild(emailCell);
+    row.appendChild(phoneCell);
+    row.appendChild(statusCell);
+
+    console.log(row);
+    
+  }
+}
+
+/* data need :
+- ряд <th></th>
+- scope=row для ряда
+- data, product, full_name, email, phone
+
+- статус, статус текст
+- <td></td>
+- <div></div>, class="badge badge-pill badge-danger"
+
+-кнопка Редактировать
+-<td></td>
+- <a href="edit.html">Редактировать</a>
+*/
+
+export { TableRender, TableRowFactory }
