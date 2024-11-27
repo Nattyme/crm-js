@@ -23,9 +23,9 @@ class Controller {
     // this.manager.loadFromStorage();
     const testData = this.setRandomData(); // Получим случайные данные
     const task = new model.Task( {...testData} ); // создадим задачу случ-ые данные
-    console.log(task);
+  
     this.render.setValue(task); // заполним форму значениями задачи
-    console.log(task);
+    console.log('DATA AT THE FORM: ', task);
   }
 
   setTask(e) {
@@ -33,14 +33,9 @@ class Controller {
 
     const id = this.getNextTaskId();  // получим все задачи массива, считаем ID
     const taskData = this.render.getValues(); // получим данные задачи из формы
-    console.log('settask: ', taskData);
-    
     const task = new model.Task({ ...taskData }); // Создадим задачу
-    console.log('settask task: ', task);// не получает full name and product
 
     this.manager.addNewData(id, task); // добавим задачу в массив
-    console.log('DATA: ', this.manager.data); // добавим задачу в массив
-    console.log('settask task:  добавим задачу в массив ', id, task);
     this.eventBus.emit('tasks:save'); // вызываем событие сохранения
   }
 

@@ -2,21 +2,18 @@ const validate = {
 
   // Метод проверяет знач-е поля name
   name(full_name) {
-    // if(!full_name) {
-    //   return {
-    //     valid : false,
-    //     error : 'Ошибка.Поле full_name пустое или некорректно заполнено'
-    //   };
-    // } 
+    if(!full_name) {
+      return {
+        valid : false,
+        error : 'Ошибка.Поле full_name пустое или некорректно заполнено'
+      };
+    } 
  
-
     const nameValid = String(full_name).trim(); // Преобразуем в строку, удалим пробелы
     
     const nameRegex = /^[a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввел фамилию и имя
     const threeNameRegex = /^[a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввёл ФИО
-    console.log('Name after trim:', nameValid);
-    console.log('Regex 2 words match:', nameRegex.test(nameValid));
-    console.log('Regex 3 words match:', threeNameRegex.test(nameValid));
+
     // Проверка на пустую строку
     if( nameValid === '' ) {
       return {
@@ -27,8 +24,6 @@ const validate = {
 
     // Проверка на рег. выражения
     if( !nameRegex.test(nameValid) && !threeNameRegex.test(nameValid)) {
-      console.log(nameValid);
-      console.log('unvalid');
       return {
         valid: false, 
         error: 'Ошибка. Неверный формат имени. Введите имя и фамилию в текстовом формате.'
@@ -41,16 +36,26 @@ const validate = {
 
   // Метод проверяет знач-е поля phone
   phone(phone) {
-    const phoneValid = String(phone).trim(); // Преобразуем в строку, удалим пробелы
-    const phoneRegex = /^\+?[0-9\s\-()]{11,}$/; // Проверка номера
+    // Если номер не полчен - ошибка
+    if(!phone) {
+      return {
+        valid : false,
+        error : 'Ошибка.Поле phone пустое или некорректно заполнено'
+      };
+    } 
+
+    // const phoneClean = String(phone.replace(/[^\d\s()-]/g, '')).trim(); // Удалим все, кроме цифр, пробелов, (), и -. Приведем к строке
+    
+    const phoneValid = String(phone.replace(/\D/g, '')).trim(); // Удалим все, кроме цифр. Приведем к строке
+    const phoneRegex = /^\+?[0-9\s\-()]{10,}$/; // Проверка номера
 
     // Проверка на пустую строку
-    if( phone === '') {
+    if( phoneValid === '') {
       return {valid : false, error : console.log('Ошибка. Пустое поле телефона')};
     }
 
     // Проверка NaN и рег.выражения
-    if (isNaN(phoneValid) || !phoneRegex.test(phoneValid)) {
+    if (isNaN(phoneValid) || !phoneRegex.test(phoneValid) ) {
       return {valid : false, error : console.log('Ошибка. Неверный формат номера телефона')};
     } 
 
@@ -60,6 +65,14 @@ const validate = {
 
   // Метод проверяет знач-е поля email
   email(email) {
+    // Если email не получен - ошибка
+    if(!email) {
+      return {
+        valid : false,
+        error : 'Ошибка.Поле email пустое или некорректно заполнено'
+      };
+    } 
+ 
     const emailValid = String(email).trim(); // Преобразуем в строку, удалим пробелы
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/; // Общий формат email

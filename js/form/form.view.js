@@ -20,16 +20,11 @@ class TaskRender {
   // Метод получает значения из формы
   getValues() {
     let inputs = this.inputs; // Инпуты формы
-    console.log('all input: ', inputs);
     let formData = {}; // Объект для значений формы
 
     // Обойдём каждый инпут и получим значения. Добавим в formData
     for (const data in inputs) {
-      const input = inputs[data];
-      console.log('input: ', input);
-      console.log('input data: ', input[data]);
-      console.log('input value: ', input.value);
-      
+      const input = inputs[data]; 
       formData[data] = input.value;
     }
 
@@ -56,8 +51,9 @@ class TaskRender {
       }
     }
 
-    // Установим для него атрибут selected
-    selectedProduct.setAttribute('selected', '');
+    // Если продукт получен - установим для него атрибут selected
+    if ( selectedProduct) {selectedProduct.setAttribute('selected', ''); }
+    
   }
 
   // Метод показывает ошибки

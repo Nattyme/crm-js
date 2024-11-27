@@ -1,7 +1,6 @@
 class TestDataFactory {
+  // Метож получает случайную запись и форм-т объект задачи
   static createRecord (data) {
-    console.log(data);
-    
     return {
       full_name : data.full_name,
       product : data.product,
@@ -10,13 +9,14 @@ class TestDataFactory {
     };
   }
 
+  // Метод хранит массив данных и возвращает случайную запись
   static createRandomRecord () {
      // Тестовые данные
     const testData = [
       {
-        "full_name" : "Екатерина М",
+        "full_name" : "Elena Aurgas",
         "phone" : "89253458675",
-        "email" : "justkate@google.com",
+        "email" : "helen@google.com",
         "product" : "Курс по JavaScript"
       },
       {
@@ -62,22 +62,16 @@ class TestDataFactory {
         "product" : "Курс по VUE JS"
       },
       {
-        "full_name" : "Stepanova Polina Vladimirovna",
+        "full_name" : "Ivan Ivanov Ivanovuch",
         "phone" : "89253555555",
-        "email" : "polly777@google.com",
+        "email" : "vanya@google.com",
         "product" : "Курс по JavaScript",
       },
       {
-        "full_name" : "Pavel L",
+        "full_name" : "Pavel Nerezov",
         "phone" : "89253555555",
-        "email" : "polly777@google.com",
+        "email" : "pn@google.com",
         "product" : "Курс по VUE JS"
-      },
-      {
-        "full_name" : "",
-        "phone" : "",
-        "email" : "",
-        "product" : ""
       }
     ];
 

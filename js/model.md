@@ -1,6 +1,4 @@
-import { validate } from './validate.js';
-
-
+```js
 /**
  * Класс для управления задачами.
  * Позволяет добавлять, удалять, сохранять и загружать задачи.
@@ -17,19 +15,15 @@ class TaskManager {
    *
    * @param {EventBus} eventBus - Экземпляр EventBus для управления событиями.
    */
-  constructor (eventBus) {
+  constructor(eventBus) {
     this.data = [];
-    this.eventBus = eventBus; // общий EventBus
-
-    // Подписка на события
+    this.eventBus = eventBus;
     this.eventBus.on('tasks:load', this.loadFromStorage.bind(this));
     this.eventBus.on('tasks:save', this.saveToStorage.bind(this));
     this.eventBus.on('tasks:clear', this.clearStorage.bind(this));
 
-    // Получим данные из localStorage
     this.loadFromStorage();
-
-    console.log('DATA AT THE START: ',this.data); 
+    console.log('DATA AT THE START: ', this.data); 
   }
 
   /**
@@ -38,7 +32,7 @@ class TaskManager {
    * @method loadFromStorage
    * @memberof TaskManager
    */
-  loadFromStorage () {
+  loadFromStorage() {
     const storedData = localStorage.getItem('tasksData');
     this.data = storedData ? JSON.parse(storedData) : [];
     console.log('Задачи получены из localStorage');
@@ -64,7 +58,7 @@ class TaskManager {
   clearStorage() {
     localStorage.removeItem('tasksData');
     this.data = [];
-    this.eventBus.emit('tasks:save'); // Уведомлие об изменениях
+    this.eventBus.emit('tasks:save'); 
     console.log('Данные удалены из local storage. Массив data пуст');
   }
 
@@ -88,19 +82,16 @@ class TaskManager {
    * @returns {Object|null} Возвращает задачу или null, если не найдено.
    */
   getData(id) {
-    // В массиве data найдём нужную по ID
     let data = this.data.find(task => task.id === id);
     console.log(data);
     
-    // Если ID не найден
     if (!data) return console.error(`Запись не найдена в ${this.data}`);
 
-    const dataCopy = {...data};     // Создадим копию массива
-    dataCopy.date = this.getFormattedData( dataCopy.timestamp); // Добавим св-во дата в нужно формате
-    console.log('Запись, вовращённая getData: ');
-    console.log(dataCopy);
+    const dataCopy = { ...data };
+    dataCopy.date = this.getFormattedData(dataCopy.timestamp); 
+    console.log('Запись, вовращённая getData: ', dataCopy);
     
-    return dataCopy;  // Вернём запись
+    return dataCopy;
   }
 
   /**
@@ -111,7 +102,7 @@ class TaskManager {
    * @param {number} timestamp - Временная метка.
    * @returns {string} Отформатированная дата.
    */
-  getFormattedData (timestamp) {
+  getFormattedData(timestamp) {
     const formatter = new Intl.DateTimeFormat('ru-RU', {
       year: 'numeric',
       month: 'numeric',
@@ -131,20 +122,16 @@ class TaskManager {
    * @returns {Object|null} Добавленную задачу или null в случае ошибки.
    */
   addNewData(id, record) {
-    // Обходим св-ва в массиве, ищем пустые знач-я
-    for ( const field in record) {
-  
-      if ( record[field] === null || record[field] === undefined) {
+    for (const field in record) {
+      if (record[field] === null || record[field] === undefined) {
         console.log('Ошибка данных. Запись не добавлена.');
         return;
       }
     }
 
-    record.id = id; // Запишем ID в задачу
-    this.data.push(record); // Добавим задачу в массив
+    record.id = id; 
+    this.data.push(record); 
     console.log('DATA after ADD NEW DATA', this.data);
-
-    // Событие сохранения
     this.eventBus.emit('tasks:save');
     return record;
   }
@@ -157,10 +144,10 @@ class TaskManager {
    * @param {Array} data - Массив всех задач.
    * @returns {number} Новый ID.
    */
-  calcID (data) {
+  calcID(data) {
     let id;
     
-    if ( data.length !== 0 ) {
+    if (data.length !== 0) {
       const lastRecord = data[data.length - 1];
       id = lastRecord.id + 1;
     } else {
@@ -178,14 +165,13 @@ class TaskManager {
    * @param {number} recordID - ID задачи.
    * @returns {number} ID удалённой задачи.
    */
-  removeData (recordID) {
+  removeData(recordID) {
     const recordIndex = this.data.findIndex(record => record.id === recordID);
     if (recordIndex !== -1) {
       this.data.splice(recordIndex, 1);
     }
     return recordID;
   }
-
 }
 
 /**
@@ -195,16 +181,15 @@ class TaskManager {
  * @see {@link ./validate.js|Модуль валидации}
  */
 class Task {
-  constructor ( {full_name, phone, email, product}) {
-    // this.id = id,
+  constructor({ full_name, phone, email, product }) {
     this.timestamp = Date.now();
-    this.full_name = this.setProperty( full_name, validate.name),
-    this.product = product,
-    this.email = this.setProperty( email, validate.email),
-    this.phone = this.setProperty( phone, validate.phone)
+    this.full_name = this.setProperty(full_name, validate.name);
+    this.product = product;
+    this.email = this.setProperty(email, validate.email);
+    this.phone = this.setProperty(phone, validate.phone);
   }
 
-   /**
+  /**
    * Валидирует значение с использованием соответствующей функции.
    *
    * @method setProperty
@@ -213,29 +198,27 @@ class Task {
    * @param {Function} validate - Функция для валидации.
    * @returns {string|null} Отвалидированное значение или null, если ошибка.
    */
-  setProperty ( value, validate) {
+  setProperty(value, validate) {
     const result = validate(value);
- 
-    if(!result.valid) {
+
+    if (!result.valid) {
       console.log(result.error);
       return null;
-    } 
+    }
     
     return result.value;
   }
-
 }
 
 /**
  * Класс для управления событиями.
-*
-* @class EventBus
-*/
+ *
+ * @class EventBus
+ */
 class EventBus {
-  constructor () {
-    this.listeners = {} // объект хранит события и подписчиков
+  constructor() {
+    this.listeners = {};
   }
-
 
   /**
    * Подписывается на событие.
@@ -249,25 +232,24 @@ class EventBus {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
-
     this.listeners[event].push(callback);
   }
 
   /**
- * Отписывается от события.
- *
- * @method off
- * @memberof EventBus
- * @param {string} event - Название события.
- * @param {Function} callback - Функция-обработчик.
- */
-  off (event, callback) {
-    if ( !this.listeners[event]) return;
+   * Отписывается от события.
+   *
+   * @method off
+   * @memberof EventBus
+   * @param {string} event - Название события.
+   * @param {Function} callback - Функция-обработчик.
+   */
+  off(event, callback) {
+    if (!this.listeners[event]) return;
 
     this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
   }
 
-   /**
+  /**
    * Вызывает событие.
    *
    * @method emit
@@ -275,16 +257,11 @@ class EventBus {
    * @param {string} event - Название события.
    * @param {*} data - Данные, которые передаются обработчику.
    */
-  emit ( event, data) {
-    if ( !this.listeners[event]) return;
+  emit(event, data) {
+    if (!this.listeners[event]) return;
     this.listeners[event].forEach(callback => callback(data));
   }
 }
-
-
-
-// Единый экз-р EventBus
-const eventBus = new EventBus();
 
 /**
  * Функция для форматирования временной метки.
@@ -295,13 +272,10 @@ const eventBus = new EventBus();
  * @param {Intl.DateTimeFormat} formatter - Форматтер для даты.
  * @returns {string} Отформатированная дата.
  */
-const dateFormatter = function (timestamp, formatter) {
-  const date = formatter.format( new Date(timestamp) );
-
+const dateFormatter = function(timestamp, formatter) {
+  const date = formatter.format(new Date(timestamp));
   return date;
 }
-
-
 
 /**
  * Экспорт классов и функций модуля.
@@ -311,9 +285,5 @@ const dateFormatter = function (timestamp, formatter) {
  * @exports {Task} - Класс для создания задач.
  * @exports {EventBus} - Класс для управления событиями.
  * @exports {dateFormatter} - Функция для форматирования временных меток.
-  */
-export { TaskManager, Task, EventBus, dateFormatter, eventBus}
-
-
-
-
+ */
+export { TaskManager, Task, EventBus, dateFormatter, eventBus };
