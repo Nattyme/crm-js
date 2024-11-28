@@ -42,11 +42,6 @@
   cursor: pointer;
 }
 
-
-.link-abs::before:hover .task-table__row {
-  background-color: red;
-}
-
 .button-edit {
   color: #007bff;
 }

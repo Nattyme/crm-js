@@ -20,9 +20,7 @@ class TableRender {
    */
   setRowHTML (task) {
     const row = new TableRowFactory();
-    return row.createTableRow(task, {
-      className : "task-table__row task-table__row--link",
-    });
+    return row.createTableRow(task);
   }
 
   /**
@@ -51,33 +49,6 @@ class TableRender {
     const rows = this.setAllRows(tasks);
     return this.tbody.appendChild(rows);
   }
-
-  /**
-   * Устанавливает статус задачи.
-   * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
-   * @returns {Object} Объект данных статуса.
-   */
-  setStatus(type) {
-    const status = [
-      {
-        type : 'new',
-        text : 'Новый',
-        class : 'badge-danger'
-      },
-      {
-        type : 'processing',
-        text : 'В работе',
-        class : 'badge-warning'
-      },
-      {
-        type : 'new',
-        text : 'Завершенный',
-        class : 'badge-success'
-      }
-    ];
-
-    return statusData;
-  }
 }
 
 /**
@@ -90,62 +61,96 @@ class TableRowFactory {
    * @param {Object} [options] - Дополнительные опции для настройки строки.
    * @returns {HTMLElement} Созданная строка таблицы (`<tr>`).
    */
-  createTableRow(task, options) {
+  createTableRow(task, options = {}) {
     const row = this.createElem('tr');
-    row.className = options.className;
+    row.className = options.className || 'task-table__row task-table__row--link';
     row.setAttribute("scope", `${task.id}`);
- 
-    // Создадим ячейки таблицы
-    const idCell = this.createElem('th');
-    idCell.textContent = (task.id);
-
-    const dateCell = this.createElem('td');
-    dateCell.textContent = task.date;
-
-    const productCell = this.createElem('td');
-    productCell.textContent = task.product;
-
-    const nameCell = this.createElem('td');
-    const nameLink = this.createElem('a');
-    nameLink.href= "edit.html";
-    nameLink.className = "link-abs";
-    nameLink.textContent = task.full_name;
-    nameCell.appendChild(nameLink);
-
-    const emailCell = this.createElem('td');
-    emailCell.textContent = task.email;
-
-    const phoneCell = this.createElem('td');
-    phoneCell.textContent = task.phone;
-
-    const statusCell = this.createElem('td');
-    const badge = this.createElem('div');
-    badge.className = 'badge badge-pill badge-danger';
-    badge.textContent = task.status;
-    statusCell.appendChild(badge);
-
-    const buttonCell = this.createElem('td');
-    buttonCell.className = "button-edit";
-    // const buttonLink = this.createElem('a');
-    // buttonLink.href= "edit.html";
-    // buttonLink.className = "button-edit__link";
-    buttonCell.textContent = 'Редактировать';
-    // buttonCell.appendChild(buttonLink);
-  
-    // Добавляем ячейки в строку
-    row.appendChild(idCell);
-    row.appendChild(dateCell);
-    row.appendChild(productCell); 
-    row.appendChild(nameCell);
-    row.appendChild(emailCell);
-    row.appendChild(phoneCell);
-    row.appendChild(statusCell);
-    row.appendChild(buttonCell);
+    console.log(task.id);
     
+    // Настройки для ячеек таблицы
+    const cellsConfig = [
+      {
+        type : 'td',
+        content : String(task.id)
+      },
+      {
+        type : 'td',
+        content : task.date
+      },
+      {
+        type : 'td',
+        content : task.product
+      },
+      {
+        type : 'td',
+        content : this.createAbsLink(task.full_name, `edit.html?id=${task.id}`)
+      },
+      {
+        type : 'td',
+        content : task.email
+      },
+      {
+        type : 'td',
+        content : task.phone
+      },
+      {
+        type : 'td',
+        content : this.createBadge(task.status)
+      },
+      {
+        type : 'td',
+        content : this.createButton('Редактировать')
+      },
+    ];
 
-    console.log(row);
+    cellsConfig.forEach( config => {
+      let cell = this.createElem(config.type);
+
+      if ( typeof config.content === 'string') {
+        console.log(config.content);
+        
+        cell.textContent = config.content;
+      } 
+      else if ( config.content instanceof HTMLElement) {
+        console.log(config.content);
+        cell.appendChild(config.content);
+      }
+
+      else {
+        console.log('Получен неизвестный тип данных');  
+      }
+
+      // Добавляем ячейку в ряд
+      row.appendChild(cell);
+    });
+
+    // Вернём ряд
     return row;
     
+  }
+
+  createAbsLink(content, url) {
+    const link = this.createElem('a');
+    link.textContent = content;
+    link.href = url;
+    link.className = "link-abs";
+
+    return link;
+  }
+
+  createBadge (status) {
+    const badge = this.createElem('div');
+    badge.className = `badge badge-pill ${this.setStatus('new').class}`;
+    badge.textContent = status;
+    return badge;
+  }
+
+  createButton (content, option = {}) {
+    const buttonCell = this.createElem('div');
+    buttonCell.className = option.className || 'button-edit';
+    buttonCell.textContent = content;
+
+    return buttonCell;
   }
 
   /**
@@ -156,6 +161,33 @@ class TableRowFactory {
   createElem (type) {
     return document.createElement(type);
   }
+
+    /**
+   * Устанавливает статус задачи.
+   * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
+   * @returns {Object} Объект данных статуса.
+   */
+    setStatus(name) {
+      const status = [
+        {
+          type : 'new',
+          text : 'Новый',
+          class : 'badge-danger'
+        },
+        {
+          type : 'processing',
+          text : 'В работе',
+          class : 'badge-warning'
+        },
+        {
+          type : 'new',
+          text : 'Завершенный',
+          class : 'badge-success'
+        }
+      ];
+    
+      return status.find(item => item.type === name);
+    }
 
   moveAppend(){
 
