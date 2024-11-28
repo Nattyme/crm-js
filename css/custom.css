@@ -4,19 +4,21 @@
 
 .task-table__row {
   position: relative;
-  transition: opacity 0.2s ease-in;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .table__body:hover .task-table__row--link {
-  opacity: 0.3;
-}
-
-.task-table__row:hover .button-edit {
-  color: #0056b3;
+  opacity: 0.6;
+  background-color: transparent;
 }
 
 .table__body .task-table__row--link:hover {
   opacity: 1;
+  background-color: rgba(224, 229, 233, 0.5);
+}
+
+.task-table__row:hover .button-edit {
+  color: #0056b3;
 }
 
 .link-abs {

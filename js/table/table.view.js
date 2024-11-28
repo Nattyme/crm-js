@@ -130,10 +130,14 @@ class TableRowFactory {
   }
 
   createAbsLink(content, url) {
+    const id = url.split('?')[1].split("=")[1];
     const link = this.createElem('a');
+
     link.textContent = content;
     link.href = url;
+    
     link.className = "link-abs";
+    link.setAttribute("title", `Перейти к редактированию заявки №${id}`)
 
     return link;
   }
