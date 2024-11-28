@@ -1,0 +1,44 @@
+.task-table__row {
+  position: relative;
+}
+
+.link-abs::before:hover .task-table__row {
+  background-color: red;
+}
+
+.link-abs {
+  color: #000;
+}
+
+.link-abs:hover {
+  text-decoration: none;
+  color: #000;
+}
+
+.link-abs::before {
+  z-index: 99;
+  position: absolute;
+  content: "";
+
+  display: inline-block;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  cursor: pointer;
+}
+
+.link-abs:hover.link-abs::before {
+  background-color: #bdd4de18;
+}
+
+.button-edit__link {
+  z-index: 99;
+  position: relative;
+  
+  text-underline-offset: 10px;
+
+  transition: all 0.2s ease-in;
+}
+

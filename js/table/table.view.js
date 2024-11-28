@@ -102,6 +102,7 @@ class TableRowFactory {
    */
   createTableRow(task, options) {
     const row = this.createElem('tr');
+    row.className = "task-table__row task-table__row--link";
     // ('scope', `${task.id}`);
     
     // Создадим ячейки таблицы
@@ -115,7 +116,11 @@ class TableRowFactory {
     productCell.textContent = task.product;
 
     const nameCell = this.createElem('td');
-    nameCell.textContent = task.full_name;
+    const nameLink = this.createElem('a');
+    nameLink.href= "edit.html";
+    nameLink.className = "link-abs";
+    nameLink.textContent = task.full_name;
+    nameCell.appendChild(nameLink);
 
     const emailCell = this.createElem('td');
     emailCell.textContent = task.email;
@@ -130,10 +135,12 @@ class TableRowFactory {
     statusCell.appendChild(badge);
 
     const buttonCell = this.createElem('td');
+    buttonCell.className = "button-edit";
     const buttonLink = this.createElem('a');
-    // buttonLink.attributes = [href="edit.html"];
-    // buttonLink.textContent = 'Редактировать';
-    // buttonCell.appendChild(buttonLink);
+    buttonLink.href= "edit.html";
+    buttonLink.className = "button-edit__link";
+    buttonLink.textContent = 'Редактировать';
+    buttonCell.appendChild(buttonLink);
   
     // Добавляем ячейки в строку
     row.appendChild(idCell);
@@ -143,6 +150,8 @@ class TableRowFactory {
     row.appendChild(emailCell);
     row.appendChild(phoneCell);
     row.appendChild(statusCell);
+    row.appendChild(buttonCell);
+    
 
     console.log(row);
     return row;
