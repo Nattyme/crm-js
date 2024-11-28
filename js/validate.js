@@ -55,15 +55,13 @@ const validate = {
    * - `error` {string}: Сообщение об ошибке (при некорректной валидации).
    */
   phone(phone) {
-    // Если номер не полчен - ошибка
+    // Если номер не получен - ошибка
     if(!phone) {
       return {
         valid : false,
         error : 'Ошибка.Поле phone пустое или некорректно заполнено'
       };
     } 
-
-    // const phoneClean = String(phone.replace(/[^\d\s()-]/g, '')).trim(); // Удалим все, кроме цифр, пробелов, (), и -. Приведем к строке
     
     const phoneValid = String(phone.replace(/\D/g, '')).trim(); // Удалим все, кроме цифр. Приведем к строке
     const phoneRegex = /^\+?[0-9\s\-()]{10,}$/; // Проверка номера

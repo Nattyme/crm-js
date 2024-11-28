@@ -11,7 +11,14 @@ class TableRender {
    * @returns {HTMLElement} Элемент `tbody`.
    */
   setTbody() {
-    return document.querySelector('#tbody');
+    let tbody = document.querySelector('#tbody');
+
+    if (!tbody) {
+      console.log('Не найден контейнер для рядов таблицы');
+      return;
+    }
+
+    return tbody;
   }
 
   /**
@@ -130,12 +137,12 @@ class TableRowFactory {
   }
 
   createAbsLink(content, url) {
-    const id = url.split('?')[1].split("=")[1];
+    const id = tableDataFormatter.getUrlID(url);
     const link = this.createElem('a');
 
     link.textContent = content;
     link.href = url;
-    
+
     link.className = "link-abs";
     link.setAttribute("title", `Перейти к редактированию заявки №${id}`)
 
@@ -166,47 +173,58 @@ class TableRowFactory {
     return document.createElement(type);
   }
 
-    /**
-   * Устанавливает статус задачи.
-   * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
-   * @returns {Object} Объект данных статуса.
-   */
-    setStatus(name) {
-      const status = [
-        {
-          type : 'new',
-          text : 'Новый',
-          class : 'badge-danger'
-        },
-        {
-          type : 'processing',
-          text : 'В работе',
-          class : 'badge-warning'
-        },
-        {
-          type : 'new',
-          text : 'Завершенный',
-          class : 'badge-success'
-        }
-      ];
-    
-      return status.find(item => item.type === name);
-    }
-
-  moveAppend(){
-
+  /**
+ * Устанавливает статус задачи.
+ * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
+ * @returns {Object} Объект данных статуса.
+ */
+  setStatus(name) {
+    const status = [
+      {
+        type : 'new',
+        text : 'Новый',
+        class : 'badge-danger'
+      },
+      {
+        type : 'processing',
+        text : 'В работе',
+        class : 'badge-warning'
+      },
+      {
+        type : 'new',
+        text : 'Завершенный',
+        class : 'badge-success'
+      }
+    ];
+  
+    return status.find(item => item.type === name);
   }
 }
 
-/* data need :
-- scope=row для ряда
+class tableDataFormatter {
+  static phoneGetReady () {
 
-- статус,
-- <div></div>, class="badge badge-pill badge-danger"
+  }
 
--кнопка Редактировать
--<td></td>
-- <a href="edit.html">Редактировать</a>
-*/
+  static getUrlID (url) {
+    const uri = url.split('?')[1];
+    const param = uri.split("=")[0];
+    const id = uri.split("=")[1];
+
+    // Проверим, что парам-р в ссылке - id
+    if ( param !== 'id') {
+    console.log('В первом параметре ссылки не задан ID');
+    return;
+    }
+
+    if (param !== 'id' && id === '') {
+    console.log('В параметре id не значения');
+    return;
+    }
+    
+     return id;
+  }
+
+}
 
 export { TableRender, TableRowFactory }
