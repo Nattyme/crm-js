@@ -19,7 +19,6 @@ class Controller {
    */
   constructor () {
     this.eventBus = model.eventBus; // общий EventBus
-
     this.manager = new model.TaskManager(model.eventBus); // менеджер для обработки задач
     this.render = new view.TaskRender(); // создадим рендера задачи
     this.form = this.render.form; // форма отправки
@@ -49,7 +48,7 @@ class Controller {
     // this.manager.loadFromStorage();
     const testData = this.setRandomData(); // Получим случайные данные
     const task = new model.Task( {...testData} ); // создадим задачу случ-ые данные
-  
+
     this.render.fillOutForm(task); // заполним форму значениями задачи
     console.log('DATA AT THE FORM: ', task);
   }

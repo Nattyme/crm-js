@@ -1,3 +1,5 @@
+import { validate } from '../validate.js';
+
 /**
  * Класс для создания задачи и её валидации.
  *
@@ -11,8 +13,8 @@ class Task {
     this.full_name = this.setProperty( full_name, validate.name),
     this.product = product,
     this.email = this.setProperty( email, validate.email),
-    this.phone = this.setProperty( phone, validate.phone),
-    this.status = this.setStatus();
+    this.phone = this.setProperty( phone, validate.phone)
+    // this.status = this.setStatus();
   }
 
   /**
@@ -26,7 +28,7 @@ class Task {
    */
   setProperty ( value, validate) {
     const result = validate(value);
- 
+   
     if(!result.valid) {
       return null;
     } 
@@ -34,7 +36,9 @@ class Task {
     return result.value;
   }
 
-  setStatus(name = this.status.NEW.text) {
+  setStatus(name ) {
+    console.log(this.status);
+    
     return name;
   }
 

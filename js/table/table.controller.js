@@ -5,15 +5,19 @@ import * as view from '../table/table.view.js';
 class Controller {
   constructor () {
     this.eventBus = model.eventBus; // общий EventBus
+    this.status = model.status; // общий статус
 
     this.manager = new model.TaskManager(model.eventBus); // менеджер для работы с задачами
     this.render = view.TableRowFactory; // создадим рендер ряда с задачей
     this.renderTable = new view.TableRender; // создадим рендер ряда с задачей
+
   }
 
   setInit () {
     this.setEventListeners();
     this.eventBus.emit(NAMES.TASKS_LOAD);
+    console.log(this.status);
+    
     this.setRows()
   }
 
@@ -25,7 +29,11 @@ class Controller {
       task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
     }
 
-    this.renderTable.addRowsToTable(dataCopy, {status : 'Новый'});
+    const statusData = this.render.getStatusData(this.status);
+    console.log(statusData.data.NEW.text);
+    console.log(statusData);
+    
+    this.renderTable.addRowsToTable(dataCopy, statusData);
   }
 
   setEventListeners () {

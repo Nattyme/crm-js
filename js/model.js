@@ -8,6 +8,7 @@ import { Table } from './module/table.js';
 // Единый экз-р EventBus
 const eventBus = new EventBus();
 const status = new Status();
+console.log(status);
 
 /**
  * Функция для форматирования временной метки.

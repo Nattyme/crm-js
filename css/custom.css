@@ -29,6 +29,11 @@
   cursor: pointer;
 }
 
+.custom-select:hover:not(:focus) {
+  border-color: rgba(128, 189, 255, 0.3);
+  box-shadow: 0 0 0 .2rem rgba(0,123,255,.15);
+}
+
 .table__body {
   transition: opacity 0.5s ease, background-color 0.5s ease;
 }

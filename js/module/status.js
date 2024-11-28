@@ -3,7 +3,7 @@
  */
 class Status {
   constructor () {
-    this.status = {
+    this.data = {
         NEW :   {
                   key: 'new',
                   text : 'Новый',
@@ -24,7 +24,7 @@ class Status {
   }
 
   getStatusData () {
-    return this.status;
+    return this.data;
   }
   
   /**
