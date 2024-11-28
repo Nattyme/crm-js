@@ -8,7 +8,7 @@ class Controller {
 
     this.manager = new model.TaskManager(model.eventBus); // менеджер для работы с задачами
     this.render = view.TableRowFactory; // создадим рендер ряда с задачей
-    this.renderTable = view.TableRender; // создадим рендер ряда с задачей
+    this.renderTable = new view.TableRender; // создадим рендер ряда с задачей
   }
 
   setInit () {

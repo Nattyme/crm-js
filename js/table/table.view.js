@@ -3,14 +3,14 @@
  */
 class TableRender {
   constructor () {
-    this.tbody = setTbody();
+    this.tbody = this.setTbody();
   }
 
   /**
    * Получает элемент `<tbody>` таблицы.
    * @returns {HTMLElement} Элемент `tbody`.
    */
-  static setTbody() {
+  setTbody() {
     return document.querySelector('#tbody');
   }
 
@@ -18,8 +18,9 @@ class TableRender {
    * Создаёт строку таблицы на основе задачи.
    * @param {Object} task - Объект задачи с данными.
    */
-  static setRowHTML (task) {
-   new TableRowFactory.createTableRow(task);
+  setRowHTML (task) {
+    const row = new TableRowFactory();
+    return row.createTableRow(task);
   }
 
   /**
@@ -27,11 +28,11 @@ class TableRender {
    * @param {Object[]} tasks - Массив задач.
    * @returns {DocumentFragment} Фрагмент строк таблицы.
    */
-  static setAllRows (tasks) {
+  setAllRows (tasks) {
     const fragmentOfRows = document.createDocumentFragment();
 
     for (let task of tasks) {
-      fragmentOfRows.push( this.setRowHTML(task) );
+      fragmentOfRows.appendChild( this.setRowHTML(task) );
     }
 
     return fragmentOfRows;
@@ -42,7 +43,7 @@ class TableRender {
    * @param {Object[]} tasks - Массив задач.
    * @returns {HTMLElement} Обновлённый элемент `tbody` с добавленными строками.
    */
-  static addRowsToTable (tasks) {
+  addRowsToTable (tasks) {
     console.log(this);
     
     const rows = this.setAllRows(tasks);
@@ -105,32 +106,35 @@ class TableRowFactory {
     
     // Создадим ячейки таблицы
     const idCell = this.createElem('th');
-    idCell.this.setText(task.id);
+    idCell.textContent = (task.id);
 
-    const dateCell = this.createElem('th');
+    const dateCell = this.createElem('td');
     dateCell.textContent = task.date;
 
-    const productCell = this.createElem('th');
+    const productCell = this.createElem('td');
     productCell.textContent = task.product;
 
-    const nameCell = this.createElem('th');
+    const nameCell = this.createElem('td');
     nameCell.textContent = task.full_name;
 
-    const emailCell = this.createElem('th');
+    const emailCell = this.createElem('td');
     emailCell.textContent = task.email;
 
-    const phoneCell = this.createElem('th');
+    const phoneCell = this.createElem('td');
     phoneCell.textContent = task.phone;
 
-    const statusCell = this.createElem('th');
+    const statusCell = this.createElem('td');
     const badge = this.createElem('div');
     badge.className = "badge badge-pill badge-danger";
     badge.textContent = task.status;
-    badge.appendChild(statusPlate);
+    statusCell.appendChild(badge);
 
-    const buttonCell = this.createElem('th');
-    // buttonCell.textContent = task.button;
-
+    const buttonCell = this.createElem('td');
+    const buttonLink = this.createElem('a');
+    // buttonLink.attributes = [href="edit.html"];
+    // buttonLink.textContent = 'Редактировать';
+    // buttonCell.appendChild(buttonLink);
+  
     // Добавляем ячейки в строку
     row.appendChild(idCell);
     row.appendChild(dateCell);
@@ -143,15 +147,6 @@ class TableRowFactory {
     console.log(row);
     return row;
     
-  }
-
-  /**
-   * Устанавливает текст в элемент.
-   * @param {string} text - Текст для установки.
-   * @returns {string} Возвращает переданный текст.
-   */
-  setText (text) {
-    return textContent = text;
   }
 
   /**
