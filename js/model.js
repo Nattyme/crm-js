@@ -285,8 +285,12 @@ class EventBus {
   }
 }
 
+/**
+ * Класс `Status` представляет статусы задач с их типами и описаниями.
+ */
 class Status {
   constructor () {
+
     this.data = {
       NEW : {
         type : 'new',
@@ -307,11 +311,20 @@ class Status {
     this.types = this.setTypes();
   }
   
+  /**
+   * Устанавливает типы статусов.
+   * @returns {Object} Объект данных со статусами.
+   */
   setTypes() {
     console.log(this.data)
     return this.data;
   }
 
+  /**
+   * Возвращает данные статуса по его имени.
+   * @param {string} name - Имя статуса.
+   * @returns {Object|null} Данные статуса или `null`, если статус не найден.
+   */
   getStatus(name) {
     for (let type in this.types) {
       return name === type ? this.types[type] : null;
@@ -320,7 +333,14 @@ class Status {
 
 }
 
+/**
+ * Класс `Table` представляет данные таблицы, включая количество строк, страниц и текущую страницу.
+ */
 class Table {
+  /**
+   * Создаёт объект `Table`.
+   * @param {number} totalRows - Общее количество строк в таблице.
+   */
   constructor (totalRows) {
     this.rowsTTL = totalRows;
     this.rowsOnPage = this.setRowsNum();
@@ -328,14 +348,28 @@ class Table {
     this.pageTTL = this.getPageTTL();
   }
 
+  /**
+ * Общее количество строк в таблице.
+ * @type {number}
+ */
   getPageTTL() {
     return this.rowsTTL / this.rowsOnPage;
   }
 
+  /**
+   * Возвращает номер страницы для строки.
+   * @param {number} currentRowId - ID текущей строки.
+   * @param {number} pagesTTL - Общее количество страниц.
+   * @param {number} rowsOnPage - Количество строк на странице.
+   */
   getPageNum (currentRowId, pagesTTL, rowsOnPage) {
 
   }
 
+  /**
+   * Возвращает общее количество строк в таблице.
+   * @returns {number} Количество строк.
+   */
   getAll () {
     return this.rowsTTL;
   }

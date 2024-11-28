@@ -8,6 +8,7 @@ class Controller {
 
     this.manager = new model.TaskManager(model.eventBus); // менеджер для работы с задачами
     this.render = view.TableRowFactory; // создадим рендер ряда с задачей
+    this.renderTable = view.TableRender; // создадим рендер ряда с задачей
   }
 
   setInit () {
@@ -24,18 +25,11 @@ class Controller {
     const data = this.manager.getAll(); // Получим данные всех задач и массива data
     const dataCopy = [...data];     // Создадим копию массива
 
-    let rows = [];
-
     for ( const task of dataCopy) {
       task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
-  
-      let row =  view.TableRowFactory.createTableRow(task); // Получим разметку и по очереди подставим данные каждой задачи массива
-      console.log(row);
-      
-      rows.push(row); // Добавим задачу на страницу
-
     }
-    console.log(rows);
+
+    this.renderTable.addRowsToTable(dataCopy);
   }
 
   setEventListeners () {
