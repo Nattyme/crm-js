@@ -51,8 +51,6 @@ class TableRender {
    * @returns {HTMLElement} Обновлённый элемент `tbody` с добавленными строками.
    */
   addRowsToTable (tasks) {
-    console.log(this);
-    
     const rows = this.setAllRows(tasks);
     return this.tbody.appendChild(rows);
   }
@@ -69,11 +67,37 @@ class TableRowFactory {
    * @returns {HTMLElement} Созданная строка таблицы (`<tr>`).
    */
   createTableRow(task, options = {}) {
+    const cellsConfig = this.getCellsConfig(task, options = {text : 'Завершен'}); // получим настройки ячеек таблицы
     const row = this.createElem('tr');
+
     row.className = options.className || 'task-table__row task-table__row--link';
     row.setAttribute("scope", `${task.id}`);
-    console.log(task.id);
+    row.setAttribute("data-status", `${task.status}`);
     
+    
+    cellsConfig.forEach( config => {
+      let cell = this.createElem(config.type);
+
+      if ( typeof config.content === 'string') {
+        cell.textContent = config.content;
+      } 
+      else if ( config.content instanceof HTMLElement) {
+        cell.appendChild(config.content);
+      }
+
+      else {
+        console.log('Получен неизвестный тип данных');  
+      }
+
+      // Добавляем ячейку в ряд
+      row.appendChild(cell);
+    });
+
+    // Вернём ряд
+    return row;
+  }
+
+  getCellsConfig(task) {
     // Настройки для ячеек таблицы
     const cellsConfig = [
       {
@@ -90,7 +114,7 @@ class TableRowFactory {
       },
       {
         type : 'td',
-        content : this.createAbsLink(task.full_name, `edit.html?id=${task.id}`)
+        content : this.createAbsLink( tableDataFormatter.fieldGetReady().name(task.full_name), `edit.html?id=${task.id}`)
       },
       {
         type : 'td',
@@ -98,11 +122,11 @@ class TableRowFactory {
       },
       {
         type : 'td',
-        content : task.phone
+        content : tableDataFormatter.fieldGetReady().phone(task.phone)
       },
       {
         type : 'td',
-        content : this.createBadge(task.status)
+        content : this.setStatus(task.status)
       },
       {
         type : 'td',
@@ -110,34 +134,11 @@ class TableRowFactory {
       },
     ];
 
-    cellsConfig.forEach( config => {
-      let cell = this.createElem(config.type);
-
-      if ( typeof config.content === 'string') {
-        console.log(config.content);
-        
-        cell.textContent = config.content;
-      } 
-      else if ( config.content instanceof HTMLElement) {
-        console.log(config.content);
-        cell.appendChild(config.content);
-      }
-
-      else {
-        console.log('Получен неизвестный тип данных');  
-      }
-
-      // Добавляем ячейку в ряд
-      row.appendChild(cell);
-    });
-
-    // Вернём ряд
-    return row;
-    
+    return cellsConfig;
   }
 
   createAbsLink(content, url) {
-    const id = tableDataFormatter.getUrlID(url);
+    const id = tableDataFormatter.fieldGetReady().urlID(url);
     const link = this.createElem('a');
 
     link.textContent = content;
@@ -173,58 +174,83 @@ class TableRowFactory {
     return document.createElement(type);
   }
 
+  getStatusData (status) {
+    const statuses = {
+      'new' : {
+                        text : 'Новый',
+                        class : 'badge-danger'
+              },
+      'processing' : { 
+                        text : 'В работе',
+                        class : 'badge-warning'
+                      },
+
+      'completed' : {
+                      text : 'Завершенный',
+                      class : 'badge-success'
+                    }
+    }
+
+    return  statuses[status] || statuses['new']; // По умолчанию вернёт 'Новый'
+  }
+
   /**
  * Устанавливает статус задачи.
  * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
  * @returns {Object} Объект данных статуса.
  */
-  setStatus(name) {
-    const status = [
-      {
-        type : 'new',
-        text : 'Новый',
-        class : 'badge-danger'
-      },
-      {
-        type : 'processing',
-        text : 'В работе',
-        class : 'badge-warning'
-      },
-      {
-        type : 'new',
-        text : 'Завершенный',
-        class : 'badge-success'
-      }
-    ];
-  
-    return status.find(item => item.type === name);
+  setStatus(status) {
+    const statusData = this.getStatusData(status);
+    const badge = this.createElem('div');
+ 
+    badge.className = `badge badge-pill ${statusData.class}`;
+    badge.textContent = statusData.text;
+
+    return badge;
+
   }
 }
 
 class tableDataFormatter {
-  static phoneGetReady () {
+  static fieldGetReady () {
+    return {
+      phone : (phoneNumber) => {
+        const phone = phoneNumber.replace(/\D/g, '');
 
-  }
+        if (phone.length === 11 && phone[0] === '8') {
+          // Заменяем 8 на 7
+          return phone.replace(/^8(\d{3})(\d{3})(\d{2})(\d{2})$/, '+7 ($1) $2-$3-$4');
+        } else {
+          console.log('Неверный номер');
+          return null;
+        }
+      },
 
-  static getUrlID (url) {
-    const uri = url.split('?')[1];
-    const param = uri.split("=")[0];
-    const id = uri.split("=")[1];
+      name : (fullName) => {
+        return fullName.split(' ').slice(0, 2).join(' ');
+      },
 
-    // Проверим, что парам-р в ссылке - id
-    if ( param !== 'id') {
-    console.log('В первом параметре ссылки не задан ID');
-    return;
-    }
+      urlID : (url) => {
+        const uri = url.split('?')[1]; // строка с парам-ми из url
 
-    if (param !== 'id' && id === '') {
-    console.log('В параметре id не значения');
-    return;
-    }
+        if ( !uri ) {
+          console.log('В url нет параметров');
+          return null;
+        }
+
+        const params = new URLSearchParams(uri);
+        const id = params.get('id'); // найдем знач-е id в подстроке
     
-     return id;
+        // Проверим, что парам-р в ссылке - id
+        if ( !id ) {
+          console.log('В параметре ID нет значения.');
+          return null;
+        }
+  
+         return id;
+      }
+    }
   }
-
 }
 
 export { TableRender, TableRowFactory }

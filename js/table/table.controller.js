@@ -14,10 +14,6 @@ class Controller {
   setInit () {
     this.setEventListeners();
     this.eventBus.emit(NAMES.TASKS_LOAD);
-
-    const status = new model.Status();
-
-    
     this.setRows()
   }
 
@@ -29,7 +25,7 @@ class Controller {
       task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
     }
 
-    this.renderTable.addRowsToTable(dataCopy);
+    this.renderTable.addRowsToTable(dataCopy, {status : 'Новый'});
   }
 
   setEventListeners () {
