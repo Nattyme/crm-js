@@ -1,9 +1,22 @@
-.task-table__row {
-  position: relative;
+.table__body {
+  transition: opacity 0.5s ease;
 }
 
-.link-abs::before:hover .task-table__row {
-  background-color: red;
+.task-table__row {
+  position: relative;
+  transition: opacity 0.2s ease-in;
+}
+
+.table__body:hover .task-table__row--link {
+  opacity: 0.3;
+}
+
+.task-table__row:hover .button-edit {
+  color: #0056b3;
+}
+
+.table__body .task-table__row--link:hover {
+  opacity: 1;
 }
 
 .link-abs {
@@ -29,16 +42,26 @@
   cursor: pointer;
 }
 
-.link-abs:hover.link-abs::before {
-  background-color: #bdd4de18;
+
+.link-abs::before:hover .task-table__row {
+  background-color: red;
 }
 
-.button-edit__link {
+.button-edit {
+  color: #007bff;
+}
+
+/* .button-delete__link::before  {
   z-index: 99;
-  position: relative;
-  
-  text-underline-offset: 10px;
+  position: absolute;
+  content: "";
 
-  transition: all 0.2s ease-in;
-}
+  display: inline-block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}  */
+
+
 

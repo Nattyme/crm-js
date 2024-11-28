@@ -20,7 +20,9 @@ class TableRender {
    */
   setRowHTML (task) {
     const row = new TableRowFactory();
-    return row.createTableRow(task);
+    return row.createTableRow(task, {
+      className : "task-table__row task-table__row--link",
+    });
   }
 
   /**
@@ -48,18 +50,6 @@ class TableRender {
     
     const rows = this.setAllRows(tasks);
     return this.tbody.appendChild(rows);
-  }
-
-  setData (taskData) {
-    
-  }
-
-  /**
-   * Отображает строку таблицы на основе данных задачи.
-   * @param {Object} taskData - Данные задачи.
-   */
-  renderRow (taskData) {
-    this.setData(taskData);
   }
 
   /**
@@ -102,9 +92,9 @@ class TableRowFactory {
    */
   createTableRow(task, options) {
     const row = this.createElem('tr');
-    row.className = "task-table__row task-table__row--link";
-    // ('scope', `${task.id}`);
-    
+    row.className = options.className;
+    row.setAttribute("scope", `${task.id}`);
+ 
     // Создадим ячейки таблицы
     const idCell = this.createElem('th');
     idCell.textContent = (task.id);
@@ -130,17 +120,17 @@ class TableRowFactory {
 
     const statusCell = this.createElem('td');
     const badge = this.createElem('div');
-    badge.className = "badge badge-pill badge-danger";
+    badge.className = 'badge badge-pill badge-danger';
     badge.textContent = task.status;
     statusCell.appendChild(badge);
 
     const buttonCell = this.createElem('td');
     buttonCell.className = "button-edit";
-    const buttonLink = this.createElem('a');
-    buttonLink.href= "edit.html";
-    buttonLink.className = "button-edit__link";
-    buttonLink.textContent = 'Редактировать';
-    buttonCell.appendChild(buttonLink);
+    // const buttonLink = this.createElem('a');
+    // buttonLink.href= "edit.html";
+    // buttonLink.className = "button-edit__link";
+    buttonCell.textContent = 'Редактировать';
+    // buttonCell.appendChild(buttonLink);
   
     // Добавляем ячейки в строку
     row.appendChild(idCell);
