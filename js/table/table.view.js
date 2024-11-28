@@ -1,3 +1,4 @@
+import { NAMES } from '../config.js';
 /**
  * Класс для управления отображением таблицы задач.
  */
@@ -174,24 +175,9 @@ class TableRowFactory {
     return document.createElement(type);
   }
 
-  getStatusData (status) {
-    const statuses = {
-      'new' : {
-                        text : 'Новый',
-                        class : 'badge-danger'
-              },
-      'processing' : { 
-                        text : 'В работе',
-                        class : 'badge-warning'
-                      },
-
-      'completed' : {
-                      text : 'Завершенный',
-                      class : 'badge-success'
-                    }
-    }
-
-    return  statuses[status] || statuses['new']; // По умолчанию вернёт 'Новый'
+  getStatusData (status) { 
+    const statusData = Object.values(NAMES.STATUS).find( item => item.text === status )
+    return  statusData || NAMES.STATUS.NEW.text; // По умолчанию вернёт 'Новый'
   }
 
   /**
@@ -199,7 +185,7 @@ class TableRowFactory {
  * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
  * @returns {Object} Объект данных статуса.
  */
-  setStatus(status) {
+  setStatus(status = NAMES.STATUS.NEW.text) {
     const statusData = this.getStatusData(status);
     const badge = this.createElem('div');
  

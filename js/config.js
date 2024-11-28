@@ -1,8 +1,4 @@
 const NAMES = {
-  // Status
-  NEW : 'Новый',
-  DOING : 'В работе',
-  DONE : 'Завершённый',
 
   // Local Storage
   TASKS_DATA : 'tasksData',
