@@ -16,23 +16,6 @@ const eventBus = new EventBus();
  */
 const status = new Status();
 
-/**
- * Функция для форматирования временной метки.
- * 
- * @function dateFormatter
- * @memberof module:TaskManagerModule
- * @param {number} timestamp - Временная метка.
- * @param {Intl.DateTimeFormat} formatter - Форматтер для даты.
- * @returns {string} Отформатированная дата.
- */
-const dateFormatter = function (timestamp, formatter) {
-  const date = formatter.format( new Date(timestamp) );
-
-  return date;
-}
-
-
-
 
 /**
  * Экспорт классов и функций модуля.
@@ -45,8 +28,8 @@ const dateFormatter = function (timestamp, formatter) {
  * @exports {Table} - Класс для работы с таблицей задач, включая рендеринг и добавление строк.
  * @exports {dateFormatter} - Утилита для форматирования и обработки дат.
  * @exports {eventBus} - Экземпляр `EventBus` для распространения событий в приложении.
- */
-export { TaskManager, Task, EventBus, status, Table, dateFormatter, eventBus}
+*/
+export { TaskManager, Task, EventBus, Table, status, eventBus}
 
 
 

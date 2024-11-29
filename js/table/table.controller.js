@@ -11,7 +11,7 @@ class Controller {
     this.status = model.status; // Общий статус
 
     this.manager = new model.TaskManager(model.eventBus); // Менеджер для работы с задачами
-    this.render = view.TableRowFactory; // Рендер ряда с задачей
+    this.render = view.RowFactory; // Рендер ряда с задачей
     this.renderTable = new view.TableRender; // Рендер таблицы
 
     this.setEventListeners(); // иницал-ция слушателей

@@ -1,5 +1,5 @@
 import { NAMES } from '../config.js';
-import { dateFormatter } from '../model.js';
+import { Formatter } from "../utils/formatter.js"
 
 /**
  * Класс для управления задачами.
@@ -124,14 +124,13 @@ class TaskManager {
    * @param {number} timestamp - Временная метка.
    * @returns {string} Отформатированная дата.
    */
-  getFormattedData (timestamp) {
-    const formatter = new Intl.DateTimeFormat('ru-RU', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    });
-
-    return dateFormatter(timestamp, formatter);
+  getFormattedData () {
+  
+    const func = new Formatter();
+    const dataCells = func.prepareDisplay(this.data);
+    console.log(dataCells);
+    
+    // return Formatter.formatFunc().date(timestamp);
   }
 
   /**

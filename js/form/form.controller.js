@@ -51,7 +51,6 @@ class Controller {
     this.eventBus.emit(NAMES.TASKS_LOAD);
     const task = this.setRandomData();  // заполним форму значениями задачи, вернём её данные
 
-    // this.render.fillOutForm(task); // заполним форму значениями задачи
     console.log('DATA AT THE FORM: ', task);
   }
 
@@ -66,7 +65,7 @@ class Controller {
     e.preventDefault(); // отмена стандарт. поведение
 
     const id = this.getNextTaskId();                   // получим все задачи массива, считаем ID
-    const taskData = this.render.collectFormValues();  // получим данные задачи из формы
+    const taskData = this.render.getFormData();  // получим данные задачи из формы
     const task = new model.Task({ ...taskData });      // Создадим задачу
 
     this.manager.addNewData(id, task);                  // добавим задачу в массив
@@ -88,7 +87,7 @@ class Controller {
     const testData = TestDataFactory.createRandomRecord(); // получим случайные тест. данные
     const task = new model.Task( {...testData} ); // создадим случ-ую задачу 
 
-    this.render.fillOutForm(task); // заполним форму значениями задачи
+    this.render.setFormData(task); // заполним форму значениями задачи
 
     return task; 
   }

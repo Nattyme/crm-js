@@ -35,7 +35,7 @@ class TaskRender {
    * @returns {Object} Объект с данными из формы, где ключи — это имена полей формы, а значения — введённые данные.
    * @see Task
    */
-  collectFormValues() {
+  getFormData() {
     const inputs = this.inputs; // инпуты формы
     let formData = {}; // Объект для значений формы
 
@@ -62,10 +62,8 @@ class TaskRender {
    * @param {string} task.phone Номер телефона.
    * @param {string} task.email Адрес электронной почты.
    * @param {string} task.product Выбранный продукт.
-   * @see TaskRender#fillOutForm
    */
-
-  fillOutForm (task) {
+  setFormData (task) {
     const inputs = this.inputs; // инпуты формы
     const options = Array.from(this.select.options); // опции селекта
 

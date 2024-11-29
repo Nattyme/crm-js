@@ -1,4 +1,4 @@
-import { TableRowFactory } from './row-factory/row.factory.js';
+import { RowFactory } from './factory/row.js';
 
 /**
  * Класс для управления отображением таблицы задач.
@@ -28,8 +28,8 @@ class TableRender {
    * @param {Object} task - Объект задачи с данными.
    */
   setRowHTML (task, status) {
-    const row = new TableRowFactory();
-    return row.createTableRow(task, status);
+    const row = new RowFactory();
+    return row.getTableRow(task, status);
   }
 
   /**
@@ -58,4 +58,4 @@ class TableRender {
   }
 }
 
-export { TableRender, TableRowFactory }
+export { TableRender, RowFactory }
