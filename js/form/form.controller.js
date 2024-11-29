@@ -49,12 +49,9 @@ class Controller {
   setInit() {
     this.setEventListeners();
     this.eventBus.emit(NAMES.TASKS_LOAD);
+    const task = this.setRandomData();  // заполним форму значениями задачи, вернём её данные
 
-    // this.manager.loadFromStorage();
-    const testData = this.setRandomData(); // Получим случайные данные
-    const task = new model.Task( {...testData} ); // создадим задачу случ-ые данные
-
-    this.render.fillOutForm(task); // заполним форму значениями задачи
+    // this.render.fillOutForm(task); // заполним форму значениями задачи
     console.log('DATA AT THE FORM: ', task);
   }
 
@@ -68,13 +65,15 @@ class Controller {
   setTask(e) {
     e.preventDefault(); // отмена стандарт. поведение
 
-    const id = this.getNextTaskId();                    // получим все задачи массива, считаем ID
-    const taskData = this.render.collectFormValues();   // получим данные задачи из формы
+    const id = this.getNextTaskId();                   // получим все задачи массива, считаем ID
+    const taskData = this.render.collectFormValues();  // получим данные задачи из формы
     const task = new model.Task({ ...taskData });      // Создадим задачу
 
-    this.manager.addNewData(id, task);        // добавим задачу в массив
-    this.eventBus.emit(NAMES.TASKS_SAVE);     // вызываем событие сохранения
-    // this.render.resetForm ();              // Очистим форму
+    this.manager.addNewData(id, task);                  // добавим задачу в массив
+    this.eventBus.emit(NAMES.TASKS_SAVE);              // вызываем событие сохранения
+    this.render.resetForm ();                         // Очистим форму
+
+    this.setRandomData ();                                  // Заново заполним данные
   }
 
   /**
@@ -87,7 +86,11 @@ class Controller {
    */
   setRandomData () {
     const testData = TestDataFactory.createRandomRecord(); // получим случайные тест. данные
-    return testData; 
+    const task = new model.Task( {...testData} ); // создадим случ-ую задачу 
+
+    this.render.fillOutForm(task); // заполним форму значениями задачи
+
+    return task; 
   }
 
   /**

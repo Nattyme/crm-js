@@ -16,13 +16,11 @@ class TestDataFactory {
    * @see TestDataFactory#createRecord
    */
   static createRandomRecord () {
-    // Получаем случ-ое число
-    const randomIndex = Math.floor(Math.random() * testData.length);
     
-    // Вернём случ. запись
-    return testData[randomIndex];
+    const randomIndex = Math.floor(Math.random() * testData.length); // Получаем случ-ое число
+    return testData[randomIndex]; // Вернём случ. запись
+    
   }
 }
-
 
 export { TestDataFactory }
