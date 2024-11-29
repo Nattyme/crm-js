@@ -67,25 +67,15 @@ class TaskRender {
 
   fillOutForm (task) {
     const inputs = this.inputs; // инпуты формы
-    const options = this.options; // опции селекта
+    const options = Array.from(this.select.options); // опции селекта
 
     // Установим значения в поля формы
     inputs.full_name.value = task.full_name;
     inputs.phone.value = task.phone;
     inputs.email.value = task.email;
 
-    let selectedProduct; // Переменная для выбранного продукта
-
-    // Обойдем селект и найдем нужный продукт. 
-    for (const item in options) {
-      const option = options[item];
-      if (option.textContent === task.product) {
-        selectedProduct = option;
-      }
-    }
-
-    // Если продукт получен - установим для него атрибут selected
-    if ( selectedProduct) {selectedProduct.setAttribute('selected', ''); }
+    // Ищем нужную опцию в select и показываем её
+    this.select.selectedIndex = options.findIndex( (element) => element.textContent === task.product);;
   }
 
   /**
@@ -97,13 +87,12 @@ class TaskRender {
    * @method resetForm
  */
   resetForm () {
-    //  Очищаем инпуты
+ 
     for ( const inputName in this.inputs) {
-      this.inputs[inputName].value = '';
+      this.inputs[inputName].value = '';    //  Очищаем инпуты
     }
 
-    // Сбросить селектор опций
-    this.select.selectedIndex = 0;
+    this.select.selectedIndex = 0;  // Сбросим селектор опций
   }
 
   /**
