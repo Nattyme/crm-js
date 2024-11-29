@@ -46,6 +46,8 @@ class Controller {
     for ( const task of dataCopy) {
       task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
     }
+
+    return dataCopy;
   }
 
    /**
