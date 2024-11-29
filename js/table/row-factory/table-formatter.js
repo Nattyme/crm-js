@@ -1,6 +1,18 @@
+/**
+ * Класс для форматирования данных, таких как телефон, имя и URL.
+ */
 class tableDataFormatter {
+  /**
+ * Возвращает объект с методами для форматирования полей данных.
+ * @returns {Object} Объект с методами для обработки данных.
+ */
   static fieldGetReady () {
     return {
+      /**
+     * Форматирует номер телефона в формат '+7 (XXX) XXX-XX-XX'.
+     * @param {string} phoneNumber - Номер телефона.
+     * @returns {string|null} Отформатированный номер телефона или `null`, если номер неверный.
+     */
       phone : (phoneNumber) => {
         const phone = phoneNumber.replace(/\D/g, '');
 
@@ -13,10 +25,20 @@ class tableDataFormatter {
         }
       },
 
+      /**
+       * Обрезает полное имя до имени и фамилии.
+       * @param {string} fullName - Полное имя.
+       * @returns {string} Имя и фамилия.
+       */
       name : (fullName) => {
         return fullName.split(' ').slice(0, 2).join(' ');
       },
 
+      /**
+       * Извлекает параметр `id` из URL.
+       * @param {string} url - URL-адрес.
+       * @returns {string|null} Значение параметра `id` или `null`, если параметр не найден.
+       */
       urlID : (url) => {
         const uri = url.split('?')[1]; // строка с парам-ми из url
 

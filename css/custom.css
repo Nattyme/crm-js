@@ -31,7 +31,7 @@
 
 .custom-select:hover:not(:focus) {
   border-color: rgba(128, 189, 255, 0.3);
-  box-shadow: 0 0 0 .2rem rgba(0,123,255,.15);
+  box-shadow: 0 0 0 .2rem rgba(0, 123, 255, 0.1);
 }
 
 .table__body {

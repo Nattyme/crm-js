@@ -1,5 +1,6 @@
 /**
- * Класс `Status` представляет статусы задач с их типами и описаниями.
+ * Класс для управления статусами задач.
+ * Обеспечивает доступ к данным статусов, их обновление и хранение в единственном экземпляре.
  */
 class Status {
   constructor () {
@@ -9,6 +10,7 @@ class Status {
       return Status.istance;
     }
 
+    // Данные о статусах.
     this.data = {
         NEW :   {
                   key: 'new',
@@ -28,9 +30,14 @@ class Status {
                 }
     };
 
-    Status.istance = this; // Сохрн. экзем-р в стат. св-ве
+    // Сохраняем экземпляр в статическое свойство для повторного использования.
+    Status.istance = this; 
   }
 
+  /**
+   * Получает все данные о статусах.
+   * @returns {Object} Все статусы.
+   */
   getStatusData () {
     return this.data;
   }
@@ -44,6 +51,11 @@ class Status {
     return this.data[name] || null;
   }
 
+  /**
+   * Устанавливает новые данные для статуса.
+   * @param {string} name - Имя статуса.
+   * @param {Object} statusData - Данные нового статуса.
+  */
   setStatus (name, statusData) {
     if (this.data[name] ) {
       this.data[name] = statusData;

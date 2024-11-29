@@ -38,7 +38,7 @@ class EventBus {
     this.listeners[event] = this.listeners[event].filter(cb => cb !== callback);
   }
 
-   /**
+  /**
    * Вызывает событие.
    *
    * @method emit

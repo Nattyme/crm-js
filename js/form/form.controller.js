@@ -13,10 +13,15 @@ import { NAMES } from '../config.js';
  * @see TestDataFactory
  */
 class Controller {
+
   /**
-   * Создаёт экземпляр контроллера, инициализируя необходимые компоненты.
-   * Включает в себя EventBus, менеджер задач и рендер формы.
-   */
+   * Конструктор для инициализации контроллера.
+   * 
+   * Создаёт экземпляры необходимых классов, таких как EventBus, TaskManager, TaskRender,
+   * и связывает их с соответствующими свойствами. Также извлекает форму для отправки задач.
+   * 
+ * @constructor
+ */
   constructor () {
     this.eventBus = model.eventBus; // общий EventBus
     this.manager = new model.TaskManager(model.eventBus); // менеджер для обработки задач
@@ -61,16 +66,15 @@ class Controller {
    * @method
    */
   setTask(e) {
-    e.preventDefault(); // отменяем стандарт. поведение
+    e.preventDefault(); // отмена стандарт. поведение
 
-    const id = this.getNextTaskId();  // получим все задачи массива, считаем ID
-    const taskData = this.render.collectFormValues(); // получим данные задачи из формы
-    const task = new model.Task({ ...taskData }); // Создадим задачу
+    const id = this.getNextTaskId();                    // получим все задачи массива, считаем ID
+    const taskData = this.render.collectFormValues();   // получим данные задачи из формы
+    const task = new model.Task({ ...taskData });      // Создадим задачу
 
-    this.manager.addNewData(id, task); // добавим задачу в массив
-    this.eventBus.emit(NAMES.TASKS_SAVE); // вызываем событие сохранения
-
-    this.render.resetForm ();  // Очистим форму
+    this.manager.addNewData(id, task);        // добавим задачу в массив
+    this.eventBus.emit(NAMES.TASKS_SAVE);     // вызываем событие сохранения
+    // this.render.resetForm ();              // Очистим форму
   }
 
   /**

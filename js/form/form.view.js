@@ -88,6 +88,14 @@ class TaskRender {
     if ( selectedProduct) {selectedProduct.setAttribute('selected', ''); }
   }
 
+  /**
+   * Очищает все формы и сбрасывает выбранные значения в форме.
+   * 
+   * Этот метод очищает все поля ввода и сбрасывает значение выбранного элемента
+   * в селекторе на первое значение по умолчанию.
+   * 
+   * @method resetForm
+ */
   resetForm () {
     //  Очищаем инпуты
     for ( const inputName in this.inputs) {

@@ -33,7 +33,11 @@ class TaskManager {
     console.log('DATA FROM THE START: ', this.data); 
   }
 
-  //Ф-ция обрабатвает событие изменения статуса
+  /**
+   * Обновляет статус задачи в массиве данных.
+   * @param {Object} updatedTask - Объект задачи с обновлёнными данными.
+   * @throws {Error} Если задача с таким `id` не найдена, выводится ошибка.
+ */
   updateTaskStatus(updatedTask) {
     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
     if (taskIndex !== -1) {
@@ -140,7 +144,7 @@ class TaskManager {
    * @returns {Object|null} Добавленную задачу или null в случае ошибки.
    */
   addNewData(id, record) {
-    // Обходим св-ва в массиве, ищем пустые знач-я
+    // Ищем пустые знач-я
     for ( const field in record) {
       if ( record[field] === null || record[field] === undefined) {
         console.log('Ошибка данных. Запись не добавлена.');
@@ -148,8 +152,8 @@ class TaskManager {
       }
     }
 
-    record.id = id; // Запишем ID в задачу
-    this.data.push(record); // Добавим задачу в массив
+    record.id = id; 
+    this.data.push(record); 
     console.log('DATA after ADD NEW DATA', this.data);
 
     // Событие сохранения 

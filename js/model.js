@@ -1,14 +1,20 @@
-import { validate } from './validate.js';
 import { TaskManager } from './module/task-manager.js';
 import { Task } from './module/task.js';
 import { EventBus } from './module/event-bus.js';
 import { Status } from './module/status.js';
 import { Table } from './module/table.js';
 
-// Единый экз-р EventBus
+/**
+ * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.
+ * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
+*/
 const eventBus = new EventBus();
+
+/**
+ * Создаёт новый экземпляр Status, который управляет данными статусов задач.
+ * @constant {Status} status - Экземпляр класса Status, содержащий данные статусов.
+ */
 const status = new Status();
-console.log(status);
 
 /**
  * Функция для форматирования временной метки.
@@ -26,15 +32,20 @@ const dateFormatter = function (timestamp, formatter) {
 }
 
 
+
+
 /**
  * Экспорт классов и функций модуля.
  * 
  * @module TaskManagerModule
- * @exports {TaskManager} - Класс для работы с задачами.
- * @exports {Task} - Класс для создания задач.
- * @exports {EventBus} - Класс для управления событиями.
- * @exports {dateFormatter} - Функция для форматирования временных меток.
-  */
+ * @exports {TaskManager} - Класс для управления задачами, их созданием, обновлением и хранением.
+ * @exports {Task} - Класс для создания задач с валидацией данных и изменением статуса.
+ * @exports {EventBus} - Класс для реализации паттерна "Publish/Subscribe", который позволяет компонентам системы обмениваться событиями.
+ * @exports {status} - Экземпляр класса `Status`, управляющий данными для различных статусов задач.
+ * @exports {Table} - Класс для работы с таблицей задач, включая рендеринг и добавление строк.
+ * @exports {dateFormatter} - Утилита для форматирования и обработки дат.
+ * @exports {eventBus} - Экземпляр `EventBus` для распространения событий в приложении.
+ */
 export { TaskManager, Task, EventBus, status, Table, dateFormatter, eventBus}
 
 
