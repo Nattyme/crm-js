@@ -3,6 +3,12 @@
  */
 class Status {
   constructor () {
+
+    // Если экз-р уже был создан - то всегда получаем только его
+    if ( Status.istance ) {
+      return Status.istance;
+    }
+
     this.data = {
         NEW :   {
                   key: 'new',
@@ -21,6 +27,8 @@ class Status {
                   class : 'badge-success'
                 }
     };
+
+    Status.istance = this; // Сохрн. экзем-р в стат. св-ве
   }
 
   getStatusData () {
@@ -33,8 +41,15 @@ class Status {
    * @returns {Object|null} Данные статуса или `null`, если статус не найден.
    */
   getStatus(name) {
-    for (let type in this.types) {
-      return name === type ? this.types[type] : null;
+    return this.data[name] || null;
+  }
+
+  setStatus (name, statusData) {
+    if (this.data[name] ) {
+      this.data[name] = statusData;
+    } else {
+      console.log('Статус не найден');
+      return;
     }
   }
 

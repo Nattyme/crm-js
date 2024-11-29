@@ -25,11 +25,23 @@ class TaskManager {
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
+    this.eventBus.on(NAMES.STATUS_CHANGED, this.updateTaskStatus.bind(this)); // обнов-е статуса задачи
 
     // Получим данные из localStorage
     this.loadFromStorage();
 
     console.log('DATA FROM THE START: ', this.data); 
+  }
+
+  //Ф-ция обрабатвает событие изменения статуса
+  updateTaskStatus(updatedTask) {
+    const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
+    if (taskIndex !== -1) {
+      this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
+      this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
+    } else {
+      console.error(`Задача ${updatedTask.id} не найдена`);
+    }
   }
 
   /**
@@ -140,8 +152,9 @@ class TaskManager {
     this.data.push(record); // Добавим задачу в массив
     console.log('DATA after ADD NEW DATA', this.data);
 
-    // Событие сохранения
-    this.eventBus.emit(NAMES.TASKS_SAVE);
+    // Событие сохранения 
+    this.eventBus.emit(NAMES.TASKS_SAVE, record); 
+    // this.eventBus.emit(record); // передадим запись 
     return record;
   }
 
@@ -178,6 +191,10 @@ class TaskManager {
     if (recordIndex !== -1) {
       this.data.splice(recordIndex, 1);
     }
+
+    // Уведом-е об удалении 
+    this.eventBus.emit(NAMES.TASK_REMOVED, recordID);
+
     return recordID;
   }
 }

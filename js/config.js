@@ -5,6 +5,9 @@ const NAMES = {
   TASKS_SAVE : 'tasks:save',
   TASKS_LOAD : 'tasks:load',
   TASKS_CLEAR : 'tasks:clear',
+
+  // STATUS
+  STATUS_CHANGED: 'status_changed', 
 }
 
 export { NAMES };

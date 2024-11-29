@@ -88,6 +88,16 @@ class TaskRender {
     if ( selectedProduct) {selectedProduct.setAttribute('selected', ''); }
   }
 
+  resetForm () {
+    //  Очищаем инпуты
+    for ( const inputName in this.inputs) {
+      this.inputs[inputName].value = '';
+    }
+
+    // Сбросить селектор опций
+    this.select.selectedIndex = 0;
+  }
+
   /**
    * Метод для отображения ошибок.
    * @todo Реализовать отображение ошибок на форме.

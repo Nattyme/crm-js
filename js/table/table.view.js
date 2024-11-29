@@ -27,9 +27,9 @@ class TableRender {
    * Создаёт строку таблицы на основе задачи.
    * @param {Object} task - Объект задачи с данными.
    */
-  setRowHTML (task, statuses) {
+  setRowHTML (task, status) {
     const row = new TableRowFactory();
-    return row.createTableRow(task, statuses, statuses.data.NEW);
+    return row.createTableRow(task, status);
   }
 
   /**
@@ -37,11 +37,11 @@ class TableRender {
    * @param {Object[]} tasks - Массив задач.
    * @returns {DocumentFragment} Фрагмент строк таблицы.
    */
-  setAllRows (tasks, statuses) {
+  setAllRows (tasks, status) {
     const fragmentOfRows = document.createDocumentFragment();
 
     for (let task of tasks) {
-      fragmentOfRows.appendChild( this.setRowHTML(task, statuses) );
+      fragmentOfRows.appendChild( this.setRowHTML(task, status) );
     }
 
     return fragmentOfRows;
@@ -52,8 +52,8 @@ class TableRender {
    * @param {Object[]} tasks - Массив задач.
    * @returns {HTMLElement} Обновлённый элемент `tbody` с добавленными строками.
    */
-  addRowsToTable (tasks, statuses) {
-    const rows = this.setAllRows(tasks, statuses);
+  addRowsToTable (tasks, status) {
+    const rows = this.setAllRows(tasks, status);
     return this.tbody.appendChild(rows);
   }
 }

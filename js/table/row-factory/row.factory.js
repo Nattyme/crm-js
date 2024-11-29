@@ -10,13 +10,8 @@ class TableRowFactory {
    * @param {Object} [options] - Дополнительные опции для настройки строки.
    * @returns {HTMLElement} Созданная строка таблицы (`<tr>`).
    */
-  createTableRow(task, statuses, options) {
-    const statusData = statuses;
+  createTableRow(task, options) {
     console.log(options);
-    
-    console.log(statusData);
-    
-    
     const cellsConfig = this.getCellsConfig(task, options); // получим настройки ячеек таблицы
     const row = this.createElem('tr');
 
@@ -48,6 +43,7 @@ class TableRowFactory {
   }
 
   getCellsConfig(task, options) {
+    
     // Настройки для ячеек таблицы
     const cellsConfig = [
       {
@@ -76,7 +72,7 @@ class TableRowFactory {
       },
       {
         type : 'td',
-        content : this.setStatus(options)
+        content : this.createBageWithStatus(options)
       },
       {
         type : 'td',
@@ -98,13 +94,6 @@ class TableRowFactory {
     link.setAttribute("title", `Перейти к редактированию заявки №${id}`)
 
     return link;
-  }
-
-  createBadge (status) {
-    const badge = this.createElem('div');
-    badge.className = `badge badge-pill ${this.setStatus('new').class}`;
-    badge.textContent = status;
-    return badge;
   }
 
   createButton (content, option = {}) {
@@ -137,7 +126,7 @@ class TableRowFactory {
  * @param {string} type - Тип статуса задачи (например, 'new', 'processing').
  * @returns {Object} Объект данных статуса.
  */
-  setStatus(status) {
+  createBageWithStatus(status) {
     const badge = this.createElem('div');
  
     badge.className = `badge badge-pill ${status.class}`;

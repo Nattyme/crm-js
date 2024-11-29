@@ -69,6 +69,8 @@ class Controller {
 
     this.manager.addNewData(id, task); // добавим задачу в массив
     this.eventBus.emit(NAMES.TASKS_SAVE); // вызываем событие сохранения
+
+    this.render.resetForm ();  // Очистим форму
   }
 
   /**

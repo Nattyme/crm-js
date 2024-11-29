@@ -4,17 +4,17 @@ import * as view from '../table/table.view.js';
 
 class Controller {
   constructor () {
-    this.eventBus = model.eventBus; // общий EventBus
-    this.status = model.status; // общий статус
+    this.eventBus = model.eventBus; // Общий EventBus
+    this.status = model.status; // Общий статус
 
-    this.manager = new model.TaskManager(model.eventBus); // менеджер для работы с задачами
-    this.render = view.TableRowFactory; // создадим рендер ряда с задачей
-    this.renderTable = new view.TableRender; // создадим рендер ряда с задачей
+    this.manager = new model.TaskManager(model.eventBus); // Менеджер для работы с задачами
+    this.render = view.TableRowFactory; // Рендер ряда с задачей
+    this.renderTable = new view.TableRender; // Рендер таблицы
 
+    this.setEventListeners(); // иницал-ция слушателей
   }
 
   setInit () {
-    this.setEventListeners();
     this.eventBus.emit(NAMES.TASKS_LOAD);
     console.log(this.status);
     
@@ -29,15 +29,32 @@ class Controller {
       task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
     }
 
-    const statusData = this.render.getStatusData(this.status);
-    console.log(statusData.data.NEW.text);
-    console.log(statusData);
-    
+    // Получили массив со всеми статусами
+    const statusData = this.status.getStatusData();
     this.renderTable.addRowsToTable(dataCopy, statusData);
   }
 
   setEventListeners () {
-    
+    // Добав. слушателя для события измен-я статуса
+    this.eventBus.on(NAMES.STATUS_CHANGED, this.handleStatusChange.bind(this));
+  }
+
+  // Обработчик измен.статуса
+  handleStatusChange(taskID, dataCopy, statusName, newStatusData) {
+    this.status.setStatus(statusName, newStatusData); // Обновляем статус
+
+    // Обнов-е статуса задачи
+    const task = this.manager.getTaskById(taskID);
+
+    if ( task ) {
+      task.status = statusName; //  устанав. новый статус
+
+      // Перерисовать страницу
+      this.setRows(statusName);
+      this.eventBus.on(NAMES.STATUS_CHANGED, (taskID, statusName, newStatusData) => {
+        console.log('Событие STATUS_CHANGED: ', { taskID, statusName, newStatusData });
+      });
+    }
   }
 }
 
