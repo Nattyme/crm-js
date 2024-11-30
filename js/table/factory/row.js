@@ -17,6 +17,8 @@ class RowFactory {
  * @returns {HTMLElement} Строка таблицы (`<tr>`) с заполненными данными задачи.
  */
   getTableRow(taskData) {
+    console.log(taskData);
+    
     const cellsHTML = `
         ${this.render.getHTML('cell', taskData.id) }
         ${this.render.getHTML('cell', taskData.date) }
@@ -25,7 +27,7 @@ class RowFactory {
         ${this.render.getHTML('cell', taskData.email) }
         ${this.render.getHTML('cell', taskData.phone) }
         ${this.render.getHTML('cell', this.render.getHTML('badge', taskData.status) ) }
-        ${this.render.getHTML('cell', this.render.getHTML('cell', this.render.getHTML('button', 'Редактировать', 'edit.html') ) ) }
+        ${this.render.getHTML('cell', this.render.getHTML('button', 'Редактировать', 'edit.html') ) }
     `;
     const row =  this.render.getHTML('row', taskData, cellsHTML); // пустая строка, без ячеек
     // Вернём ряд

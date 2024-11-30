@@ -6,7 +6,7 @@ class HTMLFactory {
    * Provides a set of HTML templates for table components.
    * @returns {Object} An object containing methods to generate HTML strings for various table components.
    */
-  getHTML (type, content = '', extra='') {
+  getHTML (type, content = '', extra='') {    
     const templates =  {
               /**
                * Generates an HTML string for a table row.
@@ -17,27 +17,20 @@ class HTMLFactory {
                * @param {string} task.status.text - Display text for the task's status.
                * @returns {string} HTML string for the table row.
               */
-              row : (content, extra) => 
-                           `<tr 
-                              class="task-table__row task-table__row--link" 
-                              scope=${content.id} 
-                              data-status=${content.status.key}>
-                              ${extra}
-                            </tr>`,
+              row : (content, extra) => this.generateRow(content, extra),
 
               /**
                * Generates an HTML string for a table cell.
                * @returns {string} HTML string for the table cell.
               */
-              cell : (content) => `<td>${content}</td>`,
+              cell : (content) => this.generateCell(content),
 
               /**
                * Generates an HTML string for an action button.
                * @param {string} [text='Редактировать'] - Text to display on the button.
                * @returns {string} HTML string for the action button.
               */
-              button : (content, extra) => 
-                            `<a class="button-edit" href="${extra}">${content}</a>`,
+              button : (content, extra) => this.generateButton(content, extra),
 
               /**
                * Generates an HTML string for a status badge.
@@ -47,7 +40,7 @@ class HTMLFactory {
                * @param {string} task.status.text - Text to display in the badge.
                * @returns {string} HTML string for the badge.
              */
-              badge :  (content) =>  `<div class="badge badge-pill ${content.class}">${content.text}</div>`,
+              badge :  (content) => this.generateBadge(content),
 
               /**
                * Generates an HTML string for a link with a custom title.
@@ -57,19 +50,49 @@ class HTMLFactory {
                * @param {string} url - URL for the link.
                * @returns {string} HTML string for the link.
              */
-              linkAbs : (content) => 
-              
-                        ` <a 
-                            class = "link-abs"
-                            title = "Перейти к редактированию заявки №${content}" 
-                            href="edit.html"
-                          >
-                              ${extra}
-                          </a>`
+              linkAbs : (content) => this.generateLinkAbs(content, extra)
     }
 
-    return templates[type](content, extra);
+    return templates[type] ? templates[type](content, extra) : '';
   }
+
+  generateRow (content, extra) {
+    return `
+              <tr 
+                class="task-table__row task-table__row--link" 
+                scope=${content.id} 
+                data-status=${content.status.key}>
+                ${extra}
+              </tr>
+             `;
+  }
+
+  generateCell (content) {
+    return `<td>${content}</td>`;
+  }
+
+  generateButton (content, extra) {    
+    return `<a class="button-edit" href="${extra}">${content}</a>`;
+  } 
+
+  generateBadge (content) {
+
+    return `<div class="badge badge-pill ${content.class}">
+                ${content.text}
+            </div>`;
+  }  
+
+  generateLinkAbs (content, extra)  {
+    return ` 
+            <a 
+              class = "link-abs"
+              title = "Перейти к редактированию заявки №${content}" 
+              href="edit.html"
+            >
+                ${extra}
+            </a>`
+  }
+
 }
 
 export { HTMLFactory };
