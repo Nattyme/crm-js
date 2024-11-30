@@ -124,13 +124,12 @@ class TaskManager {
    * @param {number} timestamp - Временная метка.
    * @returns {string} Отформатированная дата.
    */
-  getFormattedData () {
-  
+  getFormattedData (data) {
     const func = new Formatter();
-    const dataCells = func.prepareDisplay(this.data);
-    console.log(dataCells);
-    
-    // return Formatter.formatFunc().date(timestamp);
+    const dataFormatted = func.prepareDisplay(data);
+    console.log(dataFormatted);
+
+    return dataFormatted;
   }
 
   /**

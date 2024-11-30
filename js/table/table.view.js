@@ -9,6 +9,35 @@ class TableRender {
   }
 
   /**
+   * Создаёт фрагмент строк таблицы на основе массива задач.
+   * @param {Object[]} tasks - Массив задач.
+   * @returns {DocumentFragment} Фрагмент строк таблицы.
+   */
+  addRowsToTable (tasksData, status) {
+    if (!this.tbody) {
+      console.error('Не найден <tbody>. Проверьте наличие элемента в DOM.');
+      return;
+    }
+    let container = this.tbody;
+
+    for (let task of tasksData) {
+      container.insertAdjacentHTML('afterbegin', this.setRowHTML(task, status) );
+    }
+
+    return container;
+  }
+
+  
+  /**
+   * Создаёт строку таблицы на основе задачи.
+   * @param {Object} task - Объект задачи с данными.
+   */
+  setRowHTML (task, status) {
+    const row = new RowFactory();
+    return row.getTableRow(task, status);
+  }
+
+  /**
    * Получает элемент `<tbody>` таблицы.
    * @returns {HTMLElement} Элемент `tbody`.
    */
@@ -23,39 +52,6 @@ class TableRender {
     return tbody;
   }
 
-  /**
-   * Создаёт строку таблицы на основе задачи.
-   * @param {Object} task - Объект задачи с данными.
-   */
-  setRowHTML (task, status) {
-    const row = new RowFactory();
-    return row.getTableRow(task, status);
-  }
-
-  /**
-   * Создаёт фрагмент строк таблицы на основе массива задач.
-   * @param {Object[]} tasks - Массив задач.
-   * @returns {DocumentFragment} Фрагмент строк таблицы.
-   */
-  setAllRows (tasks, status) {
-    const fragmentOfRows = document.createDocumentFragment();
-
-    for (let task of tasks) {
-      fragmentOfRows.appendChild( this.setRowHTML(task, status) );
-    }
-
-    return fragmentOfRows;
-  }
-
-  /**
-   * Добавляет строки задач в таблицу.
-   * @param {Object[]} tasks - Массив задач.
-   * @returns {HTMLElement} Обновлённый элемент `tbody` с добавленными строками.
-   */
-  addRowsToTable (tasks, status) {
-    const rows = this.setAllRows(tasks, status);
-    return this.tbody.appendChild(rows);
-  }
 }
 
 export { TableRender, RowFactory }

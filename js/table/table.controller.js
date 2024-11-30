@@ -30,9 +30,11 @@ class Controller {
   */
   setRows () {
     const dataCopy = this.getTasksData(); // Получим данные всех задач из массива data
+    const dataFormatted = this.manager.getFormattedData(dataCopy); // Отформатируем поля
     const statusData = this.status.getStatusData();  // Получили массив со всеми статусами
 
-    this.renderTable.addRowsToTable(dataCopy, statusData);
+    this.renderTable.addRowsToTable(dataFormatted, statusData);
+    // this.renderTable.addRowsToTable(dataFormatted, statusData);
   }
 
   /**
@@ -42,10 +44,6 @@ class Controller {
   getTasksData () {
     const data = this.manager.getAll(); // Получим данные всех задач из массива data
     const dataCopy = [...data];     // Создадим копию массива
-
-    for ( const task of dataCopy) {
-      task.date = this.manager.getFormattedData( task.timestamp); // Добавим св-во дата в нужном формате
-    }
 
     return dataCopy;
   }

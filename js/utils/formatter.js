@@ -64,7 +64,7 @@ class Formatter {
 
     const updatedData = data.map( record => ({
       ...record,
-      id : { text : String(record.id) },
+      id : String(record.id),
       full_name : this.formatName(record.full_name),
       phone : this.formatPhone(record.phone),
       date : this.formatDate(record.timestamp),

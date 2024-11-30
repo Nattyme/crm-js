@@ -16,8 +16,12 @@ class CellFactory {
    * @param {string} options.text - Текст статуса задачи.
    * @returns {Object} Настройки ячеек таблицы, где каждое свойство соответствует типу ячейки.
   */
-  static getData(task, options) {
+  getData(task) {
+    console.log(task);
+    console.log(...task);
+    
     return {
+          ...task,
           id:         () => { return  { text : String(task.id) } },
           data:       () => { return  { text : task.date } },
           product:    () => { return  { text : task.product } },
