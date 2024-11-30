@@ -3,10 +3,11 @@
  */
 class HTMLFactory {
   /**
-   * Provides a set of HTML templates for table components.
-   * @returns {Object} An object containing methods to generate HTML strings for various table components.
-   */
-  getHTML (type, content = '', extra='') {    
+   * Предоставляет набор HTML-шаблонов для компонентов таблицы.
+   * @returns {Object} Объект, содержащий методы для генерации HTML-строк для различных компонентов таблицы.
+  */
+  getHTML (type, content = '', extra='') {  
+
     const templates =  {
               /**
                * Generates an HTML string for a table row.
@@ -56,6 +57,12 @@ class HTMLFactory {
     return templates[type] ? templates[type](content, extra) : '';
   }
 
+  /**
+   * Генерирует HTML-строку для строки таблицы.
+   * @param {Object} content - Данные для строки.
+   * @param {string} extra - Дополнительный HTML-контент, который будет включен в строку.
+   * @returns {string} HTML-строка для строки таблицы.
+  */  
   generateRow (content, extra) {
     return `
               <tr 
@@ -67,14 +74,32 @@ class HTMLFactory {
              `;
   }
 
+  /**
+   * Генерирует HTML-строку для ячейки таблицы.
+   * @param {string} content - Контент для ячейки таблицы.
+   * @returns {string} HTML-строка для ячейки таблицы.
+  */
   generateCell (content) {
     return `<td>${content}</td>`;
   }
 
+  /**
+   * Генерирует HTML-строку для кнопки действия.
+   * @param {string} content - Текст, который будет отображаться на кнопке.
+   * @param {string} extra - URL для кнопки действия.
+   * @returns {string} HTML-строка для кнопки.
+  */
   generateButton (content, extra) {    
     return `<a class="button-edit" href="${extra}">${content}</a>`;
   } 
 
+  /**
+   * Генерирует HTML-строку для бейджа статуса.
+   * @param {Object} content - Контент бейджа.
+   * @param {string} content.class - CSS-класс для бейджа.
+   * @param {string} content.text - Текст, который будет отображаться в бейдже.
+   * @returns {string} HTML-строка для бейджа.
+  */
   generateBadge (content) {
 
     return `<div class="badge badge-pill ${content.class}">
@@ -82,6 +107,12 @@ class HTMLFactory {
             </div>`;
   }  
 
+  /**
+   * Генерирует HTML-строку для ссылки с настраиваемым заголовком.
+   * @param {Object} content - Контент для ссылки.
+   * @param {string} extra - Дополнительный HTML-контент для ссылки.
+   * @returns {string} HTML-строка для ссылки.
+  */
   generateLinkAbs (content, extra)  {
     return ` 
             <a 

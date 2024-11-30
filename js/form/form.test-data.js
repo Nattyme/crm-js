@@ -1,4 +1,5 @@
-import { testData } from './test-data.js';
+import { testData } from './../data.js';
+
 
 /**
  * Класс для создания тестовых данных.

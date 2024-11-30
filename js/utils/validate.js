@@ -1,3 +1,5 @@
+import { products } from './../data.js'
+
 /**
  * Объект `validate` содержит методы для проверки корректности значений различных полей формы.
  */
@@ -63,7 +65,7 @@ const validate = {
       };
     } 
     
-    const phoneValid = String(phone.replace(/\D/g, '')).trim(); // Удалим все, кроме цифр. Приведем к строке
+    const phoneValid = String(phone).replace(/\D/g, '').trim(); // Удалим все, кроме цифр. Приведем к строке
     const phoneRegex = /^\+?[0-9\s\-()]{10,}$/; // Проверка номера
 
     // Проверка на пустую строку
@@ -126,6 +128,16 @@ const validate = {
 
     // Если всё ок 
     return {valid: true, value : emailValid};
+  },
+
+  product (name) {
+    const productData = products;
+
+    for (const product in productData) {
+      if(product === name ) {
+        return productData[name];
+      }
+    }
   }
 }
 

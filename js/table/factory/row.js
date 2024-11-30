@@ -3,19 +3,27 @@ import { HTMLFactory } from './html.js';
 
 /**
  * Класс для создания строк таблицы из данных задачи.
- */
+*/
 class RowFactory {
   constructor () {
     this.renderCells = new CellFactory();
     this.render = new HTMLFactory();
   }
+
   /**
- * Создаёт строку таблицы на основе данных задачи.
- * @param {Object} task - Объект задачи с информацией о задаче.
- * @param {Object} [options] - Опциональные параметры для настройки строки.
- * @param {string} [options.className] - Класс строки таблицы.
- * @returns {HTMLElement} Строка таблицы (`<tr>`) с заполненными данными задачи.
- */
+   * Создаёт строку таблицы на основе данных задачи.
+   * @param {Object} taskData - Объект задачи с информацией о задаче.
+   * @param {string} taskData.id - Уникальный идентификатор задачи.
+   * @param {string} taskData.date - Дата задачи.
+   * @param {string} taskData.product - Название продукта.
+   * @param {string} taskData.full_name - Полное имя клиента.
+   * @param {string} taskData.email - Электронная почта клиента.
+   * @param {string} taskData.phone - Телефон клиента.
+   * @param {Object} taskData.status - Статус задачи.
+   * @param {string} taskData.status.class - CSS класс для статуса.
+   * @param {string} taskData.status.text - Текст статуса.
+   * @returns {HTMLElement} Строка таблицы (`<tr>`) с заполненными данными задачи.
+  */
   getTableRow(taskData) {
     const cellsHTML = this.createCells(taskData); 
     const row =  this.render.getHTML('row', taskData, cellsHTML); // пустая строка, без ячеек
@@ -24,6 +32,11 @@ class RowFactory {
     return row;
   }
 
+  /**
+   * Создаёт HTML-строки для ячеек таблицы на основе данных задачи.
+   * @param {Object} taskData - Данные задачи для генерации ячеек.
+   * @returns {string} Строка HTML с ячейками таблицы.
+  */
   createCells(taskData) {
 
     // Массив настроек для ячеек

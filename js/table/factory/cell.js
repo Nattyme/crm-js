@@ -1,5 +1,5 @@
-/**
- * Фабрика для генерации настроек ячеек таблицы.
+/*
+  Класс CellFactory отвечает за генерацию данных для ячеек таблицы, основываясь на информации о задаче
 */
 class CellFactory {
   /**
@@ -17,22 +17,15 @@ class CellFactory {
    * @returns {Object} Настройки ячеек таблицы, где каждое свойство соответствует типу ячейки.
   */
   getData(task) {
-    console.log(task);
-    console.log(...task);
-    
     return {
           ...task,
-          id:         () => { return  { text : String(task.id) } },
+          id:         () => { return  { text : task.id } },
           data:       () => { return  { text : task.date } },
           product:    () => { return  { text : task.product } },
           data:       () => { return  { text : task.date } },
           full_name:  () => { return { text : task.full_name } },
-          // full_name:  () => { return this.createAbsLink( tableDataFormatter.fieldGetReady().name(task.full_name), `edit.html?id=${task.id}`) },
           email:      () => { return  { text : task.email } },
           phone:      () => { return  { text : task.phone } },
-          // phone:      () => { return  tableDataFormatter.fieldGetReady().phone(task.phone) },
-          badge:      () => { return  options = {class: 'badge-danger', text: 'Новая'} },
-          button:     () => { return  { text : 'Редактировать'} },
     }
   }
  

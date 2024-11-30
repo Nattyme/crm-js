@@ -25,12 +25,6 @@
       "product" : "Курс по верстке"
     },
     {
-      "full_name" : "Екатерина С",
-      "phone" : "89253458675",
-      "email" : "justkate@google.com",
-      "product" : "Курс по верстке"
-    },
-    {
       "full_name" : "Анатолий Ш",
       "phone" : "89253458675",
       "email" : "anatol@google.com",
@@ -62,4 +56,13 @@
     }
   ];
 
-  export { testData }
+  // Данные по продуктам
+  const products = {
+    "course-html" : "Курс по верстке",
+	  "course-js" : "Курс по JavaScript",
+		"course-vue" : "Курс по VUE JS",
+		"course-php" : "Курс по PHP",
+		"course-wordpress" : "Курс по WordPress"
+  }
+
+  export { testData, products }

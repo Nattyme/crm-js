@@ -64,8 +64,8 @@ class Controller {
   setTask(e) {
     e.preventDefault(); // отмена стандарт. поведение
 
-    const id = this.getNextTaskId();                   // получим все задачи массива, считаем ID
-    const taskData = this.render.getFormData();  // получим данные задачи из формы
+    const id = this.getNextTaskId();                      // получим все задачи массива, считаем ID
+    const taskData = this.render.getFormData();         // получим данные задачи из формы
     const task = new model.Task({ ...taskData });      // Создадим задачу
 
     this.manager.addNewData(id, task);                  // добавим задачу в массив
@@ -84,7 +84,7 @@ class Controller {
    * @method
    */
   setRandomData () {
-    const testData = TestDataFactory.createRandomRecord(); // получим случайные тест. данные
+    const testData = this.getRandomData(); // получим случайные тест. данные
     const task = new model.Task( {...testData} ); // создадим случ-ую задачу 
 
     this.render.setFormData(task); // заполним форму значениями задачи
@@ -112,7 +112,7 @@ class Controller {
    * 
    * @method
    */
-  getData() {
+  getRandomData() {
     return TestDataFactory.createRandomRecord(); 
   }
 

@@ -1,5 +1,6 @@
 import { NAMES } from '../config.js';
 import { Formatter } from "../utils/formatter.js"
+import { validate } from '../utils/validate.js';
 
 /**
  * Класс для управления задачами.
@@ -151,6 +152,8 @@ class TaskManager {
     }
 
     record.id = id; 
+    record.product = validate.product(record.product); //Отформатируем знач-е product 
+  
     this.data.push(record); 
     console.log('DATA after ADD NEW DATA', this.data);
 

@@ -36,20 +36,16 @@ class TaskRender {
    * @see Task
    */
   getFormData() {
-    const inputs = this.inputs; // инпуты формы
+    const form = new FormData(this.form);
+
     let formData = {}; // Объект для значений формы
 
-    // Обойдём каждый инпут и получим значения. Добавим в formData
-    for (const data in inputs) {
-      const input = inputs[data]; 
-      formData[data] = input.value;
+    // Получим данные из полей
+    for (let pair of form.entries()) {
+      formData[pair[0]] = pair[1];
     }
-
-    const selectedProduct = this.select.options[ this.select.selectedIndex ]; // получем выбранную опцию
-
-    // запишем текст опции селекта в formData
-    formData[this.select.name] = selectedProduct.textContent; 
-
+  
+    
     return formData;
   }
 

@@ -21,12 +21,12 @@ class Controller {
   * Инициализация: загружает данные и заполняет таблицу.
   */
   setInit () {
-    // this.eventBus.emit(NAMES.TASKS_LOAD);
     this.setRows();
   }
 
   /**
-   * Настроить строки таблицы, добавив все задачи с их статусами.
+    * Метод для получения, форматирования данных задач и добавления строк в таблицу.
+    * Получает данные задач, форматирует их и добавляет в таблицу с учетом статусов.
   */
   setRows () {
     const dataCopy = this.getTasksData(); // Получим данные всех задач из массива data
@@ -34,7 +34,6 @@ class Controller {
     const statusData = this.status.getStatusData();  // Получили массив со всеми статусами
 
     this.renderTable.addRowsToTable(dataFormatted, statusData);
-    // this.renderTable.addRowsToTable(dataFormatted, statusData);
   }
 
   /**
