@@ -1,31 +1,8 @@
-/**
- * Класс для рендеринга формы задачи.
- * Этот класс управляет взаимодействием с формой, включая получение и установку значений, а также работу с ошибками.
- * 
- * @class
- * @see TaskManager
- */
-class TaskRender {
-  /**
-   * Создаёт экземпляр класса TaskRender.
-   * Находит форму и элементы формы на странице.
-   * @constructor
-   */
-  constructor () {
-    this.form = document.querySelector('#form'),
-    this.select = this.form.querySelector('#product'),
-    this.inputs = {
-      full_name  : this.form.querySelector('#name'),
-      phone : this.form.querySelector('#phone'),
-      email : this.form.querySelector('#email'),
-    }
-    this.options = {
-      html : this.select.querySelector('[value = "course-html"]'),
-      js   : this.select.querySelector('[value = "course-js"]'),
-      vue  : this.select.querySelector('[value = "course-vue"]'),
-      php  : this.select.querySelector('[value = "course-php"]'),
-      wp  : this.select.querySelector('[value = "course-wordpress"]'),
-    }
+class FormActions {
+  constructor (form, select, inputs) {
+    this.form = form;
+    this.select = select;
+    this.inputs = inputs;
   }
   
   /**
@@ -37,14 +14,13 @@ class TaskRender {
    */
   getFormData() {
     const form = new FormData(this.form);
-
+ 
     let formData = {}; // Объект для значений формы
 
     // Получим данные из полей
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
-  
     
     return formData;
   }
@@ -79,9 +55,9 @@ class TaskRender {
    * в селекторе на первое значение по умолчанию.
    * 
    * @method resetForm
- */
+  */
   resetForm () {
- 
+
     for ( const inputName in this.inputs) {
       this.inputs[inputName].value = '';    //  Очищаем инпуты
     }
@@ -96,6 +72,9 @@ class TaskRender {
   setError() {
 
   }
+
 }
 
-export { TaskRender }
+export default FormActions;
+
+

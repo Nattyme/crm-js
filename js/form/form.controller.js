@@ -1,5 +1,5 @@
 import * as model from '../model.js';
-import * as view from './form.view.js';
+import * as view from './FormView/Form.view.js';
 import { TestDataFactory } from './form.test-data.js';
 import { NAMES } from '../config.js';
 
@@ -64,15 +64,16 @@ class Controller {
   setTask(e) {
     e.preventDefault(); // отмена стандарт. поведение
 
-    const id = this.getNextTaskId();                      // получим все задачи массива, считаем ID
-    const taskData = this.render.getFormData();         // получим данные задачи из формы
-    const task = new model.Task({ ...taskData });      // Создадим задачу
+    const id = this.getNextTaskId();                                  // получим все задачи массива, считаем ID
+    const taskData = this.render.formActions.getFormData();          // получим данные задачи из формы
+    const task = new model.Task({ ...taskData });                  // Создадим задачу
+console.log(this.render.formActions);
 
-    this.manager.addNewData(id, task);                  // добавим задачу в массив
-    this.eventBus.emit(NAMES.TASKS_SAVE);              // вызываем событие сохранения
-    this.render.resetForm ();                         // Очистим форму
+    this.manager.addNewData(id, task);                           // добавим задачу в массив
+    this.eventBus.emit(NAMES.TASKS_SAVE);                      // вызываем событие сохранения
+    this.render.formActions.resetForm ();                     // Очистим форму
 
-    this.setRandomData ();                                  // Заново заполним данные
+    this.setRandomData ();                                 // Заново заполним данные
   }
 
   /**
@@ -87,7 +88,7 @@ class Controller {
     const testData = this.getRandomData(); // получим случайные тест. данные
     const task = new model.Task( {...testData} ); // создадим случ-ую задачу 
 
-    this.render.setFormData(task); // заполним форму значениями задачи
+    this.render.formActions.setFormData(task); // заполним форму значениями задачи
 
     return task; 
   }

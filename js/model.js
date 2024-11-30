@@ -1,8 +1,8 @@
-import { TaskManager } from './module/task-manager.js';
-import { Task } from './module/task.js';
-import { EventBus } from './module/event-bus.js';
-import { Status } from './module/status.js';
-import { Table } from './module/table.js';
+import { TaskManager } from './module/TaskManager/TaskManager.js';
+import { Task } from './module/Task.js';
+import { EventBus } from './module/EventBus.js';
+import { Status } from './module/Status.js';
+import { Table } from './module/Table.js';
 
 /**
  * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.

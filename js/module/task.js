@@ -26,9 +26,6 @@ class Task {
     this.email = this.setProperty( email, validate.email),
     this.phone = this.setProperty( phone, validate.phone)
     this.status = status.data.NEW; // из класса Status
-console.log(this);
-console.log(product);
-
 
     // После созда-я задачи отправляем соб-е о статусе
     eventBus.emit(NAMES.TASK_CREATED, this); // Передаем созданную задачу
