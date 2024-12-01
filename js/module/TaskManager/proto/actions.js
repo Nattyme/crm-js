@@ -1,5 +1,5 @@
 import { NAMES } from './../../../config.js';
-import { validate } from './../../../utils/validate.js';
+import validate from './../../../utils/validate.js';
 import Formatter from './../../../utils/formatter.js';
 
 // actions

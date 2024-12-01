@@ -141,4 +141,4 @@ const validate = {
   }
 }
 
-export { validate }
+export default validate;

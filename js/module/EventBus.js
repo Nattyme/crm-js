@@ -52,4 +52,9 @@ class EventBus {
   }
 }
 
-export { EventBus }
+/**
+ * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.
+ * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
+*/
+const eventBus = new EventBus();
+export { eventBus }

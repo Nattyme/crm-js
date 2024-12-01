@@ -1,7 +1,7 @@
 import { NAMES } from './../../config.js';
 
 // Прототипы
-import { loadFromStorage, saveToStorage, clearStorage } from  './proto/storage.js';
+import {Storage} from  './proto/Storage.js';
 import { addNewData, removeData, getAll, getData, getFormattedData } from  './proto/actions.js';
 
 /**
@@ -26,9 +26,10 @@ class TaskManager {
 
     // Прототипы
     // STORAGE
-    this.loadFromStorage = loadFromStorage.bind(this);
-    this.saveToStorage = saveToStorage.bind(this);
-    this.clearStorage = clearStorage.bind(this);
+    this.storage = new Storage(); // экз-р хранилища
+    this.loadFromStorage =  this.storage.loadFromStorage.bind(this);
+    this.saveToStorage =  this.storage.saveToStorage.bind(this);
+    this.clearStorage =  this.storage.clearStorage.bind(this);
 
     // ACTIONS
     this.addNewData = addNewData.bind(this);

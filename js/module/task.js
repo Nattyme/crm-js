@@ -1,6 +1,7 @@
-import { validate } from '../utils/validate.js';
+import validate from '../utils/validate.js';
 import { NAMES } from '../config.js';
-import { eventBus, status } from '../model.js';
+import { status } from '../model.js';
+import {eventBus} from './EventBus.js';
 
 /**
  * Класс для создания задачи и её валидации.
