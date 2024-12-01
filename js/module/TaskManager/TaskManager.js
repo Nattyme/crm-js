@@ -36,8 +36,9 @@ class TaskManager {
     this.addNewData = this.dataAction.addNewData.bind(this);
     this.removeData = this.dataAction.removeData.bind(this);
     this.getAll = this.dataAction.getAll.bind(this);
-    this.getData = this.dataAction.getTaskData.bind(this);
-    this.getFormattedData = this.dataAction.getFormattedData.bind(this);
+    this.getTaskData = this.dataAction.getTaskData.bind(this);
+    this.setFormattedDate = this.dataAction.setFormattedDate.bind(this);
+    this.setFormattedDateTime = this.dataAction.setFormattedDateTime.bind(this);
 
     // Подписка на события
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));

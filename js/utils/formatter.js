@@ -53,6 +53,13 @@ class Formatter {
     return formatter.format( new Date(timestamp));
   }
 
+  formatDateTime (timestamp) {
+    const dateStamp = new Date(timestamp);
+    let date = dateStamp.toISOString();
+    date = date.slice(0, -5).replace('T', ' ');
+    return date;
+  }
+
   /**
    * Подготавливает данные для отображения, применяя форматирующие функции.
    * @param {Object} data - Объект исходных данных.

@@ -74,17 +74,20 @@ class TaskDataActions {
    * @returns {Object|null} Возвращает задачу или null, если не найдено.
    */
   getTaskData(id, allTaskData) {
-    console.log(this);
+    console.log(id);
+    console.log(allTaskData);
     // В массиве data найдём нужную по ID
-    let data = allTaskData.find(task => task.id === id);
-console.log(data);
+    let data = allTaskData.find(task => task.id === Number(id) );
+
 
     // Если ID не найден
     if (!data) return console.error(`Запись не найдена в ${this.data}`);
 
     const dataCopy = {...data};     // Создадим копию объекта
-    dataCopy.date = this.getFormattedData( dataCopy.timestamp); // Добавим св-во дата в нужно формате
-    
+    console.log(dataCopy);
+    dataCopy.date = this.setFormattedDateTime( dataCopy.timestamp); // Добавим св-во дата в нужно формате
+console.log(dataCopy);
+
     return dataCopy;  // Вернём запись
   }
 
@@ -96,12 +99,28 @@ console.log(data);
    * @param {number} timestamp - Временная метка.
    * @returns {string} Отформатированная дата.
    */
-  getFormattedData (data) {
-    console.log('getFormatted data', data);
+  setFormattedDate (timestamp) {
+    console.log('getFormatted data', timestamp);
     const func = new Formatter();
-    const dataFormatted = func.prepareDisplay(data);
+    return  func.formatDate(timestamp);
+    // const dataFormatted = func.prepareDisplay(data);
+  
+  }
 
-    return dataFormatted;
+  /**
+   * Форматирует временную метку.
+   *
+   * @method getFormattedData
+   * @memberof TaskManager
+   * @param {number} timestamp - Временная метка.
+   * @returns {string} Отформатированная дата.
+   */
+  setFormattedDateTime (timestamp) {
+    console.log('getFormatted data', timestamp);
+    const func = new Formatter();
+    return func.formatDateTime(timestamp);
+    // const dataFormatted = func.prepareDisplay(data);
+  
   }
 
 }

@@ -32,7 +32,7 @@ class Controller {
     const dataTaskAll = this.getTasksData ();
     const id =  this.formActions.getTaskID();
     console.log(id);
-    const dataTask = this.dataActions.getTaskData(id);
+    const dataTask = this.dataActions.getTaskData(id, dataTaskAll);
     console.log(dataTask);
     
     // 1. Получаем данные по задаче из loact storage
