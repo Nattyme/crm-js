@@ -38,6 +38,7 @@ class TaskManager {
     this.getAll = this.dataAction.getAll.bind(this);
     this.getTaskData = this.dataAction.getTaskData.bind(this);
     this.setFormattedDate = this.dataAction.setFormattedDate.bind(this);
+    this.setFormattedDateAll = this.dataAction.setFormattedDateAll.bind(this);
     this.setFormattedDateTime = this.dataAction.setFormattedDateTime.bind(this);
 
     // Подписка на события

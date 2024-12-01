@@ -107,6 +107,21 @@ console.log(dataCopy);
   
   }
 
+   /**
+   * Форматирует временную метку.
+   *
+   * @method getFormattedData
+   * @memberof TaskManager
+   * @param {number} timestamp - Временная метка.
+   * @returns {string} Отформатированная дата.
+   */
+   setFormattedDateAll (taskDataAll) {
+    const formatter = new Formatter();
+    console.log(formatter.prepareDisplay(taskDataAll));
+
+    return formatter.prepareDisplay(taskDataAll); 
+  }
+
   /**
    * Форматирует временную метку.
    *

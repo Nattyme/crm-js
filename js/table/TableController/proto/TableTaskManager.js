@@ -1,3 +1,4 @@
+import Formatter from './../../../utils/formatter.js'
 class TableTaskManager {
   constructor ( manager ) {
     this.taskTableManager = manager;
@@ -25,14 +26,14 @@ class TableTaskManager {
   }
 
   // Прокси вызовы
-  getTasksData () {
+  getTasksDataCopy () {
     const data = this.taskTableManager.getAll();
     const dataCopy = [...data];
     return dataCopy;
   }
   
   getFormattedData(data) {
-    return this.taskTableManager.getFormattedData(data); // Прокси вызов
+    return this.taskTableManager.setFormattedDateAll(data); // прокси вызов
   }
 }
 
