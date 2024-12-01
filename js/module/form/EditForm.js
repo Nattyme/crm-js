@@ -1,6 +1,6 @@
 
-import { Formatter } from './../utils/formatter.js';
-import FormActions from './../module/form/FormActions.js';
+import { Formatter } from '../../utils/formatter.js';
+import FormActions from '';
 
 class FormEdit extends FormActions {
  constructor (form, select, selectStatus, inputs) {

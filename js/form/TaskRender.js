@@ -1,5 +1,3 @@
-import FormActions from './proto/FormActions.js';
-
 /**
  * Класс для рендеринга формы задачи.
  * Этот класс управляет взаимодействием с формой, включая получение и установку значений, а также работу с ошибками.
@@ -28,11 +26,16 @@ class TaskRender {
       php  : this.select.querySelector('[value = "course-php"]'),
       wp  : this.select.querySelector('[value = "course-wordpress"]'),
     }
-    
-    // Прототипы
-    // FORM ACTIONS
-    this.formActions = new FormActions(  this.form, this.select, this.inputs );
   }
+
+  getInputs() {
+    return this.inputs;
+  }
+
+  getSelect() {
+    return this.select;
+  }
+
 }
 
 export { TaskRender }

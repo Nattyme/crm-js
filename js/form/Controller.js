@@ -1,6 +1,6 @@
 import * as model from '../model.js';
-import * as view from './FormView/Form.view.js';
-import { TestDataFactory } from './form.test-data.js';
+import * as view from './TaskRender.js';
+import { TestDataFactory } from './TestDataFactory.js';
 import { NAMES } from '../config.js';
 
 /**
@@ -23,6 +23,7 @@ class Controller {
  * @constructor
  */
   constructor () {
+    this.formActions = new model.FormActions(); // методы формы
     this.eventBus = model.eventBus; // общий EventBus
     this.manager = new model.TaskManager(model.eventBus); // менеджер для обработки задач
     this.render = new view.TaskRender(); // создадим рендера задачи
@@ -64,13 +65,15 @@ class Controller {
   setTask(e) {
     e.preventDefault(); // отмена стандарт. поведение
 
-    const id = this.getNextTaskId();                                  // получим все задачи массива, считаем ID
-    const taskData = this.render.formActions.getFormData();          // получим данные задачи из формы
+    const id = this.getNextTaskId(); 
+    const select = this.render.getSelect();                            // получим все задачи массива, считаем ID
+    const inputs = this.render.getInputs();                               // получим все задачи массива, считаем ID
+    const taskData = this.formActions.getFormData( this.render.form );          // получим данные задачи из формы
     const task = new model.Task({ ...taskData });                  // Создадим задачу
 
     this.manager.addNewData(id, task);                           // добавим задачу в массив
     this.eventBus.emit(NAMES.TASKS_SAVE);                      // вызываем событие сохранения
-    this.render.formActions.resetForm ();                     // Очистим форму
+    this.formActions.resetForm (select, inputs);                     // Очистим форму
 
     this.setRandomData ();                                 // Заново заполним данные
   }
@@ -87,7 +90,10 @@ class Controller {
     const testData = this.getRandomData(); // получим случайные тест. данные
     const task = new model.Task( {...testData} ); // создадим случ-ую задачу 
 
-    this.render.formActions.setFormData(task); // заполним форму значениями задачи
+    const inputs = this.render.getInputs(); // инпуты формы
+    const select = this.render.getSelect();
+  
+    this.formActions.setFormData(task, inputs, select); // заполним форму значениями задачи
 
     return task; 
   }

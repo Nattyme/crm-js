@@ -12,8 +12,8 @@ class FormActions {
    * @returns {Object} Объект с данными из формы, где ключи — это имена полей формы, а значения — введённые данные.
    * @see Task
    */
-  getFormData() {
-    const form = new FormData(this.form);
+  getFormData(formElement) {
+    const form = new FormData(formElement);
  
     let formData = {}; // Объект для значений формы
 
@@ -35,9 +35,8 @@ class FormActions {
    * @param {string} task.email Адрес электронной почты.
    * @param {string} task.product Выбранный продукт.
    */
-  setFormData (task) {
-    const inputs = this.inputs; // инпуты формы
-    const options = Array.from(this.select.options); // опции селекта
+  setFormData (task, inputs, select) {
+    const options = Array.from(select.options);
 
     // Установим значения в поля формы
     inputs.full_name.value = task.full_name;
@@ -45,7 +44,7 @@ class FormActions {
     inputs.email.value = task.email;
 
     // Ищем нужную опцию в select и показываем её
-    this.select.selectedIndex = options.findIndex( (element) => element.textContent === task.product);;
+    select.selectedIndex = options.findIndex( (element) => element.textContent === task.product);;
   }
 
   /**
@@ -56,13 +55,13 @@ class FormActions {
    * 
    * @method resetForm
   */
-  resetForm () {
+  resetForm (select, inputs) {
 
-    for ( const inputName in this.inputs) {
-      this.inputs[inputName].value = '';    //  Очищаем инпуты
+    for ( const inputName in inputs) {
+      inputs[inputName].value = '';    //  Очищаем инпуты
     }
 
-    this.select.selectedIndex = 0;  // Сбросим селектор опций
+    select.selectedIndex = 0;  // Сбросим селектор опций
   }
 
   /**
