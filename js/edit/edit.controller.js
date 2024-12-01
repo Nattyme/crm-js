@@ -5,6 +5,11 @@ class Controller {
   constructor () {
     this.render = new EditFormRender();
     this.manager = new FormEdit();
+
+    // Получим элем-ты формы из render
+    const {form, select, selectStatus, inputs} = this.render.getFormElements();
+    // Передадим менеджеру
+    this.manager.initializeForm(form, select, selectStatus, inputs); // Передадим элем. формы
   }
 
   setInit() {

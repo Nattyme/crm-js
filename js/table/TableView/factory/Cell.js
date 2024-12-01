@@ -31,4 +31,4 @@ class CellFactory {
  
 }
 
-export { CellFactory };
+export default CellFactory;

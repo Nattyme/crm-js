@@ -1,5 +1,5 @@
-import { CellFactory } from './Cell.js';
-import { HTMLFactory } from './Html.js';
+import CellFactory from './Cell.js';
+import HTMLFactory  from './Html.js';
 
 /**
  * Класс для создания строк таблицы из данных задачи.
@@ -55,4 +55,4 @@ class RowFactory {
   }
 }
 
-export { RowFactory }
+export default RowFactory;

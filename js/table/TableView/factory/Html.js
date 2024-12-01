@@ -126,4 +126,4 @@ class HTMLFactory {
 
 }
 
-export { HTMLFactory };
+export default HTMLFactory;

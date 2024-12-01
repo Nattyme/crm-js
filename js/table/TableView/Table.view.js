@@ -1,4 +1,4 @@
-import { RowFactory } from './factory/Row.js';
+import RowFactory from './factory/Row.js';
 import TableActions from './prototype/TableActions.js';
 
 /**

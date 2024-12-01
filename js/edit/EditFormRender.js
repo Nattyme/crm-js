@@ -15,6 +15,16 @@ class EditFormRender  {
 
   this.taskId = this.setTaskId();      
  }
+ 
+ getFormElements(){
+  return {
+    form : this.form,
+    select : this.select,
+    selectStatus : this.selectStatus,
+    inputs : this.inputs,
+    taskId : this.taskId
+  }
+ }
 
  setTaskId(id) {
   return id;

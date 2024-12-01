@@ -75,4 +75,4 @@ class Formatter {
   }
 }
 
-export { Formatter };
+export default Formatter;
