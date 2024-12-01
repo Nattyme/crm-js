@@ -3,6 +3,7 @@ import { Task } from './module/Task.js';
 import { eventBus } from './module/EventBus.js';
 import { Status } from './module/Status.js';
 import { Table } from './module/Table.js';
+import { FormEdit } from './module/form/FormEdit.js';
 import FormActions from './module/form/FormActions.js';
 
 
@@ -25,7 +26,7 @@ const status = new Status();
  * @exports {dateFormatter} - Утилита для форматирования и обработки дат.
  * @exports {eventBus} - Экземпляр `EventBus` для распространения событий в приложении.
 */
-export { TaskManager, Task, Table, FormActions, status, eventBus}
+export { TaskManager, Task, Table, FormActions, FormEdit, status, eventBus}
 
 
 

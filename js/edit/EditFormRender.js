@@ -1,6 +1,3 @@
-
-// import { Formatter } from '../utils/formatter.js';
-
 class EditFormRender  {
  constructor () {
   this.form = document.querySelector('#form');                          

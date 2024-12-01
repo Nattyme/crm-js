@@ -1,10 +1,5 @@
-import Formatter from '../utils/formatter.js';
-import validate from './../utils/validate.js';
-
-import { eventBus } from './../module/EventBus.js';
-import { TaskManager } from './../module/TaskManager/TaskManager.js';
+import { eventBus, TaskManager, FormEdit } from './../model.js';
 import { TaskDataActions } from  './../module/TaskManager/proto/TaskDataActions.js';
-import { FormEdit } from './../module/form/FormEdit.js';
 import { Storage } from '../module/TaskManager/proto/Storage.js';
 import { EditFormRender } from './EditFormRender.js';
 
@@ -12,27 +7,35 @@ import { EditFormRender } from './EditFormRender.js';
 class Controller {
   constructor () {
     this.eventBus = eventBus; // общий EventBus
-    console.log(this);
-    this.manager = new TaskManager(eventBus);
-    this.dataActions = new TaskDataActions();
-    this.formActions = new FormEdit();
+
+    this.formEditManager = new FormEdit();
+    this.taskManager = new TaskManager(eventBus);
+    this.taskDataAction = new TaskDataActions();
     this.render = new EditFormRender();
-    this.storage = this.manager.storage;
 
-    // Получим элем-ты формы из render
-    const {form, select, selectStatus, inputs} = this.render.getFormElements();
-    // Передадим в методы форм
-    this.formActions.initFormElements(form, select, selectStatus, inputs); // Передадим элем. формы
+    this.storage = this.taskManager.storage;
 
-     // Получим данные из localStorage
-     this.storage.loadFromStorage();
+    const {form, select, selectStatus, inputs} = this.render.getFormElements(); // Получим элем-ты формы из render
+    this.formEditManager.initFormElems(form, select, selectStatus, inputs);       // Передадим в методы форм
+
+    this.storage.loadFromStorage();      // Получим данные из localStorage
   }
+  
 
   setInit() {
+
+    this.render.form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      console.log('submitted');
+      
+      
+    });
+    
     const dataTaskAll = this.getTasksData ();
-    const id =  this.formActions.getTaskID();
+    const id =  this.formEditManager.getTaskID();
     console.log(id);
-    const dataTask = this.dataActions.getTaskData(id, dataTaskAll);
+    
+    const dataTask = this.taskDataAction.getTaskData(id, dataTaskAll);
     console.log(dataTask);
     
     // 1. Получаем данные по задаче из loact storage
@@ -45,7 +48,7 @@ class Controller {
   }
 
   getTasksData () {
-    const data = this.manager.getAll(); // Получим данные всех задач из массива data
+    const data = this.taskManager.getAll(); // Получим данные всех задач из массива data
     const dataCopy = [...data];     // Создадим копию массива
 
     return dataCopy;

@@ -1,5 +1,5 @@
-import * as model from './../../model.js';
-import * as view from './../TableView/Table.view.js';
+import {eventBus, status, TaskManager, } from './../../model.js';
+import { RowFactory, TableRender } from './../TableView/Table.view.js';
 
 // Прототипы
 import TableTaskManager from './proto/TableTaskManager.js';
@@ -10,13 +10,13 @@ import EventBus from './proto/EventBus.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor ( model, view ) {
-    this.eventBus = model.eventBus; // Общий EventBus
-    this.status = model.status; // Общий статус
+  constructor () {
+    this.eventBus = eventBus; // Общий EventBus
+    this.status = status; // Общий статус
 
-    this.manager = new model.TaskManager(model.eventBus); // Менеджер для работы с задачами
-    this.render = view.RowFactory; // Рендер ряда с задачей
-    this.renderTable = new view.TableRender; // Рендер таблицы
+    this.manager = new TaskManager(eventBus); // Менеджер для работы с задачами
+    this.render = RowFactory; // Рендер ряда с задачей
+    this.renderTable = new TableRender; // Рендер таблицы
 
     // Прототипы
     this.tableTaskManager = new TableTaskManager( this.manager );
@@ -36,5 +36,5 @@ class Controller {
 }
 
 // Запуск приложения
-const controller = new Controller( model, view );
+const controller = new Controller();
 controller.setInit();

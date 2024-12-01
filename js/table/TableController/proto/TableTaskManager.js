@@ -22,7 +22,7 @@ class TableTaskManager {
   updateTaskStatus ( taskID ) {
     const task = this.taskTableManager.getTaskById(taskID);  
 
-    if (task) {task.status = statusName; } 
+    if (task) { task.status = statusName; } 
   }
 
   // Прокси вызовы

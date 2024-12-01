@@ -1,18 +1,21 @@
-
 import Formatter from '../../utils/formatter.js';
-import FormActions from './FormActions.js';
 
-class FormEdit extends FormActions {
- constructor (form, select, selectStatus, inputs) {
-  super( form, select, selectStatus, inputs);  // Вызовем констр-р род. класса и передадим ему парам-ры
- }
+class FormEdit  {
+  constructor () {
+    this.form = null;
+    this.select = null;
+    this.inputs = {};
+    this.selectStatus = null;
+
+    this.initFormElems(); // задает элементы формы
+  }
 
   // Задает значения элементов в конструктор
-  initFormElements(form, select, selectStatus, inputs) {
+  initFormElems(form, select, selectStatus, inputs) {
     this.form = form;                          
     this.select = select;
-    this.selectStatus = selectStatus;
     this.inputs = inputs;              
+    this.selectStatus = selectStatus;
   }
 
   /**

@@ -17,11 +17,11 @@ class TaskRender {
     this.inputs = {};
     this.options = {};
 
-    this.initializeForm(); // задает элементы формы
+    this.initFormElems(); // задает элементы формы
 
   }
 
-  initializeForm() {
+  initFormElems() {
     this.form = document.querySelector('#form'),
     this.select = this.form.querySelector('#product'),
 

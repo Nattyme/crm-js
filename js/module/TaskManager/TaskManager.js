@@ -42,15 +42,17 @@ class TaskManager {
     this.setFormattedDateTime = this.dataAction.setFormattedDateTime.bind(this);
 
     // Подписка на события
+    this.subscribeToEvents();
+
+    // Получим данные из localStorage
+    this.loadFromStorage();
+  }
+
+  subscribeToEvents () {
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
     this.eventBus.on(NAMES.STATUS_CHANGED, this.updateTaskStatus.bind(this)); // обнов-е статуса задачи
-
-    // Получим данные из localStorage
-    this.loadFromStorage();
-
-    console.log('DATA FROM THE START: ', this.data); 
   }
 
   /**
