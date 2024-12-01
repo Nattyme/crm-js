@@ -8,7 +8,8 @@ class Controller {
   }
 
   setInit() {
-    console.log( this.edit);
+    console.log( this.render);
+    console.log( this.manager);
   }
 }
 

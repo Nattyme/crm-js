@@ -30,10 +30,7 @@ class Controller {
     this.manager = new model.TaskManager(model.eventBus); // менеджер для обработки задач
     this.render = new view.TaskRender(); // создадим рендера задачи
 
-    // Элементы форсмы
-    this.form = this.render.getForm();                 // форма
-    this.select = this.render.getSelect();       // селект
-    this.inputs = this.render.getInputs();      // инпуты
+    this.render.initializeForm();  // Передадим элементы формы в рендер
 
   }
 
@@ -45,7 +42,7 @@ class Controller {
    */
   setEventListeners () {
     // Слушаем submit, запускаем ф-цию добавления задачи
-    this.form.addEventListener('submit', (e) => this.setTask(e));
+    this.render.getForm().addEventListener('submit', (e) => this.setTask(e));
   }
 
   /**
@@ -74,12 +71,12 @@ class Controller {
 
     const id = this.getNextTaskId(); 
 
-    const taskData = this.formActions.getFormData( this.form );          // получим данные задачи из формы
+    const taskData = this.formActions.getFormData( this.render.getForm() );          // получим данные задачи из формы
     const task = new model.Task({ ...taskData });                  // Создадим задачу
 
     this.manager.addNewData(id, task);                           // добавим задачу в массив
     this.eventBus.emit(NAMES.TASKS_SAVE);                      // вызываем событие сохранения
-    this.formActions.resetForm (this.select, this.inputs);                     // Очистим форму
+    this.formActions.resetForm (this.render.getSelect(), this.render.getInputs());                     // Очистим форму
 
     this.setRandomData ();                                 // Заново заполним данные
   }
@@ -96,7 +93,7 @@ class Controller {
     const testData = this.getRandomData(); // получим случайные тест. данные
     const task = new model.Task( {...testData} ); // создадим случ-ую задачу 
 
-    this.formActions.setFormData(task, this.inputs, this.select); // заполним форму значениями задачи
+    this.formActions.setFormData(task, this.render.getSelect(), this.render.getInputs() ); // заполним форму значениями задачи
 
     return task; 
   }

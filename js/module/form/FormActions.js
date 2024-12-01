@@ -35,7 +35,7 @@ class FormActions {
    * @param {string} task.email Адрес электронной почты.
    * @param {string} task.product Выбранный продукт.
    */
-  setFormData (task, inputs, select) {
+  setFormData (task, select, inputs) {
     const options = Array.from(select.options);
 
     // Установим значения в поля формы

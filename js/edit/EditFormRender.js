@@ -1,12 +1,9 @@
 
 // import { Formatter } from '../utils/formatter.js';
-import FormActions from '../module/form/FormActions.js';
 
-class EditFormRender extends FormActions {
- constructor (form, select, selectStatus, inputs) {
-  super( form, select, selectStatus, inputs );                  // Вызовем констр-р род. класса и передадим ему парам-ры
-
-  this.form = document.querySelector('#form');                // Теперь можно исполз-ть 'this'. Надём форму на текущ. странице            
+class EditFormRender  {
+ constructor () {
+  this.form = document.querySelector('#form');                          
   this.select = this.form.querySelector('#product');
   this.selectStatus = this.form.querySelector('#status');
 
@@ -16,8 +13,14 @@ class EditFormRender extends FormActions {
     email : this.form.querySelector('#email'),
   }
 
-  this.taskId = this.setTaskId();                     // Установим ID задачи 
+  this.taskId = this.setTaskId();      
  }
+
+ setTaskId(id) {
+  return id;
+ }
+
+
 }
 // this.setFormData();
-export { FormEdit };
+export { EditFormRender };

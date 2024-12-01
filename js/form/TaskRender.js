@@ -12,13 +12,38 @@ class TaskRender {
    * @constructor
    */
   constructor () {
+    this.form = null;
+    this.select = null;
+    this.inputs = {};
+    this.options = {};
+
+    this.initializeForm(); // задает элементы формы
+    // this.form = document.querySelector('#form'),
+    // this.select = this.form.querySelector('#product'),
+    // this.inputs = {
+    //   full_name  : this.form.querySelector('#name'),
+    //   phone : this.form.querySelector('#phone'),
+    //   email : this.form.querySelector('#email'),
+    // }
+    // this.options = {
+    //   html : this.select.querySelector('[value = "course-html"]'),
+    //   js   : this.select.querySelector('[value = "course-js"]'),
+    //   vue  : this.select.querySelector('[value = "course-vue"]'),
+    //   php  : this.select.querySelector('[value = "course-php"]'),
+    //   wp  : this.select.querySelector('[value = "course-wordpress"]'),
+    // }
+  }
+
+  initializeForm() {
     this.form = document.querySelector('#form'),
     this.select = this.form.querySelector('#product'),
+    
     this.inputs = {
       full_name  : this.form.querySelector('#name'),
       phone : this.form.querySelector('#phone'),
       email : this.form.querySelector('#email'),
     }
+
     this.options = {
       html : this.select.querySelector('[value = "course-html"]'),
       js   : this.select.querySelector('[value = "course-js"]'),
