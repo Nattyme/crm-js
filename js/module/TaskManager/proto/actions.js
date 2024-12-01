@@ -95,9 +95,9 @@ export function getData(id) {
  * @returns {string} Отформатированная дата.
  */
 export function getFormattedData (data) {
+  console.log('getFormatted data', data);
   const func = new Formatter();
   const dataFormatted = func.prepareDisplay(data);
-  console.log(dataFormatted);
 
   return dataFormatted;
 }

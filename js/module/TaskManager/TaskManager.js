@@ -1,11 +1,8 @@
 import { NAMES } from './../../config.js';
 
-import { Formatter } from "../../utils/formatter.js"
-import { validate } from '../../utils/validate.js';
-
 // Прототипы
-import { loadFromStorage, saveToStorage, clearStorage } from  './prototype/storage.js';
-import { addNewData, removeData, getAll, getData, getFormattedData } from  './prototype/actions.js';
+import { loadFromStorage, saveToStorage, clearStorage } from  './proto/storage.js';
+import { addNewData, removeData, getAll, getData, getFormattedData } from  './proto/actions.js';
 
 /**
  * Класс для управления задачами.

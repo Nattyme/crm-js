@@ -52,10 +52,6 @@ class Formatter {
     return formatter.format( new Date(timestamp));
   }
 
-  formatProduct (product) {
-
-  }
-
   /**
    * Подготавливает данные для отображения, применяя форматирующие функции.
    * @param {Object} data - Объект исходных данных.

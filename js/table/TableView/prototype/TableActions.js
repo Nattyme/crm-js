@@ -1,18 +1,14 @@
-import { RowFactory } from './factory/row.js';
-
-/**
- * Класс для управления отображением таблицы задач.
- */
-class TableRender {
-  constructor () {
-    this.tbody = this.setTbody();
+// Table actions
+class TableActions {
+  constructor( RowFactory ) {
+    this.tbody =  this.setTbody();
+    this.row = new RowFactory();
   }
-
   /**
-   * Создаёт фрагмент строк таблицы на основе массива задач.
-   * @param {Object[]} tasks - Массив задач.
-   * @returns {DocumentFragment} Фрагмент строк таблицы.
-   */
+ * Создаёт фрагмент строк таблицы на основе массива задач.
+ * @param {Object[]} tasks - Массив задач.
+ * @returns {DocumentFragment} Фрагмент строк таблицы.
+ */
   addRowsToTable (tasksData, status) {
     if (!this.tbody) {
       console.error('Не найден <tbody>. Проверьте наличие элемента в DOM.');
@@ -27,14 +23,12 @@ class TableRender {
     return container;
   }
 
-  
   /**
    * Создаёт строку таблицы на основе задачи.
    * @param {Object} task - Объект задачи с данными.
    */
   setRowHTML (task, status) {
-    const row = new RowFactory();
-    return row.getTableRow(task, status);
+    return  this.row.getTableRow(task, status);
   }
 
   /**
@@ -52,6 +46,6 @@ class TableRender {
     return tbody;
   }
 
-}
+} 
 
-export { TableRender, RowFactory }
+export default TableActions;

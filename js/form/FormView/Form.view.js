@@ -1,4 +1,4 @@
-import FormActions from './prototype/FormActions.js';
+import FormActions from './proto/FormActions.js';
 
 /**
  * Класс для рендеринга формы задачи.
