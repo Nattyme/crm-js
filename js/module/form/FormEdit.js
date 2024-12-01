@@ -8,7 +8,7 @@ class FormEdit extends FormActions {
  }
 
   // Задает значения элементов в конструктор
-  initializeForm(form, select, selectStatus, inputs) {
+  initFormElements(form, select, selectStatus, inputs) {
     this.form = form;                          
     this.select = select;
     this.selectStatus = selectStatus;

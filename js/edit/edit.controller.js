@@ -9,7 +9,7 @@ class Controller {
     // Получим элем-ты формы из render
     const {form, select, selectStatus, inputs} = this.render.getFormElements();
     // Передадим менеджеру
-    this.manager.initializeForm(form, select, selectStatus, inputs); // Передадим элем. формы
+    this.manager.initFormElements(form, select, selectStatus, inputs); // Передадим элем. формы
   }
 
   setInit() {
