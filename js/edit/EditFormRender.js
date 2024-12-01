@@ -1,6 +1,8 @@
 class EditFormRender  {
  constructor () {
-  this.form = document.querySelector('#form');                          
+  this.form = document.querySelector('#form'); 
+  this.id = this.form.querySelector('#number');                           
+  this.date = this.form.querySelector('#date');
   this.select = this.form.querySelector('#product');
   this.selectStatus = this.form.querySelector('#status');
 
@@ -9,17 +11,16 @@ class EditFormRender  {
     phone : this.form.querySelector('#phone'),
     email : this.form.querySelector('#email'),
   }
-
-  this.taskId = this.setTaskId();      
  }
  
  getFormElements(){
   return {
     form : this.form,
+    id : this.id,
+    date : this.date,
     select : this.select,
     selectStatus : this.selectStatus,
-    inputs : this.inputs,
-    taskId : this.taskId
+    inputs : this.inputs
   }
  }
 

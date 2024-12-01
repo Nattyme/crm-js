@@ -14,7 +14,7 @@ class Status {
     this.data = {
         NEW :   {
                   key: 'new',
-                  text : 'Новый',
+                  text : 'Новая',
                   class : 'badge-danger'
                 },
         DOING : { 

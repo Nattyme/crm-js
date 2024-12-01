@@ -1,8 +1,8 @@
 import { NAMES } from './../../config.js';
 
 // Прототипы
-import {Storage} from  './proto/Storage.js';
-import { TaskDataActions } from  './proto/TaskDataActions.js';
+import {Storage} from  './Storage.js';
+import { TaskDataActions } from  './TaskDataActions.js';
 
 /**
  * Класс для управления задачами.

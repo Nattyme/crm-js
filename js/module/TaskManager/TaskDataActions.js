@@ -1,6 +1,6 @@
-import { NAMES } from '../../../config.js';
-import validate from '../../../utils/validate.js';
-import Formatter from '../../../utils/formatter.js';
+import { NAMES } from './../../config.js';
+import validate from './../../utils/validate.js';
+import Formatter from './../../utils/formatter.js';
 
 // actions
 class TaskDataActions {
@@ -74,8 +74,6 @@ class TaskDataActions {
    * @returns {Object|null} Возвращает задачу или null, если не найдено.
    */
   getTaskData(id, allTaskData) {
-    console.log(id);
-    console.log(allTaskData);
     // В массиве data найдём нужную по ID
     let data = allTaskData.find(task => task.id === Number(id) );
 
@@ -86,7 +84,6 @@ class TaskDataActions {
     const dataCopy = {...data};     // Создадим копию объекта
     console.log(dataCopy);
     dataCopy.date = this.setFormattedDateTime( dataCopy.timestamp); // Добавим св-во дата в нужно формате
-console.log(dataCopy);
 
     return dataCopy;  // Вернём запись
   }

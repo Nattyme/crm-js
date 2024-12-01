@@ -1,6 +1,6 @@
 import { eventBus, TaskManager, FormEdit } from './../model.js';
-import { TaskDataActions } from  './../module/TaskManager/proto/TaskDataActions.js';
-import { Storage } from '../module/TaskManager/proto/Storage.js';
+import { TaskDataActions } from  '../module/TaskManager/TaskDataActions.js';
+import { Storage } from '../module/TaskManager/Storage.js';
 import { EditFormRender } from './EditFormRender.js';
 
 
@@ -24,7 +24,7 @@ class Controller {
 
   setInit() {
 
-    this.render.form.addEventListener('submit', function (e) {
+    this.render.form.addEventListener('submit',  (e) => {
       e.preventDefault();
       console.log('submitted');
       
@@ -33,10 +33,17 @@ class Controller {
     
     const dataTaskAll = this.getTasksData ();
     const id =  this.formEditManager.getTaskID();
-    console.log(id);
-    
+console.log(dataTaskAll);
+
     const dataTask = this.taskDataAction.getTaskData(id, dataTaskAll);
-    console.log(dataTask);
+    this.formEditManager.setFormTaskValue(
+      dataTask, 
+      this.render.id, 
+      this.render.date, 
+      this.render.select, 
+      this.render.selectStatus, 
+      this.render.inputs
+    );
     
     // 1. Получаем данные по задаче из loact storage
     // 2. Заполняем форму этими данными

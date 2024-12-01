@@ -1,4 +1,4 @@
-import { NAMES } from '../../../config.js';
+import { NAMES } from '../../config.js';
 class Storage {
   /**
    * Загружает данные из localStorage.

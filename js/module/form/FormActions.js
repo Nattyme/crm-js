@@ -44,7 +44,7 @@ class FormActions {
     inputs.email.value = task.email;
 
     // Ищем нужную опцию в select и показываем её
-    select.selectedIndex = options.findIndex( (element) => element.textContent === task.product);;
+    select.selectedIndex = options.findIndex( (element) => element.textContent === task.product);
   }
 
   /**

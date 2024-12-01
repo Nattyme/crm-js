@@ -18,16 +18,6 @@ class FormEdit  {
     this.selectStatus = selectStatus;
   }
 
-  /**
-   * Получает ID задачи из строки запроса URL.
-   * Если ID не найден, выводит сообщение об ошибке.
-   *
-   * @returns {number|null} Возвращает ID задачи, если он найден, или null, если ID не найден.
-   */
-  setTaskId () {
-    return this.getTaskID();
-  }
-
   getTaskID () {
     const formatter = new Formatter();
 
@@ -44,9 +34,36 @@ class FormEdit  {
   
   }
 
-  setFormTaskValue() {
-    const id = getTaskID();
-    const taskData = getTask(id);
+  setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {
+    console.log(task);
+   
+    console.log(task.status.text);
+
+    // Установим значения в поля формы
+    idElem.textContent = task.id;
+    dateElem.textContent = task.date;
+    inputs.full_name.value = task.full_name;
+    inputs.phone.value = task.phone;
+    inputs.email.value = task.email;
+console.log(selectStatusElem);
+
+    const options = Array.from(selectElem.options);
+    const optionsStatus = Array.from(selectStatusElem.options);
+    // Ищем нужную опцию в select и показываем её
+    const productIndex = selectElem.selectedIndex = options.findIndex( (element) => element.textContent.trim() === task.product);
+    if (productIndex !== -1) {
+      selectElem.selectedIndex = productIndex;
+    } else {
+      console.log('Продукт не найден');
+    }
+
+    const statusIndex = selectStatusElem.selectedIndex = optionsStatus.findIndex( (element) => element.textContent.trim() === task.status.text);
+    if (statusIndex !== -1) {
+      selectElem.selectedIndex = productIndex;
+    } else {
+      console.log('Статус заявки не найден');
+    }
+    
   }
 
 
