@@ -2,7 +2,7 @@ import { NAMES } from './../../config.js';
 
 // Прототипы
 import {Storage} from  './proto/Storage.js';
-import { addNewData, removeData, getAll, getData, getFormattedData } from  './proto/actions.js';
+import { TaskDataActions } from  './proto/TaskDataActions.js';
 
 /**
  * Класс для управления задачами.
@@ -32,11 +32,12 @@ class TaskManager {
     this.clearStorage =  this.storage.clearStorage.bind(this);
 
     // ACTIONS
-    this.addNewData = addNewData.bind(this);
-    this.removeData = removeData.bind(this);
-    this.getAll = getAll.bind(this);
-    this.getData = getData.bind(this);
-    this.getFormattedData = getFormattedData.bind(this);
+    this.dataAction = new TaskDataActions();
+    this.addNewData = this.dataAction.addNewData.bind(this);
+    this.removeData = this.dataAction.removeData.bind(this);
+    this.getAll = this.dataAction.getAll.bind(this);
+    this.getData = this.dataAction.getTaskData.bind(this);
+    this.getFormattedData = this.dataAction.getFormattedData.bind(this);
 
     // Подписка на события
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));

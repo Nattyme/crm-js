@@ -4,7 +4,7 @@ import FormActions from './FormActions.js';
 
 class FormEdit extends FormActions {
  constructor (form, select, selectStatus, inputs) {
-  super( form, select, selectStatus, inputs );  // Вызовем констр-р род. класса и передадим ему парам-ры
+  super( form, select, selectStatus, inputs);  // Вызовем констр-р род. класса и передадим ему парам-ры
  }
 
   // Задает значения элементов в конструктор
@@ -12,8 +12,7 @@ class FormEdit extends FormActions {
     this.form = form;                          
     this.select = select;
     this.selectStatus = selectStatus;
-    this.inputs = inputs;
-    this.taskId = this.setTaskId();                     // Установим ID задачи 
+    this.inputs = inputs;              
   }
 
   /**

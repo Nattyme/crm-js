@@ -3,6 +3,7 @@ import validate from './../utils/validate.js';
 
 import { eventBus } from './../module/EventBus.js';
 import { TaskManager } from './../module/TaskManager/TaskManager.js';
+import { TaskDataActions } from  './../module/TaskManager/proto/TaskDataActions.js';
 import { FormEdit } from './../module/form/FormEdit.js';
 import { Storage } from '../module/TaskManager/proto/Storage.js';
 import { EditFormRender } from './EditFormRender.js';
@@ -13,6 +14,7 @@ class Controller {
     this.eventBus = eventBus; // общий EventBus
     console.log(this);
     this.manager = new TaskManager(eventBus);
+    this.dataActions = new TaskDataActions();
     this.formActions = new FormEdit();
     this.render = new EditFormRender();
     this.storage = this.manager.storage;
@@ -27,12 +29,11 @@ class Controller {
   }
 
   setInit() {
-    console.log( this.render);
-    console.log( this.formActions);
-    console.log(this.manager);
-    
-    const data = this.getTasksData ();
-    console.log(data);
+    const dataTaskAll = this.getTasksData ();
+    const id =  this.formActions.getTaskID();
+    console.log(id);
+    const dataTask = this.dataActions.getTaskData(id);
+    console.log(dataTask);
     
     // 1. Получаем данные по задаче из loact storage
     // 2. Заполняем форму этими данными
