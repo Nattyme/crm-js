@@ -18,10 +18,11 @@ class Formatter {
   }
 
   getUrlID () {
-    const uri = url.split('?')[1] ? new URLSearchParams( url.split('?')[1] ) : console.log('В url нет параметров');
-    const id = params.get('id') ? params.get('id') : console.log('В параметре ID нет значения.');
+    const url = window.location.href;  // получим полный адрес страницы
+    const uri = url.split('?')[1] ? new URLSearchParams( url.split('?')[1] ) : console.log('В url нет параметров'); // разделим по '?'
+    const id = uri.get('id') ? uri.get('id') : console.log('В параметре ID нет значения.');  // если есть парам-р 'id' - возьмем его знач-е
 
-    if ( !uri || !id) { return null; } // Нет парам-ов - return
+    if ( !uri || !id) { return null; } // Нет парам-в - return
 
     return id;
   }

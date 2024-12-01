@@ -118,7 +118,7 @@ class HTMLFactory {
             <a 
               class = "link-abs"
               title = "Перейти к редактированию заявки №${content}" 
-              href="edit.html"
+              href="edit.html?id=${content}"
             >
                 ${extra}
             </a>`
