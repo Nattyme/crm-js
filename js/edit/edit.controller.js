@@ -2,6 +2,7 @@ import { eventBus, TaskManager, FormEdit } from './../model.js';
 import { TaskDataActions } from  '../module/TaskManager/TaskDataActions.js';
 import { Storage } from '../module/TaskManager/Storage.js';
 import { EditFormRender } from './EditFormRender.js';
+import Formatter from './../utils/formatter.js';
 
 
 class Controller {
@@ -23,19 +24,11 @@ class Controller {
   
 
   setInit() {
-
-    this.render.form.addEventListener('submit',  (e) => {
-      e.preventDefault();
-      console.log('submitted');
-      
-      
-    });
-    
     const dataTaskAll = this.getTasksData ();
     const id =  this.formEditManager.getTaskID();
-console.log(dataTaskAll);
 
     const dataTask = this.taskDataAction.getTaskData(id, dataTaskAll);
+    const timestampOrigin = this.formEditManager.getTimestampOrigin(dataTask);
     this.formEditManager.setFormTaskValue(
       dataTask, 
       this.render.id, 
@@ -44,15 +37,30 @@ console.log(dataTaskAll);
       this.render.selectStatus, 
       this.render.inputs
     );
+
+    this.setEventListener(); // Слушает событие submitw
     
-    // 1. Получаем данные по задаче из loact storage
-    // 2. Заполняем форму этими данными
-    // 3. Слушаем клик по кнопке
     // 4. Если клик произошел - получаем данные всех полей формы.
     // 5. Валидация полей формы.
     // 6.Если ок - сохарняем в локал сторидж
     // 7. Заново устанавливаем обнов данные в форму?
   }
+  
+  setEventListener() {
+    this.render.form.addEventListener('submit',  (e) => this.editTask(e));
+  }
+
+  editTask (e) {
+    e.preventDefault();
+      
+    const formData = this.formEditManager.getFormData(this.render.form);
+    console.log(formData);
+    const id = Formatter.getUrlID();
+    const taskUpdated = this.formEditManager.updateTaskData(id, formData);
+    console.log(taskUpdated);
+    this.formEditManager.setFormTaskValue();
+  }
+
 
   getTasksData () {
     const data = this.taskManager.getAll(); // Получим данные всех задач из массива data

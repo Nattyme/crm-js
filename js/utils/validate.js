@@ -1,4 +1,4 @@
-import { products } from './../data.js'
+import { products } from './../data.js';
 
 /**
  * Объект `validate` содержит методы для проверки корректности значений различных полей формы.

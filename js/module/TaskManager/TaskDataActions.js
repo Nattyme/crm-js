@@ -4,7 +4,7 @@ import Formatter from './../../utils/formatter.js';
 
 // actions
 class TaskDataActions {
-    /**
+  /**
    * Добавляет новую задачу.
    *
    * @method addNewData
