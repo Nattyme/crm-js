@@ -28,12 +28,16 @@ class TaskRender {
     }
   }
 
-  getInputs() {
-    return this.inputs;
+  getForm () {
+    return this.form;
   }
 
   getSelect() {
     return this.select;
+  }
+
+  getInputs() {
+    return this.inputs;
   }
 
 }

@@ -1,8 +1,10 @@
-import { FormEdit } from './Edit.view.js';
+import { EditFormRender } from './EditFormRender.js';
+import { FormEdit } from './../module/form/FormEdit.js';
 
 class Controller {
   constructor () {
-    this.edit = new FormEdit();
+    this.render = new EditFormRender();
+    this.manager = new FormEdit();
   }
 
   setInit() {
