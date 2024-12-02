@@ -14,6 +14,7 @@ class TableActions {
       console.error('Не найден <tbody>. Проверьте наличие элемента в DOM.');
       return;
     }
+    
     let container = this.tbody;
 
     for (let task of tasksData) {

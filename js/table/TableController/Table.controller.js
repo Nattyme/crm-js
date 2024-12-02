@@ -22,8 +22,6 @@ class Controller {
     this.tableTaskManager = new TableTaskManager( this.manager );
     this.tableActions = new TableActions(  this.renderTable,  this.tableTaskManager, this.status );
     this.taskEventBus = new EventBus( this.eventBus, this.status, this.tableActions, this.tableTaskManager );
-
-    // this.setEventListeners(); // иницал-ция слушателей
   }
 
   /**

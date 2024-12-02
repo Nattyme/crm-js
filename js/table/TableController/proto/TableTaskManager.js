@@ -1,4 +1,3 @@
-import Formatter from './../../../utils/formatter.js'
 class TableTaskManager {
   constructor ( manager ) {
     this.taskTableManager = manager;

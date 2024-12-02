@@ -1,5 +1,5 @@
 import RowFactory from './factory/Row.js';
-import TableActions from './prototype/TableActions.js';
+import TableActions from './TableActions.js';
 
 /**
  * Класс для управления отображением таблицы задач.

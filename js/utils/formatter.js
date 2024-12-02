@@ -1,3 +1,5 @@
+import { products } from './../data.js';
+import { Status } from '../module/Status.js';
 /**
  * Класс для форматирования данных, таких как телефон, имя и URL.
  */
@@ -58,6 +60,35 @@ class Formatter {
     return date;
   }
 
+  formatStatus(incomeStatus) {
+    const status = new Status();
+    const statusTypes = status.data;
+
+    for (const item in statusTypes) {
+      const currentObj = statusTypes[item];
+     
+      if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
+        console.log(currentObj);
+        
+        return currentObj;
+      }
+
+    }
+
+    console.log('Статус не найден');
+    return null;
+  }
+
+  formatProduct(name) {
+    const productData = products;
+
+    for (const product in productData) {
+      if (product === name) {
+        return productData[name];
+      }
+    }
+  }
+
   /**
    * Подготавливает данные для отображения, применяя форматирующие функции.
    * @param {Object} data - Объект исходных данных.
@@ -66,14 +97,15 @@ class Formatter {
    * @param {Function} data.date - Функция, возвращающая дату.
    * @returns {Object} Объект данных для отображения с применением форматирования.
  */
-  prepareDisplay ( data ) {
-
+  prepareDisplayTable ( data ) {
     const updatedData = data.map( record => ({
       ...record,
       id : String(record.id),
       full_name : this.formatName(record.full_name),
       phone : this.formatPhone(record.phone),
       date : this.formatDate(record.timestamp),
+      product : this.formatProduct(record.product),
+      status : this.formatStatus(record.status)
     }));
 
     return updatedData;

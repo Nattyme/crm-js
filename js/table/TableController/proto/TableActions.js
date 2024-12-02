@@ -11,8 +11,10 @@ class TableActions {
   */
   setRows () {
     const dataCopy = this.manager.getTasksData(); // Получим данные всех задач из массива data
+    // console.log(dataCopy);
    
     const dataFormatted = this.manager.getFormattedData(dataCopy); // Отформатируем поля
+    console.log(dataFormatted);
     const statusData = this.status.getStatusData();  // Получили массив со всеми статусами
 
     this.renderTable.tableActions.addRowsToTable(dataFormatted, statusData);

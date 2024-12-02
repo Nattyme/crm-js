@@ -145,11 +145,8 @@ const validate = {
   },
 
   status (incomeStatus) {
-    console.log(incomeStatus);
-    
     const status = new Status();
     const statusTypes = status.data;
-    console.log(statusTypes);
 
     for (const item in statusTypes) {
       const currentObj = statusTypes[item];

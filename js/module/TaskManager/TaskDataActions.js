@@ -23,11 +23,8 @@ class TaskDataActions {
     }
 
     record.id = id; // Добавим id
-  
     this.data.push(record); 
-    console.log('DATA after ADD NEW DATA', this.data);
-
-    this.eventBus.emit(NAMES.TASKS_SAVE, record);    // Событие сохранения 
+    this.eventBus.emit(NAMES.TASKS_SAVE, record); 
 
     return record;
   }
@@ -95,10 +92,10 @@ class TaskDataActions {
    */
   setFormattedDate (timestamp) {
     console.log('getFormatted data', timestamp);
+    
     const func = new Formatter();
     return  func.formatDate(timestamp);
-    // const dataFormatted = func.prepareDisplay(data);
-  
+   
   }
 
   /**
@@ -111,9 +108,7 @@ class TaskDataActions {
    */
   setFormattedDateAll (taskDataAll) {
     const formatter = new Formatter();
-    console.log(formatter.prepareDisplay(taskDataAll));
-
-    return formatter.prepareDisplay(taskDataAll); 
+    return formatter.prepareDisplayTable(taskDataAll); 
   }
 
   /**
