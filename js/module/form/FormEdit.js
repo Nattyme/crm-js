@@ -1,4 +1,3 @@
-import {NAMES} from '../../config.js';
 import Formatter from '../../utils/formatter.js';
 import validate from '../../utils/validate.js';
 import {eventBus} from '../EventBus.js';
@@ -107,6 +106,7 @@ class FormEdit  {
   }
 
   formatFromData(formData) {
+
     const formatter = new Formatter();
     console.log(formData);
     console.log(formData.product);
@@ -114,6 +114,7 @@ class FormEdit  {
     
     return {
       ...formData,
+      phone : formatter.formatPhone(formData.phone),
       product : formatter.formatProduct(formData.product),
       status : formatter.formatStatus(formData.status)
     }

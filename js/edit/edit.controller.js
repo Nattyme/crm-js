@@ -2,8 +2,6 @@ import {NAMES} from './../config.js';
 import { eventBus, TaskManager, FormEdit } from './../model.js';
 import { TaskDataActions } from  '../module/TaskManager/TaskDataActions.js';
 import { EditFormRender } from './EditFormRender.js';
-import Formatter from './../utils/formatter.js';
-
 
 class Controller {
   constructor () {
@@ -19,14 +17,11 @@ class Controller {
     const {form, select, selectStatus, inputs} = this.render.getFormElements(); // Получим элем-ты формы из render
     this.formEditManager.initFormElems(form, select, selectStatus, inputs);       // Передадим в методы форм
 
-    this.storage.loadFromStorage();      // Получим данные из localStorage
-
 
     this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
-      const taskFormatted = this.formEditManager.formatFromData(task); //отформатируем поля для отображения
       // Обновление интерфейса
       this.formEditManager.setFormTaskValue(
-        taskFormatted, 
+        task, 
         this.render.id, 
         this.render.date, 
         this.render.select, 
@@ -35,9 +30,10 @@ class Controller {
       );
     });
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
-      this.storage.loadFromStorage();
+      console.log(task);
 
       const formDataFormatted = this.formEditManager.formatFromData(task);
+      console.log('FORMATTED:', formDataFormatted);
       this.formEditManager.setFormTaskValue(
         formDataFormatted, 
         this.render.id, 
@@ -73,12 +69,10 @@ class Controller {
     const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
     this.setCurrentTaskData(updatedTaskData); // Обновим текущую задачу
     const taskSaved = this.taskManager.updateTaskInData(updatedTaskData); // Обновим задачу в массиве
-    const task = this.formEditManager.formatFromData(taskSaved); //отформатируем поля для отображения
-    console.log(task);
-   
+
     // Установим новые знач-я в форму
     this.formEditManager.setFormTaskValue(
-      task, 
+      taskSaved, 
       this.render.id, 
       this.render.date, 
       this.render.select, 
