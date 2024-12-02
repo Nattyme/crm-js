@@ -70,6 +70,17 @@ class TaskManager {
     }
   }
 
+  updateTask(updatedTask) {
+    const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
+
+    if (taskIndex !== -1) {
+      this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
+      this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
+    } else {
+      console.error(`Задача ${updatedTask.id} не найдена`);
+    }
+  }
+
   /**
    * Рассчитывает ID для новой задачи.
    *

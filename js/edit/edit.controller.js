@@ -70,17 +70,25 @@ class Controller {
 
     // Обновим задачу, передадим стартовые и новые знач-я задачи
     const taskUpdated = this.formEditManager.updateTaskData(this.currentTaskData, formData);
-    console.log(taskUpdated);
-    
+console.log(taskUpdated);
+
+    // Установим новые знач-я в форму
     this.formEditManager.setFormTaskValue(
       taskUpdated, 
-      this.currentTaskData.id, 
+      this.render.id, 
       this.render.date, 
       this.render.select, 
       this.render.selectStatus, 
       this.render.inputs
     );
-    this.eventBus.emit(NAMES.TASKS_SAVE);    
+
+    this.taskManager.updateTask(taskUpdated); // Обновим задачу в массиве
+
+    // Сохраняем обновленные данные в localStorage
+    this.storage.saveToStorage();
+    this.eventBus.emit(NAMES.TASKS_SAVE, taskUpdated);    
+    console.log(NAMES.TASKS_SAVE);
+    
   }
 
 
