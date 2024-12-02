@@ -23,21 +23,17 @@ class Controller {
 
 
     this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
-      this.taskManager.updateTaskInData(task); // Обновим задачу в массиве
-
+      const taskFormatted = this.formEditManager.formatFromData(task); //отформатируем поля для отображения
       // Обновление интерфейса
       this.formEditManager.setFormTaskValue(
-        task, 
+        taskFormatted, 
         this.render.id, 
         this.render.date, 
         this.render.select, 
         this.render.selectStatus, 
-        this.render.inputs);
-      },
-
-      // Сохраняем обновленные данные в localStorage
-      this.storage.saveToStorage()
-    );
+        this.render.inputs
+      );
+    });
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
       this.storage.loadFromStorage();
 
@@ -73,13 +69,13 @@ class Controller {
     // Получим данные из формы
     const formData = this.formEditManager.getFormData(this.render.form);
 
-    // Обновим дааные задачи, передадим стартовые и новые знач-я задачи
-    const updateTaskData = this.formEditManager.updateTaskData(this.currentTaskData, formData);
-
-    console.log('Updated task: ', updateTaskData);
-    
-
-    // const task = this.taskManager.updateTaskInData(taskUpdated); // Обновим задачу в массиве
+    // Обновим даные задачи, передадим стартовые и новые знач-я задачи
+    const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
+    this.setCurrentTaskData(updatedTaskData); // Обновим текущую задачу
+    const taskSaved = this.taskManager.updateTaskInData(updatedTaskData); // Обновим задачу в массиве
+    const task = this.formEditManager.formatFromData(taskSaved); //отформатируем поля для отображения
+    console.log(task);
+   
     // Установим новые знач-я в форму
     this.formEditManager.setFormTaskValue(
       task, 
@@ -89,9 +85,7 @@ class Controller {
       this.render.selectStatus, 
       this.render.inputs
     );
-
-    
-    this.eventBus.emit(NAMES.TASKS_SAVE, updateTaskData);    
+    this.eventBus.emit(NAMES.TASKS_SAVE, task);    
   }
 
 

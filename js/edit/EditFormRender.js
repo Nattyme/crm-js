@@ -24,11 +24,6 @@ class EditFormRender  {
   }
  }
 
- setTaskId(id) {
-  return id;
- }
-
-
 }
 // this.setFormData();
 export { EditFormRender };

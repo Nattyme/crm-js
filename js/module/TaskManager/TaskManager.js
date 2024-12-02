@@ -52,32 +52,37 @@ class TaskManager {
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
-    this.eventBus.on(NAMES.STATUS_CHANGED, this.updateTaskStatus.bind(this)); // обнов-е статуса задачи
+    // this.eventBus.on(NAMES.STATUS_CHANGED, this.updateTaskStatus.bind(this)); // обнов-е статуса задачи
   }
 
-  /**
-   * Обновляет статус задачи в массиве данных.
-   * @param {Object} updatedTask - Объект задачи с обновлёнными данными.
-   * @throws {Error} Если задача с таким `id` не найдена, выводится ошибка.
- */
-  updateTaskStatus(updatedTask) {
-    const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
-    if (taskIndex !== -1) {
-      this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
-      this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
-    } else {
-      console.error(`Задача ${updatedTask.id} не найдена`);
-    }
-  }
+//   /**
+//    * Обновляет статус задачи в массиве данных.
+//    * @param {Object} updatedTask - Объект задачи с обновлёнными данными.
+//    * @throws {Error} Если задача с таким `id` не найдена, выводится ошибка.
+//  */
+//   updateTaskStatus(updatedTask) {
+//     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
+//     if (taskIndex !== -1) {
+//       this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
+//       this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
+//     } else {
+//       console.error(`Задача ${updatedTask.id} не найдена`);
+//     }
+//   }
 
   updateTaskInData(updatedTask) {
+    if (!updatedTask || !updatedTask.id) {
+      console.error("Обновляемая задача некорректна:", updatedTask);
+      return;
+    }
+    
     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
 
     if (taskIndex !== -1) {
       this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
       this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
     } else {
-      console.error(`Задача ${updatedTask.id} не найдена`);
+      console.error("Задача с указанным id не найдена:", updatedTask.id);
     }
   }
 

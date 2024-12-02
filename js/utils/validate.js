@@ -147,6 +147,7 @@ const validate = {
   status (incomeStatus) {
     const status = new Status();
     const statusTypes = status.data;
+    console.log('Validating field:', incomeStatus);
 
     for (const item in statusTypes) {
       const currentObj = statusTypes[item];

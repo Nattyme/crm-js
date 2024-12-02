@@ -61,18 +61,24 @@ class Formatter {
   }
 
   formatStatus(incomeStatus) {
+    console.log(incomeStatus);
+    
     const status = new Status();
     const statusTypes = status.data;
 
     for (const item in statusTypes) {
+      console.log(incomeStatus.key);
+      console.log('statusTypes', statusTypes[item].key);
+      console.log(statusTypes[item].text);
+      
       const currentObj = statusTypes[item];
      
       if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
-        console.log(currentObj);
-        
+        return currentObj;
+      } else if (incomeStatus.key === statusTypes[item].key) {
         return currentObj;
       }
-
+      
     }
 
     console.log('Статус не найден');

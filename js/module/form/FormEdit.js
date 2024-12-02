@@ -23,7 +23,9 @@ class FormEdit  {
     this.selectStatus = selectStatus;
   }
 
-  updateTaskData(startTaskData, updatedTaskData) {
+  updateTask(startTaskData, updatedTaskData) {
+    console.log(startTaskData);
+    
     // Ищем пустые знач-я
     for ( const field in updatedTaskData) {
       if ( updatedTaskData[field] === null || updatedTaskData[field] === undefined) {
@@ -44,9 +46,6 @@ class FormEdit  {
 
     console.log('DATA after ADD NEW DATA', this.data);
 
-    // Событие сохранения 
-    this.eventBus.emit(NAMES.TASKS_SAVE, updatedRecord); 
-    
     return updatedRecord;
   }
 
@@ -85,7 +84,6 @@ class FormEdit  {
     const getSelectedIndex = function (options, value) {
       return [...options].findIndex( (element) => element.textContent.trim() === value);
     }
-console.log(task);
 
     // Находим и выбираем нужный продукт
     selectElem.selectedIndex = getSelectedIndex([...selectElem.options], task.product);
@@ -110,6 +108,10 @@ console.log(task);
 
   formatFromData(formData) {
     const formatter = new Formatter();
+    console.log(formData);
+    console.log(formData.product);
+    console.log(formData.status);
+    
     return {
       ...formData,
       product : formatter.formatProduct(formData.product),
