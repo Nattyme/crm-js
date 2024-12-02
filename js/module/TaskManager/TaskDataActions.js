@@ -77,9 +77,8 @@ class TaskDataActions {
     // В массиве data найдём нужную по ID
     let data = allTaskData.find(task => task.id === Number(id) );
 
-
     // Если ID не найден
-    if (!data) return console.error(`Запись не найдена в ${this.data}`);
+    if (!data) return console.log(`Запись не найдена в ${this.data}`);
 
     const dataCopy = {...data};     // Создадим копию объекта
     console.log(dataCopy);

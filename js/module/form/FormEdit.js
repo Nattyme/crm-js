@@ -23,29 +23,48 @@ class FormEdit  {
     this.selectStatus = selectStatus;
   }
 
-  updateTaskData(id, record) {
-    
-    console.log(record);
-    
+  updateTaskData(startTaskData, updatedTaskData) {
     // Ищем пустые знач-я
-    for ( const field in record) {
-      if ( record[field] === null || record[field] === undefined) {
+    for ( const field in updatedTaskData) {
+      if ( updatedTaskData[field] === null || updatedTaskData[field] === undefined) {
         console.log('Ошибка данных. Запись не добавлена. Поля формы не должны быть пустыми');
         return;
       }
     }
+console.log(updatedTaskData);
+console.log(updatedTaskData.status);
 
-    record.id = Number(id); 
-    record.product = validate.product(record.product); //Отформатируем знач-е product 
-    record.changed = Date.now();
-    // this.data.push(record); 
+    const updatedRecord = {
+      ...startTaskData,
+      email : this.setProperty(updatedTaskData.email, validate.email),
+      full_name : this.setProperty(updatedTaskData.full_name, validate.name),
+      product : this.setProperty(updatedTaskData.product, validate.product), //Отформатируем знач-е product 
+      phone :  this.setProperty(updatedTaskData.phone, validate.phone),
+      status : this.setProperty(updatedTaskData.status, validate.status),
+      changed : Date.now()
+    }
+
+    console.log(updatedRecord);
+
     console.log('DATA after ADD NEW DATA', this.data);
-console.log(record);
 
     // Событие сохранения 
-    this.eventBus.emit(NAMES.TASKS_SAVE, record); 
-    // this.eventBus.emit(record); // передадим запись 
-    return record;
+    this.eventBus.emit(NAMES.TASKS_SAVE, updatedRecord); 
+    
+    return updatedRecord;
+  }
+
+  setProperty ( value, validate) {
+    const result = validate(value);
+   console.log(result);
+   
+    if(!result.valid) {
+      console.log(`Ошибка: неверное поле ${value}`);
+      
+      return null;
+    } 
+    
+    return result.value;
   }
 
   getTaskID () {
@@ -60,9 +79,8 @@ console.log(record);
 
   setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {
     console.log(task);
-   
-    console.log(task.status.text);
-
+    console.log(idElem);
+    
     // Установим значения в поля формы
     idElem.textContent = task.id;
     dateElem.textContent = task.date;
@@ -75,7 +93,9 @@ console.log(record);
       return options.findIndex( (element) => element.textContent.trim() === value);
     }
 
+    // Находим и выбираем нужный продукт
     selectElem.selectedIndex = getSelectedIndex(Array.from(selectElem.options), task.product);
+    // Находим и выбиарем нужный статус
     selectStatusElem.selectedIndex = getSelectedIndex(Array.from(selectStatusElem.options), task.status.text);   
   }
 
@@ -88,17 +108,12 @@ console.log(record);
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
+
+    console.log(formData);
+    
     
     return formData;
   }
-
-  getTimestampOrigin (task) {
-    return task.timestamp;
-  }
-
-
-
-
 }
 
 export { FormEdit };

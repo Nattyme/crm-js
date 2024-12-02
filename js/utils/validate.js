@@ -1,4 +1,5 @@
 import { products } from './../data.js';
+import { Status } from '../module/Status.js';
 
 /**
  * Объект `validate` содержит методы для проверки корректности значений различных полей формы.
@@ -138,6 +139,36 @@ const validate = {
         return productData[name];
       }
     }
+  },
+
+  // status: "new"
+  // {key: 'new', text: 'Новая', class: 'badge-danger'}
+  
+  status (incomeStatus) {
+    console.log(incomeStatus);
+    
+    const status = new Status();
+    const statusTypes = status.data;
+    console.log(statusTypes);
+
+    for (const item in statusTypes) {
+      const currentObj = statusTypes[item];
+      console.log(currentObj.key);
+      console.log(incomeStatus.trim());
+      if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
+        console.log(currentObj);
+        
+        return {valid: true, value: currentObj};
+      }
+
+      
+      
+
+    }
+
+    console.log('Статус не найден');
+    return null;
+    
   }
 }
 

@@ -1,13 +1,13 @@
 class EditFormRender  {
  constructor () {
   this.form = document.querySelector('#form'); 
-  this.id = this.form.querySelector('#number');                           
   this.date = this.form.querySelector('#date');
+  this.id = this.form.querySelector('#number');          
   this.select = this.form.querySelector('#product');
   this.selectStatus = this.form.querySelector('#status');
 
   this.inputs =  {
-    full_name  : this.form.querySelector('#name'),
+    full_name  : this.form.querySelector('#full_name'),
     phone : this.form.querySelector('#phone'),
     email : this.form.querySelector('#email'),
   }

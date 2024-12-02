@@ -18,7 +18,7 @@ class Status {
                   class : 'badge-danger'
                 },
         DOING : { 
-                  key: 'processing',
+                  key: 'inwork',
                   text : 'В работе',
                   class : 'badge-warning'
                 },

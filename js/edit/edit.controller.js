@@ -1,3 +1,4 @@
+import {NAMES} from './../config.js';
 import { eventBus, TaskManager, FormEdit } from './../model.js';
 import { TaskDataActions } from  '../module/TaskManager/TaskDataActions.js';
 import { Storage } from '../module/TaskManager/Storage.js';
@@ -20,15 +21,28 @@ class Controller {
     this.formEditManager.initFormElems(form, select, selectStatus, inputs);       // Передадим в методы форм
 
     this.storage.loadFromStorage();      // Получим данные из localStorage
+
+
+    this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
+      console.log('Задача обновлена:', task);
+      // Например, обновление интерфейса
+      this.formEditManager.setFormTaskValue(
+        task, 
+        this.render.id, 
+        this.render.date, 
+        this.render.select, 
+        this.render.selectStatus, 
+        this.render.inputs);
+    });
+
+    this.currentTaskData = this.setCurrentTaskData();
   }
   
 
   setInit() {
-    const dataTaskAll = this.getTasksData ();
-    const id =  this.formEditManager.getTaskID();
+    const dataTask = this.currentTaskData;
+console.log(dataTask);
 
-    const dataTask = this.taskDataAction.getTaskData(id, dataTaskAll);
-    const timestampOrigin = this.formEditManager.getTimestampOrigin(dataTask);
     this.formEditManager.setFormTaskValue(
       dataTask, 
       this.render.id, 
@@ -54,11 +68,22 @@ class Controller {
     e.preventDefault();
       
     const formData = this.formEditManager.getFormData(this.render.form);
-    console.log(formData);
-    const id = Formatter.getUrlID();
-    const taskUpdated = this.formEditManager.updateTaskData(id, formData);
+    const id = this.render.id.textContent;  // Получим значение id из dom-элемента id 
+    console.log(id);
+    console.log( this.render.selectStatus);
+
+    // Обновим задачу, передадим стартовые и новые знач-я задачи
+    const taskUpdated = this.formEditManager.updateTaskData(this.currentTaskData, formData);
     console.log(taskUpdated);
-    this.formEditManager.setFormTaskValue();
+    
+    this.formEditManager.setFormTaskValue(
+      taskUpdated, 
+      this.render.id, 
+      this.render.date, 
+      this.render.select, 
+      this.render.selectStatus, 
+      this.render.inputs
+    );
   }
 
 
@@ -67,6 +92,15 @@ class Controller {
     const dataCopy = [...data];     // Создадим копию массива
 
     return dataCopy;
+  }
+
+  setCurrentTaskData() {
+    const dataTaskAll = this.getTasksData ();
+    const id =  this.formEditManager.getTaskID();
+    console.log(dataTaskAll);
+    console.log(id);
+    
+    return this.taskDataAction.getTaskData(id, dataTaskAll);
   }
 
 

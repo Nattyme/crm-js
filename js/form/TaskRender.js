@@ -26,7 +26,7 @@ class TaskRender {
     this.select = this.form.querySelector('#product'),
 
     this.inputs = {
-      full_name  : this.form.querySelector('#name'),
+      full_name  : this.form.querySelector('#full_name'),
       phone : this.form.querySelector('#phone'),
       email : this.form.querySelector('#email'),
     }
