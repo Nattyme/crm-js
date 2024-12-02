@@ -1,4 +1,5 @@
 import { NAMES } from '../config.js';
+
 class Storage {
   constructor(data, eventBus) {
     this.data = data;

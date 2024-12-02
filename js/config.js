@@ -1,5 +1,7 @@
 const NAMES = {
+  // Task manger
   TASK_ACTION : 'task_action',
+  ADD_TASK : 'add_task',
   
   // Local Storage
   

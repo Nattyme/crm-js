@@ -1,6 +1,5 @@
 import { NAMES } from './../../config.js';
 import {TaskManagerActions} from './TaskManagerActions.js';
-// Прототипы
 import {Storage} from  '../Storage.js';
 
 /**
@@ -22,9 +21,7 @@ class TaskManager {
   constructor (eventBus) {
     this.data = [];
     this.eventBus = eventBus; // общий EventBus
-    this.subscribeToEvents();
 
-    // Прототипы
     // STORAGE
     this.storage = new Storage(); // экз-р хранилища
     this.loadFromStorage =  this.storage.loadFromStorage.bind(this);
@@ -41,36 +38,12 @@ class TaskManager {
     this.prepareDisplay = this.dataAction.prepareDisplay.bind(this);
 
     // Подписка на события
-    // this.subscribeToEvents();
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
 
     // Получим данные из localStorage
     this.loadFromStorage();
-  }
-
-  subscribeToEvents () {
-    // Подписка на одно событие для обр-ки остальных 
-    this.eventBus.on(NAMES.TASK_ACTION, (actionType) => {
-      switch (actionType) {
-        case NAMES.TASKS_LOAD :
-          this.loadFromStorage();
-          break;
-        case NAMES.TASKS_SAVE:
-          this.saveToStorage();
-          break;
-        case NAMES.TASKS_CLEAR :
-          this.clearStorage();
-          break;
-        default :
-            console.log('Действие не гайдено в subscribeEvents');
-        
-      }
-    });
-    // this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
-    // this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
-    // this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
   }
 
   updateTaskInData(taskUpdated) {

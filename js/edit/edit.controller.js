@@ -1,4 +1,5 @@
 import {NAMES} from './../config.js';
+import {subscribeToEvents} from './../module/subscribeToEvents.js';
 import { eventBus, TaskManager, TaskManagerActions, FormEdit } from './../model.js';
 import { EditFormRender } from './EditFormRender.js';
 
