@@ -95,7 +95,6 @@ class Controller {
     const dataTaskAll = this.getTasksData ();
     const id =  this.formEditManager.getTaskID();
     const currentTask =  this.taskManagerAction.getTaskData(id, dataTaskAll);
-console.log('id в setCurrent ', id);
 
     if(currentTask) {
       this.currentTaskData = currentTask;

@@ -1,5 +1,9 @@
-import { NAMES } from '../../config.js';
+import { NAMES } from '../config.js';
 class Storage {
+  constructor(data, eventBus) {
+    this.data = data;
+    this.eventBus = eventBus;
+  }
   /**
    * Загружает данные из localStorage.
    *
@@ -33,7 +37,7 @@ class Storage {
   clearStorage() {
     localStorage.removeItem(NAMES.TASKS_DATA);
     this.data = [];
-    this.eventBus.emit(NAMES.TASKS_SAVE); // Уведом-е об изменениях
+    this.eventBus.emit(NAMES.TASKS_SAVE, this.data); // Уведом-е об изменениях
     console.log('Данные удалены из local storage. Массив data пуст');
   }
 }
