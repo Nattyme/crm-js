@@ -11,7 +11,7 @@ class Controller {
 
     this.formEditManager = new FormEdit();
     this.taskManager = new TaskManager(eventBus);
-    this.taskDataAction = new TaskDataActions();
+    this.taskManagerAction = new TaskDataActions();
     this.render = new EditFormRender();
 
     this.storage = this.taskManager.storage;
@@ -100,7 +100,7 @@ class Controller {
     const dataTaskAll = this.getTasksData ();
     const id =  this.formEditManager.getTaskID();
     
-    return this.taskDataAction.getTaskData(id, dataTaskAll);
+    return this.taskManagerAction.getTaskData(id, dataTaskAll);
   }
 
 
