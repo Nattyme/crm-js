@@ -1,3 +1,5 @@
+import Formatter from "../../utils/formatter.js";
+
 class FormActions {
   constructor (form, select, inputs) {
     this.form = form;
@@ -14,14 +16,12 @@ class FormActions {
    */
   getFormData(formElement) {
     const form = new FormData(formElement);
- 
     let formData = {}; // Объект для значений формы
 
     // Получим данные из полей
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
-    console.log(formData);
     
     return formData;
   }
@@ -63,6 +63,16 @@ class FormActions {
     }
 
     select.selectedIndex = 0;  // Сбросим селектор опций
+  }
+
+  prepareDisplay (taskData) {
+    const formatter = new Formatter();
+    return {
+      ...taskData,
+      phone : formatter.formatPhone(taskData.phone),
+      full_name : formatter.formatName(taskData.full_name)
+    }
+    
   }
 
   /**

@@ -4,7 +4,7 @@ import { eventBus } from './module/EventBus.js';
 import { Status } from './module/Status.js';
 import { Table } from './module/Table.js';
 import { FormEdit } from './module/form/FormEdit.js';
-import FormActions from './module/form/FormActions.js';
+import FormActions from './module/form/Form.js';
 
 
 /**

@@ -82,14 +82,7 @@ class TaskDataActions {
     return dataCopy;  // Вернём запись
   }
 
-  /**
-   * Форматирует временную метку.
-   *
-   * @method getFormattedData
-   * @memberof TaskManager
-   * @param {number} timestamp - Временная метка.
-   * @returns {string} Отформатированная дата.
-   */
+ 
   setFormattedDate (timestamp) {
     console.log('getFormatted data', timestamp);
     
@@ -98,27 +91,13 @@ class TaskDataActions {
    
   }
 
-  /**
-   * Форматирует временную метку.
-   *
-   * @method getFormattedData
-   * @memberof TaskManager
-   * @param {number} timestamp - Временная метка.
-   * @returns {string} Отформатированная дата.
-   */
-  setFormattedDateAll (taskDataAll) {
+
+  prepareDisplay (taskDataAll) {
     const formatter = new Formatter();
-    return formatter.prepareDisplayTable(taskDataAll); 
+    return formatter.formatPrepareDisplayTask(taskDataAll); 
   }
 
-  /**
-   * Форматирует временную метку.
-   *
-   * @method getFormattedData
-   * @memberof TaskManager
-   * @param {number} timestamp - Временная метка.
-   * @returns {string} Отформатированная дата.
-   */
+
   setFormattedDateTime (timestamp) {
     console.log('getFormatted data', timestamp);
     const func = new Formatter();

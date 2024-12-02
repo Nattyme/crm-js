@@ -7,7 +7,7 @@ class Formatter {
   constructor () {
     this.regEx = {
       digit :     /\D/g,
-      formatRU : /^8(\d{3})(\d{3})(\d{2})(\d{2})$/,
+      formatRU : /^[87](\d{3})(\d{3})(\d{2})(\d{2})$/,
     }
   }
 
@@ -30,7 +30,7 @@ class Formatter {
   formatPhone (phoneNumber) {
     let phone = phoneNumber.replace(this.regEx.digit, '');
 
-    if (phone.length === 11 && phone[0] === '8') {
+    if (phone.length === 11 && (phone[0] === '8' || phone[0] === '7') ) {
       return phone.replace(this.regEx.formatRU, '+7 ($1) $2-$3-$4'); // формат RU
     } 
 
@@ -97,7 +97,7 @@ class Formatter {
    * @param {Function} data.date - Функция, возвращающая дату.
    * @returns {Object} Объект данных для отображения с применением форматирования.
  */
-  prepareDisplayTable ( data ) {
+  formatPrepareDisplayTask ( data ) {
     const updatedData = data.map( record => ({
       ...record,
       id : String(record.id),
@@ -109,6 +109,11 @@ class Formatter {
     }));
 
     return updatedData;
+  }
+
+  formatCamelWords (dataString) {
+    dataString = dataString.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+    dataString = newString.join(' ');
   }
 }
 

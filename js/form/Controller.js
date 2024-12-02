@@ -2,7 +2,6 @@ import { Task, TaskManager, FormActions, eventBus  } from '../model.js';
 import { TaskRender } from './TaskRender.js';
 import { TestDataFactory } from './TestDataFactory.js';
 import { NAMES } from '../config.js';
-import Formatter from './../utils/formatter.js';
 
 /**
  * Контроллер для обработки логики формы задач.
@@ -73,9 +72,6 @@ class Controller {
     const id = this.getNextTaskId(); 
     const taskFormData = this.formActions.getFormData( this.render.getForm() );                 // получим данные задачи из формы
     const task = new Task({...taskFormData});   // Создадим задачу    
-    
-    // const formatter = new Formatter();
-    // const task = formatter.prepareDisplay(taskData);
 
     this.manager.addNewData(id, task);                                                      // добавим задачу в массив
     this.eventBus.emit(NAMES.TASKS_SAVE);                                                   // вызываем событие сохранения
@@ -94,8 +90,11 @@ class Controller {
    */
   setRandomData () {
     const testData = this.getRandomData(); // получим случайные тест. данные
-    const task = new Task( {...testData} ); // создадим случ-ую задачу 
+    const taskData = new Task( {...testData} ); // создадим случ-ую задачу 
 
+    // Отформатируем телефон
+    const task = this.formActions.prepareDisplay(taskData);
+    
     this.formActions.setFormData(task, this.render.getSelect(), this.render.getInputs() ); // заполним форму значениями задачи
 
     return task; 

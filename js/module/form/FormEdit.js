@@ -1,7 +1,7 @@
-import {NAMES} from './../../config.js';
+import {NAMES} from '../../config.js';
 import Formatter from '../../utils/formatter.js';
 import validate from '../../utils/validate.js';
-import {eventBus} from './../../module/EventBus.js';
+import {eventBus} from '../EventBus.js';
 
 class FormEdit  {
   constructor () {

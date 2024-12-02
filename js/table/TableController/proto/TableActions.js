@@ -13,7 +13,7 @@ class TableActions {
     const dataCopy = this.manager.getTasksData(); // Получим данные всех задач из массива data
     // console.log(dataCopy);
    
-    const dataFormatted = this.manager.getFormattedData(dataCopy); // Отформатируем поля
+    const dataFormatted = this.manager.prepareDisplay(dataCopy); // Отформатируем поля
     console.log(dataFormatted);
     const statusData = this.status.getStatusData();  // Получили массив со всеми статусами
 
