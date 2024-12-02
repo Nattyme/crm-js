@@ -23,13 +23,11 @@ class Task {
     this.timestamp = Date.now();
     this.full_name = this.setProperty( full_name, validate.name);
     this.product = this.setProperty( product, validate.product);
-    // this.product = product,
     this.email = this.setProperty( email, validate.email);
     this.phone = this.setProperty( phone, validate.phone);
     this.status = status.data.NEW.key; // из класса Status
     this.changed = Date.now();
 
-    console.log( this.product);
     // После созда-я задачи отправляем соб-е о статусе
     eventBus.emit(NAMES.TASK_CREATED, this); // Передаем созданную задачу
   }
@@ -45,7 +43,6 @@ class Task {
    */
   setProperty ( value, validate) {
     const result = validate(value);
-   console.log(result);
    
     if(!result.valid) {
       return null;

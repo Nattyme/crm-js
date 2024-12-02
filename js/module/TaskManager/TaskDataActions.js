@@ -22,15 +22,13 @@ class TaskDataActions {
       }
     }
 
-    record.id = id; 
-    record.product = validate.product(record.product); //Отформатируем знач-е product 
-
+    record.id = id; // Добавим id
+  
     this.data.push(record); 
     console.log('DATA after ADD NEW DATA', this.data);
 
-    // Событие сохранения 
-    this.eventBus.emit(NAMES.TASKS_SAVE, record); 
-    // this.eventBus.emit(record); // передадим запись 
+    this.eventBus.emit(NAMES.TASKS_SAVE, record);    // Событие сохранения 
+
     return record;
   }
 
