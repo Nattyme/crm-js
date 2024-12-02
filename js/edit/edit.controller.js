@@ -1,7 +1,6 @@
 import {NAMES} from './../config.js';
 import { eventBus, TaskManager, FormEdit } from './../model.js';
 import { TaskDataActions } from  '../module/TaskManager/TaskDataActions.js';
-import { Storage } from '../module/TaskManager/Storage.js';
 import { EditFormRender } from './EditFormRender.js';
 import Formatter from './../utils/formatter.js';
 
@@ -16,7 +15,7 @@ class Controller {
     this.render = new EditFormRender();
 
     this.storage = this.taskManager.storage;
-
+    
     const {form, select, selectStatus, inputs} = this.render.getFormElements(); // Получим элем-ты формы из render
     this.formEditManager.initFormElems(form, select, selectStatus, inputs);       // Передадим в методы форм
 
@@ -24,7 +23,10 @@ class Controller {
 
 
     this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
+      console.log(this.render.id);
+      
       console.log('Задача обновлена:', task);
+
       // Например, обновление интерфейса
       this.formEditManager.setFormTaskValue(
         task, 
@@ -35,13 +37,15 @@ class Controller {
         this.render.inputs);
     });
 
+
     this.currentTaskData = this.setCurrentTaskData();
   }
   
 
   setInit() {
+    this.eventBus.emit(NAMES.TASKS_LOAD);
+
     const dataTask = this.currentTaskData;
-console.log(dataTask);
 
     this.formEditManager.setFormTaskValue(
       dataTask, 
@@ -52,12 +56,7 @@ console.log(dataTask);
       this.render.inputs
     );
 
-    this.setEventListener(); // Слушает событие submitw
-    
-    // 4. Если клик произошел - получаем данные всех полей формы.
-    // 5. Валидация полей формы.
-    // 6.Если ок - сохарняем в локал сторидж
-    // 7. Заново устанавливаем обнов данные в форму?
+    this.setEventListener(); // Слушает событие submit
   }
   
   setEventListener() {
@@ -68,9 +67,6 @@ console.log(dataTask);
     e.preventDefault();
       
     const formData = this.formEditManager.getFormData(this.render.form);
-    const id = this.render.id.textContent;  // Получим значение id из dom-элемента id 
-    console.log(id);
-    console.log( this.render.selectStatus);
 
     // Обновим задачу, передадим стартовые и новые знач-я задачи
     const taskUpdated = this.formEditManager.updateTaskData(this.currentTaskData, formData);
@@ -78,12 +74,13 @@ console.log(dataTask);
     
     this.formEditManager.setFormTaskValue(
       taskUpdated, 
-      this.render.id, 
+      this.currentTaskData.id, 
       this.render.date, 
       this.render.select, 
       this.render.selectStatus, 
       this.render.inputs
     );
+    this.eventBus.emit(NAMES.TASKS_SAVE);    
   }
 
 

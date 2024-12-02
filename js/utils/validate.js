@@ -132,11 +132,13 @@ const validate = {
   },
 
   product (name) {
+    console.log(name);
+    
     const productData = products;
 
     for (const product in productData) {
       if(product === name ) {
-        return productData[name];
+        return {valid: true, value: productData[name]};
       }
     }
   },
@@ -153,16 +155,12 @@ const validate = {
 
     for (const item in statusTypes) {
       const currentObj = statusTypes[item];
-      console.log(currentObj.key);
-      console.log(incomeStatus.trim());
+     
       if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
         console.log(currentObj);
         
         return {valid: true, value: currentObj};
       }
-
-      
-      
 
     }
 

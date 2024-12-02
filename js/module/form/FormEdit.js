@@ -31,7 +31,7 @@ class FormEdit  {
         return;
       }
     }
-console.log(updatedTaskData);
+console.log(updatedTaskData.product);
 console.log(updatedTaskData.status);
 
     const updatedRecord = {
@@ -80,6 +80,8 @@ console.log(updatedTaskData.status);
   setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {
     console.log(task);
     console.log(idElem);
+    console.log(idElem.textContent);
+    console.log(task.id);
     
     // Установим значения в поля формы
     idElem.textContent = task.id;
@@ -90,13 +92,16 @@ console.log(updatedTaskData.status);
 
     // Ф-ция ищет нужную опцию в селект
     const getSelectedIndex = function (options, value) {
-      return options.findIndex( (element) => element.textContent.trim() === value);
+      return [...options].findIndex( (element) => element.textContent.trim() === value);
     }
 
     // Находим и выбираем нужный продукт
-    selectElem.selectedIndex = getSelectedIndex(Array.from(selectElem.options), task.product);
+    selectElem.selectedIndex = getSelectedIndex([...selectElem.options], task.product);
     // Находим и выбиарем нужный статус
-    selectStatusElem.selectedIndex = getSelectedIndex(Array.from(selectStatusElem.options), task.status.text);   
+    selectStatusElem.selectedIndex = getSelectedIndex([...selectStatusElem.options], task.status.text);  
+    console.log(getSelectedIndex([...selectStatusElem.options], task.status.text));
+    console.log(task.status.text);
+     
   }
 
   getFormData(formElement) {

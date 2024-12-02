@@ -25,7 +25,7 @@ class Status {
     
         DONE : {
                   key: 'completed',
-                  text : 'Завершенный',
+                  text : 'Завершена',
                   class : 'badge-success'
                 }
     };

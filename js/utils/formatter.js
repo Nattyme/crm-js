@@ -18,11 +18,9 @@ class Formatter {
   }
 
   static getUrlID () {
-    const url = window.location.href;  // получим полный адрес страницы
-    const uri = url.split('?')[1] ? new URLSearchParams( url.split('?')[1] ) : console.log('В url нет параметров'); // разделим по '?'
-    const id = uri.get('id') ? uri.get('id') : console.log('В параметре ID нет значения.');  // если есть парам-р 'id' - возьмем его знач-е
-
-    if ( !uri || !id) { return null; } // Нет парам-в - return
+    const url = window.location.search;  // получим полный адрес страницы
+    const params = new URLSearchParams(url);
+    const id = params.get('id') ? params.get('id') : console.log('В параметре ID нет значения.');  // если есть парам-р 'id' - возьмем его знач-е
 
     return id;
   }
