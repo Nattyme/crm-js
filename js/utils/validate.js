@@ -132,35 +132,26 @@ const validate = {
   },
 
   product (name) {
-    console.log(name);
     const productData = products;
 
     for (const product in productData) {
-      if (product === name) {
-        console.log({valid: true, value: productData[name]});
-        
-        return {valid: true, value: product};
-      }
+      if (product === name) { return {valid: true, value: product} }
     }
   },
 
   status (incomeStatus) {
     const status = new Status();
     const statusTypes = status.data;
-    console.log('Validating field:', incomeStatus);
 
     for (const item in statusTypes) {
       const currentObj = statusTypes[item];
      
       if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
-        console.log(currentObj);
-        
         return {valid: true, value: currentObj};
       }
 
     }
 
-    console.log('Статус не найден');
     return null;
     
   }

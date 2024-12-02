@@ -1,6 +1,5 @@
 import {NAMES} from './../config.js';
-import { eventBus, TaskManager, FormEdit } from './../model.js';
-import { TaskDataActions } from  '../module/TaskManager/TaskDataActions.js';
+import { eventBus, TaskManager, TaskManagerActions, FormEdit } from './../model.js';
 import { EditFormRender } from './EditFormRender.js';
 
 class Controller {
@@ -9,7 +8,7 @@ class Controller {
 
     this.formEditManager = new FormEdit();
     this.taskManager = new TaskManager(eventBus);
-    this.taskManagerAction = new TaskDataActions();
+    this.taskManagerAction = new TaskManagerActions();
     this.render = new EditFormRender();
 
     this.storage = this.taskManager.storage;
@@ -30,10 +29,8 @@ class Controller {
       );
     });
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
-      console.log(task);
-
       const formDataFormatted = this.formEditManager.formatFromData(task);
-      console.log('FORMATTED:', formDataFormatted);
+  
       this.formEditManager.setFormTaskValue(
         formDataFormatted, 
         this.render.id, 
@@ -49,6 +46,7 @@ class Controller {
   }
   
 
+
   setInit() {
     const dataTask = this.currentTaskData;
     this.eventBus.emit(NAMES.TASKS_LOAD, dataTask);
@@ -62,24 +60,27 @@ class Controller {
 
   editTask (e) {
     e.preventDefault();
-    // Получим данные из формы
-    const formData = this.formEditManager.getFormData(this.render.form);
 
+     // Получим данные из формы
+    const formData = this.formEditManager.getFormData(this.render.form);
+ 
     // Обновим даные задачи, передадим стартовые и новые знач-я задачи
     const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
-    this.setCurrentTaskData(updatedTaskData); // Обновим текущую задачу
+
+    this.setCurrentTaskData(); // Обновим текущую задачу
     const taskSaved = this.taskManager.updateTaskInData(updatedTaskData); // Обновим задачу в массиве
+    const taskFormatted = this.formEditManager.formatFromData(taskSaved);
 
     // Установим новые знач-я в форму
     this.formEditManager.setFormTaskValue(
-      taskSaved, 
+      taskFormatted, 
       this.render.id, 
       this.render.date, 
       this.render.select, 
       this.render.selectStatus, 
       this.render.inputs
     );
-    this.eventBus.emit(NAMES.TASKS_SAVE, task);    
+    this.eventBus.emit(NAMES.TASKS_SAVE, taskFormatted);    
   }
 
 
@@ -93,8 +94,17 @@ class Controller {
   setCurrentTaskData() {
     const dataTaskAll = this.getTasksData ();
     const id =  this.formEditManager.getTaskID();
+    const currentTask =  this.taskManagerAction.getTaskData(id, dataTaskAll);
+console.log('id в setCurrent ', id);
+
+    if(currentTask) {
+      this.currentTaskData = currentTask;
+    } else {
+      console.log('Задача не найдена');
+      
+    }
     
-    return this.taskManagerAction.getTaskData(id, dataTaskAll);
+    return this.currentTaskData;
   }
 
 

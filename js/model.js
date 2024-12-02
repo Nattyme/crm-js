@@ -1,4 +1,4 @@
-import { TaskManager } from './module/TaskManager/TaskManager.js';
+import { TaskManager, TaskManagerActions } from './module/TaskManager/TaskManager.js';
 import { Task } from './module/Task.js';
 import { eventBus } from './module/EventBus.js';
 import { Status } from './module/Status.js';
@@ -26,7 +26,7 @@ const status = new Status();
  * @exports {dateFormatter} - Утилита для форматирования и обработки дат.
  * @exports {eventBus} - Экземпляр `EventBus` для распространения событий в приложении.
 */
-export { TaskManager, Task, Table, FormActions, FormEdit, status, eventBus}
+export { TaskManager, TaskManagerActions, Task, Table, FormActions, FormEdit, status, eventBus}
 
 
 

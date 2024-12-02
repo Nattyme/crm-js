@@ -43,14 +43,11 @@ class FormEdit  {
       changed : Date.now()
     }
 
-    console.log('DATA after ADD NEW DATA', this.data);
-
     return updatedRecord;
   }
 
   setProperty ( value, validate) {
     const result = validate(value);
-   console.log(result);
    
     if(!result.valid) {
       console.log(`Ошибка: неверное поле ${value}`);
@@ -72,6 +69,8 @@ class FormEdit  {
   }
 
   setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {  
+    console.log(task);
+    
     // Установим значения в поля формы
     idElem.textContent = task.id;
     dateElem.textContent = task.date;
@@ -88,9 +87,6 @@ class FormEdit  {
     selectElem.selectedIndex = getSelectedIndex([...selectElem.options], task.product);
     // Находим и выбирем нужный статус
     selectStatusElem.selectedIndex = getSelectedIndex([...selectStatusElem.options], task.status.text);  
-    console.log(getSelectedIndex([...selectStatusElem.options], task.status.text));
-    console.log(task.status.text);
-     
   }
 
   getFormData(formElement) {
@@ -106,11 +102,7 @@ class FormEdit  {
   }
 
   formatFromData(formData) {
-
     const formatter = new Formatter();
-    console.log(formData);
-    console.log(formData.product);
-    console.log(formData.status);
     
     return {
       ...formData,

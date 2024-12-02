@@ -3,7 +3,7 @@ import validate from '../../utils/validate.js';
 import Formatter from '../../utils/formatter.js';
 
 // actions
-class TaskDataActions {
+class TaskManagerActions {
   /**
    * Добавляет новую задачу.
    *
@@ -77,35 +77,28 @@ class TaskDataActions {
 
     const dataCopy = {...data};     // Создадим копию объекта
     console.log(dataCopy);
-    dataCopy.date = this.setFormattedDateTime( dataCopy.timestamp); // Добавим св-во дата в нужно формате
+    dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Добавим св-во дата в нужно формате
 
     return dataCopy;  // Вернём запись
   }
-
- 
-  setFormattedDate (timestamp) {
-    console.log('getFormatted data', timestamp);
-    
-    const func = new Formatter();
-    return  func.formatDate(timestamp);
-   
-  }
-
 
   prepareDisplay (taskDataAll) {
     const formatter = new Formatter();
     return formatter.formatPrepareDisplayTask(taskDataAll); 
   }
 
-
-  setFormattedDateTime (timestamp) {
-    console.log('getFormatted data', timestamp);
+  formatDateTime (timestamp, type = 'date') {
     const func = new Formatter();
-    return func.formatDateTime(timestamp);
-    // const dataFormatted = func.prepareDisplay(data);
-  
-  }
+    
+    if (type === 'date') {
+      return func.formatDate(timestamp);
+    }
 
+    if (type === 'date-time') {
+      return func.formatDateTime(timestamp);
+    }
+  }
+ 
 }
 
-export {TaskDataActions};
+export {TaskManagerActions};

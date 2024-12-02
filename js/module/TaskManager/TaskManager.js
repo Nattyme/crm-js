@@ -1,8 +1,7 @@
 import { NAMES } from './../../config.js';
-
+import {TaskManagerActions} from './TaskManagerActions.js';
 // Прототипы
 import {Storage} from  './Storage.js';
-import { TaskDataActions } from  './TaskDataActions.js';
 
 /**
  * Класс для управления задачами.
@@ -32,14 +31,13 @@ class TaskManager {
     this.clearStorage =  this.storage.clearStorage.bind(this);
 
     // ACTIONS
-    this.dataAction = new TaskDataActions();
+    this.dataAction = new TaskManagerActions();
     this.addNewData = this.dataAction.addNewData.bind(this);
     this.removeData = this.dataAction.removeData.bind(this);
     this.getAll = this.dataAction.getAll.bind(this);
     this.getTaskData = this.dataAction.getTaskData.bind(this);
-    this.setFormattedDate = this.dataAction.setFormattedDate.bind(this);
+    this.formatDateTime = this.dataAction.formatDateTime.bind(this);
     this.prepareDisplay = this.dataAction.prepareDisplay.bind(this);
-    this.setFormattedDateTime = this.dataAction.setFormattedDateTime.bind(this);
 
     // Подписка на события
     this.subscribeToEvents();
@@ -52,39 +50,41 @@ class TaskManager {
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
-    // this.eventBus.on(NAMES.STATUS_CHANGED, this.updateTaskStatus.bind(this)); // обнов-е статуса задачи
   }
 
-//   /**
-//    * Обновляет статус задачи в массиве данных.
-//    * @param {Object} updatedTask - Объект задачи с обновлёнными данными.
-//    * @throws {Error} Если задача с таким `id` не найдена, выводится ошибка.
-//  */
-//   updateTaskStatus(updatedTask) {
-//     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
-//     if (taskIndex !== -1) {
-//       this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
-//       this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
-//     } else {
-//       console.error(`Задача ${updatedTask.id} не найдена`);
-//     }
-//   }
-
-  updateTaskInData(updatedTask) {
+  updateTaskInData(taskUpdated) {
+  
+    
+    const updatedTask = taskUpdated;
     if (!updatedTask || !updatedTask.id) {
       console.error("Обновляемая задача некорректна:", updatedTask);
-      return;
+      return
     }
-    
+
     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
+
 
     if (taskIndex !== -1) {
       this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
-      this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
+      this.eventBus.emit(NAMES.TASKS_SAVE, updatedTask); // Сохраненеи измен-ий
     } else {
       console.error("Задача с указанным id не найдена:", updatedTask.id);
     }
+    return updatedTask;
+
   }
+
+//   if (taskIndex !== -1) {
+//     // Обнов-е задачи через иммутабельное обнов-е массива - чтобы убрать ошибку потери id
+//     this.data = this.data.map(task =>
+//       task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+//     );
+   
+//     this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
+//   } else {
+//     console.error("Задача с указанным id не найдена:", updatedTask.id);
+//   }
+
 
   /**
    * Рассчитывает ID для новой задачи.
@@ -108,4 +108,4 @@ class TaskManager {
 
 }
 
-export { TaskManager };
+export { TaskManager, TaskManagerActions };
