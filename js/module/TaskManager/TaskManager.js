@@ -70,7 +70,7 @@ class TaskManager {
     }
   }
 
-  updateTask(updatedTask) {
+  updateTaskInData(updatedTask) {
     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
 
     if (taskIndex !== -1) {

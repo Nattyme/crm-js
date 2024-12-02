@@ -23,11 +23,9 @@ class Controller {
 
 
     this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
-      console.log(this.render.id);
-      
-      console.log('Задача обновлена:', task);
+      this.taskManager.updateTaskInData(task); // Обновим задачу в массиве
 
-      // Например, обновление интерфейса
+      // Обновление интерфейса
       this.formEditManager.setFormTaskValue(
         task, 
         this.render.id, 
@@ -35,26 +33,32 @@ class Controller {
         this.render.select, 
         this.render.selectStatus, 
         this.render.inputs);
-    });
+      },
 
+      // Сохраняем обновленные данные в localStorage
+      this.storage.saveToStorage()
+    );
+    this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
+      this.storage.loadFromStorage();
 
+      this.formEditManager.setFormTaskValue(
+        task, 
+        this.render.id, 
+        this.render.date, 
+        this.render.select, 
+        this.render.selectStatus, 
+        this.render.inputs
+      );
+    })
+
+    
     this.currentTaskData = this.setCurrentTaskData();
   }
   
 
   setInit() {
-    this.eventBus.emit(NAMES.TASKS_LOAD);
-
     const dataTask = this.currentTaskData;
-
-    this.formEditManager.setFormTaskValue(
-      dataTask, 
-      this.render.id, 
-      this.render.date, 
-      this.render.select, 
-      this.render.selectStatus, 
-      this.render.inputs
-    );
+    this.eventBus.emit(NAMES.TASKS_LOAD, dataTask);
 
     this.setEventListener(); // Слушает событие submit
   }
@@ -65,16 +69,19 @@ class Controller {
 
   editTask (e) {
     e.preventDefault();
-      
+    // Получим данные из формы
     const formData = this.formEditManager.getFormData(this.render.form);
 
-    // Обновим задачу, передадим стартовые и новые знач-я задачи
-    const taskUpdated = this.formEditManager.updateTaskData(this.currentTaskData, formData);
-console.log(taskUpdated);
+    // Обновим дааные задачи, передадим стартовые и новые знач-я задачи
+    const updateTaskData = this.formEditManager.updateTaskData(this.currentTaskData, formData);
 
+    console.log('Updated task: ', updateTaskData);
+    
+
+    // const task = this.taskManager.updateTaskInData(taskUpdated); // Обновим задачу в массиве
     // Установим новые знач-я в форму
     this.formEditManager.setFormTaskValue(
-      taskUpdated, 
+      task, 
       this.render.id, 
       this.render.date, 
       this.render.select, 
@@ -82,13 +89,8 @@ console.log(taskUpdated);
       this.render.inputs
     );
 
-    this.taskManager.updateTask(taskUpdated); // Обновим задачу в массиве
-
-    // Сохраняем обновленные данные в localStorage
-    this.storage.saveToStorage();
-    this.eventBus.emit(NAMES.TASKS_SAVE, taskUpdated);    
-    console.log(NAMES.TASKS_SAVE);
     
+    this.eventBus.emit(NAMES.TASKS_SAVE, updateTaskData);    
   }
 
 
@@ -102,8 +104,6 @@ console.log(taskUpdated);
   setCurrentTaskData() {
     const dataTaskAll = this.getTasksData ();
     const id =  this.formEditManager.getTaskID();
-    console.log(dataTaskAll);
-    console.log(id);
     
     return this.taskDataAction.getTaskData(id, dataTaskAll);
   }

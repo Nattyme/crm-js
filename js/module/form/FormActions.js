@@ -21,6 +21,7 @@ class FormActions {
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
+    console.log(formData);
     
     return formData;
   }
@@ -44,7 +45,7 @@ class FormActions {
     inputs.email.value = task.email;
 
     // Ищем нужную опцию в select и показываем её
-    select.selectedIndex = options.findIndex( (element) => element.textContent === task.product);
+    select.selectedIndex = options.findIndex( (element) => element.value === task.product);
   }
 
   /**

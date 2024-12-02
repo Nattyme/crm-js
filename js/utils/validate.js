@@ -133,19 +133,17 @@ const validate = {
 
   product (name) {
     console.log(name);
-    
     const productData = products;
 
     for (const product in productData) {
-      if(product === name ) {
-        return {valid: true, value: productData[name]};
+      if (product === name) {
+        console.log({valid: true, value: productData[name]});
+        
+        return {valid: true, value: product};
       }
     }
   },
 
-  // status: "new"
-  // {key: 'new', text: 'Новая', class: 'badge-danger'}
-  
   status (incomeStatus) {
     console.log(incomeStatus);
     

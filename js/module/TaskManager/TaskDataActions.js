@@ -103,7 +103,7 @@ class TaskDataActions {
   
   }
 
-   /**
+  /**
    * Форматирует временную метку.
    *
    * @method getFormattedData
@@ -111,7 +111,7 @@ class TaskDataActions {
    * @param {number} timestamp - Временная метка.
    * @returns {string} Отформатированная дата.
    */
-   setFormattedDateAll (taskDataAll) {
+  setFormattedDateAll (taskDataAll) {
     const formatter = new Formatter();
     console.log(formatter.prepareDisplay(taskDataAll));
 

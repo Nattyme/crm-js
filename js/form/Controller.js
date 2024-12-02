@@ -71,8 +71,11 @@ class Controller {
 
     const id = this.getNextTaskId(); 
 
-    const taskData = this.formActions.getFormData( this.render.getForm() );                 // получим данные задачи из формы
-    const task = new Task({ ...taskData });                                                 // Создадим задачу
+    const taskData = this.formActions.getFormData( this.render.getForm() );   
+    console.log(taskData);
+                  // получим данные задачи из формы
+    const task = new Task({...taskData});                                                 // Создадим задачу
+console.log(task);
 
     this.manager.addNewData(id, task);                                                      // добавим задачу в массив
     this.eventBus.emit(NAMES.TASKS_SAVE);                                                   // вызываем событие сохранения

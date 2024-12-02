@@ -19,16 +19,17 @@ class Task {
    * @param {string} param.product - Продукт, связанный с задачей.
   */
   constructor ( {full_name, phone, email, product}) {
-    // this.id = id,
+   
     this.timestamp = Date.now();
-    this.full_name = this.setProperty( full_name, validate.name),
-    this.product = product,
-    // this.product = this.setProperty(product, validate.product),
-    this.email = this.setProperty( email, validate.email),
-    this.phone = this.setProperty( phone, validate.phone)
-    this.status = status.data.NEW; // из класса Status
+    this.full_name = this.setProperty( full_name, validate.name);
+    this.product = this.setProperty( product, validate.product);
+    // this.product = product,
+    this.email = this.setProperty( email, validate.email);
+    this.phone = this.setProperty( phone, validate.phone);
+    this.status = status.data.NEW.key; // из класса Status
     this.changed = Date.now();
 
+    console.log( this.product);
     // После созда-я задачи отправляем соб-е о статусе
     eventBus.emit(NAMES.TASK_CREATED, this); // Передаем созданную задачу
   }
@@ -44,6 +45,7 @@ class Task {
    */
   setProperty ( value, validate) {
     const result = validate(value);
+   console.log(result);
    
     if(!result.valid) {
       return null;
@@ -52,16 +54,6 @@ class Task {
     return result.value;
   }
 
-  /**
-   * Изменяет статус задачи и отправляет событие об изменении статуса.
-   * @param {string} newStatus - Новый статус задачи.
-  */
-  // changeStatus( newStatus ) {
-  //   this.status = newStatus;
-  //   eventBus.emit(NAMES.STATUS_CHANGED, newStatus); // Отправка обнов-го статуса
-  // }
-
-  
 }
 
 export { Task };

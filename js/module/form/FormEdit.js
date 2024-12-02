@@ -31,8 +31,6 @@ class FormEdit  {
         return;
       }
     }
-console.log(updatedTaskData.product);
-console.log(updatedTaskData.status);
 
     const updatedRecord = {
       ...startTaskData,
@@ -43,8 +41,6 @@ console.log(updatedTaskData.status);
       status : this.setProperty(updatedTaskData.status, validate.status),
       changed : Date.now()
     }
-
-    console.log(updatedRecord);
 
     console.log('DATA after ADD NEW DATA', this.data);
 
@@ -77,12 +73,7 @@ console.log(updatedTaskData.status);
     }
   }
 
-  setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {
-    console.log(task);
-    console.log(idElem);
-    console.log(idElem.textContent);
-    console.log(task.id);
-    
+  setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {  
     // Установим значения в поля формы
     idElem.textContent = task.id;
     dateElem.textContent = task.date;
@@ -97,7 +88,7 @@ console.log(updatedTaskData.status);
 
     // Находим и выбираем нужный продукт
     selectElem.selectedIndex = getSelectedIndex([...selectElem.options], task.product);
-    // Находим и выбиарем нужный статус
+    // Находим и выбирем нужный статус
     selectStatusElem.selectedIndex = getSelectedIndex([...selectStatusElem.options], task.status.text);  
     console.log(getSelectedIndex([...selectStatusElem.options], task.status.text));
     console.log(task.status.text);
