@@ -85,6 +85,7 @@ class FormEdit  {
     const getSelectedIndex = function (options, value) {
       return [...options].findIndex( (element) => element.textContent.trim() === value);
     }
+console.log(task);
 
     // Находим и выбираем нужный продукт
     selectElem.selectedIndex = getSelectedIndex([...selectElem.options], task.product);
@@ -104,11 +105,16 @@ class FormEdit  {
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
-
-    console.log(formData);
-    
-    
     return formData;
+  }
+
+  formatFromData(formData) {
+    const formatter = new Formatter();
+    return {
+      ...formData,
+      product : formatter.formatProduct(formData.product),
+      status : formatter.formatStatus(formData.status)
+    }
   }
 }
 

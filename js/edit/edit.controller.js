@@ -41,8 +41,9 @@ class Controller {
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
       this.storage.loadFromStorage();
 
+      const formDataFormatted = this.formEditManager.formatFromData(task);
       this.formEditManager.setFormTaskValue(
-        task, 
+        formDataFormatted, 
         this.render.id, 
         this.render.date, 
         this.render.select, 
