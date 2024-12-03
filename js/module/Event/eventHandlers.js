@@ -17,7 +17,6 @@ export const eventHandlers = {
 
   [NAMES.TASKS_LOAD] : () => {
     console.log('Загружаем задачи');
-    
     storage.loadFromStorage();
   },
 

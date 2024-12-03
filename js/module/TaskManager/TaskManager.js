@@ -38,10 +38,10 @@ class TaskManager {
     this.formatDateTime = this.dataAction.formatDateTime.bind(this);
     this.prepareDisplay = this.dataAction.prepareDisplay.bind(this);
 
-    // Подписка на события
-    this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
-    this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
-    this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
+    // // Подписка на события
+    // this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
+    // this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
+    // this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
 
     // Получим данные из localStorage
     this.loadFromStorage();
