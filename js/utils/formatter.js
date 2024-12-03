@@ -115,4 +115,4 @@ class Formatter {
   }
 }
 
-export default Formatter;
+export { Formatter };

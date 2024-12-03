@@ -1,6 +1,6 @@
 import {NAMES} from './../config.js';
 
-import { eventBus, TaskManager, TaskManagerActions, FormEdit } from './../model.js';
+import { eventBus, TaskManager, FormEdit } from './../model.js';
 import { EditFormRender } from './EditFormRender.js';
 import { Notes } from './../utils/notes.js';
 
@@ -10,7 +10,6 @@ class Controller {
 
     this.formEditManager = new FormEdit();
     this.taskManager = new TaskManager();
-    this.taskManagerAction = new TaskManagerActions();
     this.render = new EditFormRender();
  
     this.storage = this.taskManager.storage;
@@ -71,7 +70,7 @@ class Controller {
 
     this.setCurrentTaskData(); // Обновим текущую задачу
 
-    const taskSaved = this.taskManager.updateTaskInData(updatedTaskData); // Обновим задачу в массиве
+    const taskSaved = this.taskManager.updateSingleTaskData(updatedTaskData); // Обновим задачу в массиве
     const taskFormatted = this.formEditManager.formatFormData(taskSaved); // Приведем к формату
 
     // Установим новые знач-я в форму
@@ -89,7 +88,7 @@ class Controller {
 
 
   getTasksData () {
-    const data = this.taskManager.getAll(); // Получим данные всех задач из массива data
+    const data = this.taskManager.getAllTasksData(); // Получим данные всех задач из массива data
     const dataCopy = [...data];     // Создадим копию массива
 
     return dataCopy;
@@ -98,7 +97,7 @@ class Controller {
   setCurrentTaskData() {
     const dataTaskAll = this.getTasksData (); // Получим все задачи
     const id =  this.formEditManager.getTaskID(); // ID текущ. задачи
-    const currentTask =  this.taskManagerAction.getTaskData(id, dataTaskAll); // Найдём текущ. задачу
+    const currentTask =  this.taskManager.getSingleTask(id, dataTaskAll); // Найдём текущ. задачу
 
     return currentTask ?  this.currentTaskData = currentTask : console.log('Задача не найдена'); // Найдена - вренем знач-е
   }

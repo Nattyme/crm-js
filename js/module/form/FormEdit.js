@@ -1,6 +1,8 @@
-import Formatter from '../../utils/formatter.js';
+import { Formatter } from '../../utils/formatter.js';
 import validate from '../../utils/validate.js';
 import {eventBus} from '../EventEmitter.js';
+
+const formatter = new Formatter();
 
 class FormEdit  {
   constructor () {
@@ -97,8 +99,6 @@ class FormEdit  {
   }
 
   formatFormData(formData) {
-    const formatter = new Formatter();
-    
     return {
       ...formData,
       phone : formatter.formatPhone(formData.phone),

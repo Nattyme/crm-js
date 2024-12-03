@@ -1,5 +1,6 @@
-import { TaskManager, TaskManagerActions } from './module/TaskManager/TaskManager.js';
-import { Task } from './module/TaskManager/Task.js';
+import { Task } from './module/TaskManagers/Task.js';
+import { TaskManager } from './module/TaskManagers/TaskManager.js';
+import { TaskEditManager } from './module/TaskManagers/TaskEditManager.js';
 import { eventBus } from './module/EventEmitter.js';
 import { Status } from './module/Status.js';
 // import { Table } from './module/Table.js';
@@ -16,7 +17,7 @@ import { EventEmitter } from './module/Event/EventEmitter.js';
 const status = new Status();
 
 
-export { TaskManager, TaskManagerActions, Task, FormActions, FormEdit, status, eventBus, EventEmitter}
+export { TaskManager, TaskEditManager, Task, FormActions, FormEdit, status, eventBus, EventEmitter}
 
 
 

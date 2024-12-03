@@ -1,4 +1,6 @@
-import Formatter from "../../utils/formatter.js";
+import { Formatter } from "../../utils/formatter.js";
+
+const formatter = new Formatter();
 
 class FormActions {
   constructor (form, select, inputs) {
@@ -61,7 +63,6 @@ class FormActions {
   }
 
   prepareDisplay (taskData) {
-    const formatter = new Formatter();
     return {
       ...taskData,
       phone : formatter.formatPhone(taskData.phone),

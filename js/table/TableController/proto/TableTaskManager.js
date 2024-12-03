@@ -1,4 +1,6 @@
-import Formatter from "../../../utils/formatter.js";
+import {Formatter} from "../../../utils/formatter.js";
+
+const formatter = new Formatter();
 
 class TableTaskManager {
   constructor ( manager ) {
@@ -10,7 +12,7 @@ class TableTaskManager {
    * @returns {Array} Скопированные и отформатированные данные задач.
   */
   getTasksData () {
-    const data = this.taskTableManager.getAll(); // Получим данные всех задач из массива data
+    const data = this.taskTableManager.getAllTasksData(); // Получим данные всех задач из массива data
     const dataCopy = [...data];     // Создадим копию массива
 
     return dataCopy;
@@ -34,7 +36,6 @@ class TableTaskManager {
   }
   
   prepareDisplay(data) {
-    const formatter = new Formatter(); 
     return formatter.formatPrepareDisplayTask(data); // прокси вызов
   }
 }

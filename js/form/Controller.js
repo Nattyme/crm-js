@@ -72,7 +72,7 @@ class Controller {
     const taskFormData = this.formActions.getFormData( this.render.getForm() );  // получим данные задачи из формы
     const task = new Task({...taskFormData});   // Создадим задачу    
 
-    this.manager.addNewData(id, task);      // добавим задачу в массив
+    this.manager.addNewTask(id, task);      // добавим задачу в массив
     this.eventBus.emit(NAMES.TASKS_SAVE);          // вызываем событие сохранения
     this.formActions.resetForm (this.render.form);    // Очистим форму
 
@@ -108,7 +108,7 @@ class Controller {
    * @method
    */
   getNextTaskId() {
-    return this.manager.calcID( this.manager.getAll() ); 
+    return this.manager.calcID( this.manager.getAllTasksData() ); 
   }
 
   /**
