@@ -2,6 +2,7 @@ import {NAMES} from './../config.js';
 import {subscribeToEvents} from './../module/subscribeToEvents.js';
 import { eventBus, TaskManager, TaskManagerActions, FormEdit } from './../model.js';
 import { EditFormRender } from './EditFormRender.js';
+import { Notes } from './../utils/notes.js';
 
 class Controller {
   constructor () {
@@ -11,12 +12,12 @@ class Controller {
     this.taskManager = new TaskManager(eventBus);
     this.taskManagerAction = new TaskManagerActions();
     this.render = new EditFormRender();
-
+ 
     this.storage = this.taskManager.storage;
     
-    const {form, select, selectStatus, inputs} = this.render.getFormElements(); // Получим элем-ты формы из render
-    this.formEditManager.initFormElems(form, select, selectStatus, inputs);       // Передадим в методы форм
-
+    const {form, select, selectStatus, inputs, noteWrapper} = this.render.getFormElements(); // Получим элем-ты формы из render
+    this.formEditManager.initFormElems(form, select, selectStatus, inputs, noteWrapper);       // Передадим в методы форм
+    this.note = new Notes(this.render.noteWrapper); // создадим класс увед-ий
 
     this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
       // Обновление интерфейса
@@ -62,6 +63,8 @@ class Controller {
   editTask (e) {
     e.preventDefault();
 
+
+
      // Получим данные из формы
     const formData = this.formEditManager.getFormData(this.render.form);
  
@@ -81,7 +84,8 @@ class Controller {
       this.render.selectStatus, 
       this.render.inputs
     );
-    this.eventBus.emit(NAMES.TASKS_SAVE, taskFormatted);    
+    this.eventBus.emit(NAMES.TASKS_SAVE, taskFormatted);  
+    this.note.getNote('success', 'Задача успешно обновлена!'); //type, text, container
   }
 
 

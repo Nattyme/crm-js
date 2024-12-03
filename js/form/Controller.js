@@ -2,7 +2,7 @@ import { Task, TaskManager, FormActions, eventBus  } from '../model.js';
 import { TaskRender } from './TaskRender.js';
 import { TestDataFactory } from './TestDataFactory.js';
 import { NAMES } from '../config.js';
-
+import { Notes } from './../utils/notes.js';
 /**
  * Контроллер для обработки логики формы задач.
  * Этот класс управляет взаимодействием между моделью, видом и данными, включая обработку событий и управление задачами.
@@ -29,6 +29,7 @@ class Controller {
     this.formActions = new FormActions(); // методы формы
     this.manager = new TaskManager(eventBus); // менеджер для обработки задач
     this.render = new TaskRender(); // создадим рендера задачи
+    this.note = new Notes(); // создадим класс увед-ий
 
     this.render.initFormElems();  // Передадим элементы формы в рендер
 
