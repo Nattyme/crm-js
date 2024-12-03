@@ -9,7 +9,7 @@ class Controller {
     this.eventBus = eventBus; // общий EventBus
 
     this.formEditManager = new FormEdit();
-    this.taskManager = new TaskManager(eventBus);
+    this.taskManager = new TaskManager();
     this.taskManagerAction = new TaskManagerActions();
     this.render = new EditFormRender();
  

@@ -1,8 +1,12 @@
 import { NAMES } from './../../config.js';
 import Formatter from './../../utils/formatter.js';
+import {eventBus} from  './../../module/EventEmitter.js';
 
 // actions
 class TaskDataActions {
+  constructor () {
+    this.eventBus = eventBus;
+  }
   /**
    * Добавляет новую задачу.
    *

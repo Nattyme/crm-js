@@ -1,6 +1,6 @@
 import Formatter from '../../utils/formatter.js';
 import validate from '../../utils/validate.js';
-import {eventBus} from '../EventBus.js';
+import {eventBus} from '../EventEmitter.js';
 
 class FormEdit  {
   constructor () {

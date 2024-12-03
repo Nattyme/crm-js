@@ -1,12 +1,12 @@
 import {NAMES} from './../config.js';
-import {eventBus} from './EventBus.js';
+import {eventBus} from './EventEmitter.js';
 import {Storage} from './Storage.js';
 import {TaskManager} from './TaskManager/TaskManager.js';
 import {TaskRender} from './../form/TaskRender.js';
 
 // Создаем экз. классов , с кот. работаем. Передаем им evBus для подписки на события 
 const storage = new Storage([], eventBus);
-const taskManager = new TaskManager(eventBus);
+const taskManager = new TaskManager();
 const taskRender = new TaskRender(eventBus); // создадим рендера задачи
 
 

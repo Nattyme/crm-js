@@ -3,7 +3,7 @@
 *
 * @class EventBus
 */
-class EventBus {
+class EventEmitter {
   constructor () {
     this.listeners = {} // объект хранит события и подписчиков
   }
@@ -56,5 +56,7 @@ class EventBus {
  * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.
  * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
 */
-const eventBus = new EventBus();
+
+const eventBus = new EventEmitter(); // Общий экз-р эммитера
+
 export { eventBus }

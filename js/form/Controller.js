@@ -27,7 +27,7 @@ class Controller {
 
     // Конструкторы
     this.formActions = new FormActions(); // методы формы
-    this.manager = new TaskManager(eventBus); // менеджер для обработки задач
+    this.manager = new TaskManager(); // менеджер для обработки задач
     this.render = new TaskRender(); // создадим рендера задачи
     this.note = new Notes(); // создадим класс увед-ий
 

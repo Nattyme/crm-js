@@ -1,6 +1,7 @@
 import { NAMES } from './../../config.js';
 import {TaskManagerActions} from './TaskManagerActions.js';
 import {Storage} from  '../Storage.js';
+import {eventBus} from  './../../module/EventEmitter.js';
 
 /**
  * Класс для управления задачами.
@@ -18,7 +19,7 @@ class TaskManager {
    *
    * @param {EventBus} eventBus - Экземпляр EventBus для управления событиями.
    */
-  constructor (eventBus) {
+  constructor () {
     this.data = [];
     this.eventBus = eventBus; // общий EventBus
 

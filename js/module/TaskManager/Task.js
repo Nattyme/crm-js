@@ -1,7 +1,7 @@
 import validate from '../../utils/validate.js';
 import { NAMES } from '../../config.js';
 import { status } from '../../model.js';
-import {eventBus} from '../EventBus.js';
+import {eventBus} from '../EventEmitter.js';
 
 /**
  * Класс для создания задачи и её валидации.
@@ -19,7 +19,8 @@ class Task {
    * @param {string} param.product - Продукт, связанный с задачей.
   */
   constructor ( {full_name, phone, email, product}) {
-   
+    this.eventBus = eventBus;
+    
     this.timestamp = Date.now();
     this.full_name = this.setProperty( full_name, validate.name);
     this.product = this.setProperty( product, validate.product);

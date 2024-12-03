@@ -1,9 +1,12 @@
 import { NAMES } from '../../config.js';
-import {eventBus} from './../EventBus.js';
+import {eventBus} from '../EventEmitter.js';
 import Formatter from '../../utils/formatter.js';
 
 // actions
 class TaskManagerActions {
+  constructor () {
+    this.eventBus = eventBus;
+  }
   /**
    * Добавляет новую задачу.
    *
@@ -81,8 +84,6 @@ class TaskManagerActions {
 
 
   createDataCopyFormatted (taskData) {
-    console.log(taskData);
-    
     const dataCopy = {...taskData};     // Копия объекта задачи
     dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
 
