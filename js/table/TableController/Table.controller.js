@@ -21,7 +21,7 @@ class Controller {
     // Прототипы
     this.tableTaskManager = new TableTaskManager( this.manager );
     this.tableActions = new TableActions(  this.renderTable,  this.tableTaskManager, this.status );
-    // this.listeners = new EventBus( this.eventBus, this.status, this.tableActions, this.tableTaskManager );
+    this.listeners = new EventBus( this.eventBus, this.status, this.tableActions, this.tableTaskManager );
   }
 
   /**
