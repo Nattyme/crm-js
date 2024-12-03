@@ -48,10 +48,9 @@ class TaskManager {
 
   updateTaskInData(taskUpdated) {
   
-    
     const updatedTask = taskUpdated;
     if (!updatedTask || !updatedTask.id) {
-      console.error("Обновляемая задача некорректна:", updatedTask);
+      console.error("Нельзя обновить задачу", updatedTask);
       return
     }
 
@@ -68,17 +67,6 @@ class TaskManager {
 
   }
 
-//   if (taskIndex !== -1) {
-//     // Обнов-е задачи через иммутабельное обнов-е массива - чтобы убрать ошибку потери id
-//     this.data = this.data.map(task =>
-//       task.id === updatedTask.id ? { ...task, ...updatedTask } : task
-//     );
-   
-//     this.eventBus.emit(NAMES.TASKS_SAVE); // Сохраненеи измен-ий
-//   } else {
-//     console.error("Задача с указанным id не найдена:", updatedTask.id);
-//   }
-
 
   /**
    * Рассчитывает ID для новой задачи.
@@ -89,15 +77,7 @@ class TaskManager {
    * @returns {number} Новый ID.
    */
   calcID (data) {
-    let id;
-    
-    if ( data.length !== 0 ) {
-      id = data.reduce( (max, task) => Math.max(max, task.id), 0) + 1;
-    } else {
-      id = 1;
-    }
-
-    return id;
+    return data.length !== 0   ?    data.reduce( (max, task) => Math.max(max, task.id), 0) + 1   :    1;
   }
 
 }

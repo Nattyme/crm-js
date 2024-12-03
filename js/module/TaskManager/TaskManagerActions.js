@@ -1,7 +1,5 @@
 import { NAMES } from '../../config.js';
 import {eventBus} from './../EventBus.js';
-
-import validate from '../../utils/validate.js';
 import Formatter from '../../utils/formatter.js';
 
 // actions
@@ -77,9 +75,14 @@ class TaskManagerActions {
     // Если ID не найден
     if (!data) return console.log(`Запись не найдена в ${this.data}`);
 
-    const dataCopy = {...data};     // Создадим копию объекта
-    console.log(dataCopy);
-    dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Добавим св-во дата в нужно формате
+    return this.createDataCopyFormatted(data);  // Вернём запись
+  }
+
+
+
+  createDataCopyFormatted (taskData) {
+    const dataCopy = {...taskData};     // Копия объекта задачи
+    dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
 
     return dataCopy;  // Вернём запись
   }
