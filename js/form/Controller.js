@@ -55,9 +55,7 @@ class Controller {
   setInit() {
     this.setEventListeners();
     this.eventBus.emit(NAMES.TASKS_LOAD);
-    const task = this.setRandomData();  // заполним форму значениями задачи, вернём её данные
-
-    console.log('DATA AT THE FORM: ', task);
+    this.setRandomData();  // заполним форму значениями задачи
   }
 
   /**

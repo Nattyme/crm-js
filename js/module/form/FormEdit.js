@@ -16,24 +16,21 @@ class FormEdit  {
 
   // Задает значения элементов в конструктор
   initFormElems(form, select, selectStatus, inputs) {
-    this.form = form;                          
-    this.select = select;
-    this.inputs = inputs;              
-    this.selectStatus = selectStatus;
+    this.form = form || null;                          
+    this.select = select || null;
+    this.inputs = inputs || null;              
+    this.selectStatus = selectStatus || null;
   }
 
   updateTask(startTaskData, updatedTaskData) {
-    console.log(startTaskData);
-    
     // Ищем пустые знач-я
-    for ( const field in updatedTaskData) {
-      if ( updatedTaskData[field] === null || updatedTaskData[field] === undefined) {
-        console.log('Ошибка данных. Запись не добавлена. Поля формы не должны быть пустыми');
-        return;
-      }
-    }
+    if ( Object.values(updatedTaskData).some(value => value === null || value === undefined) )  {
+      console.log('Ошибка данных. Запись не добавлена. Поля формы не должны быть пустыми');
+      return;
+    } 
 
-    const updatedRecord = {
+    // Вернём отред-мые знач-я
+    return {
       ...startTaskData,
       email : this.setProperty(updatedTaskData.email, validate.email),
       full_name : this.setProperty(updatedTaskData.full_name, validate.name),
@@ -43,7 +40,6 @@ class FormEdit  {
       changed : Date.now()
     }
 
-    return updatedRecord;
   }
 
   setProperty ( value, validate) {

@@ -26,10 +26,8 @@ class RowFactory {
   */
   getTableRow(taskData) {
     const cellsHTML = this.createCells(taskData); 
-    const row =  this.render.getHTML('row', taskData, cellsHTML); // пустая строка, без ячеек
-
-    // Вернём ряд
-    return row;
+    
+    return this.render.getHTML('row', taskData, cellsHTML); // пустая строка, без ячеек
   }
 
   /**
