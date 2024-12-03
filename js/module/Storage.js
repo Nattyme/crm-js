@@ -41,6 +41,42 @@ class Storage {
     this.eventBus.emit(NAMES.TASKS_SAVE, this.data); // Уведом-е об изменениях
     console.log('Данные удалены из local storage. Массив data пуст');
   }
+
+
+  /*  Одна задача*/
+  loadTaskFromStorage(taskID) {
+    // Все задачи
+    const tasksAll = JSON.parse(localStorage.getItem('task')) || [];
+
+    // Задача по ID
+    const task = tasksAll.find( item => item.id === taskID);
+
+    if (task) {
+      console.log('Успех. Задача загружена из local storage');
+      this.eventBus.emit(NAMES.TASK_LOAD, task); // Отправка задачи после загрузки 
+    } else {
+      console.log('Ошибка. Задача не найдена в local storage');
+    }
+  }
+
+  saveTaskToStorage(taskData) {
+    // Получаем все задачи
+    const tasksAll = JSON.parse(localStorage.getItem(NAMES.TASKS_DATA)) || [];
+
+    // Индекс задачи
+    const taskIndex = tasksAll.findIndex(task => task.id === taskData.id);
+
+    if ( taskIndex !== - 1) {
+      // Если задача существует - обновляем ее
+      tasksAll[taskIndex] = taskData;
+    } else {
+      console.log('Ошибка. Такой задачи нет');
+    }
+
+    console.log('Успех. Задача сохранена');
+    localStorage.setItem(NAMES.TASKS_DATA, JSON.stringify(taskData));
+  }
+
 }
 
 export { Storage };

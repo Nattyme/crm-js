@@ -2,14 +2,33 @@ import {NAMES} from './../config.js';
 import {eventBus} from './EventBus.js';
 import {Storage} from './Storage.js';
 import {TaskManager} from './TaskManager/TaskManager.js';
+import {TaskRender} from './../form/TaskRender.js';
 
 // Создаем экз. классов , с кот. работаем. Передаем им evBus для подписки на события 
 const storage = new Storage([], eventBus);
 const taskManager = new TaskManager(eventBus);
+const taskRender = new TaskRender(eventBus); // создадим рендера задачи
+
 
 // Ф-ция подписывает на события
 const subscribeToEvents = function () {
-  // Работа с local storage
+  // Слушаем submit, запускаем ф-цию добавления задачи
+  taskRender.getForm().addEventListener('submit', (e) => this.setTask(e));
+
+
+
+  // Работа с local storage - одна задача
+  eventBus.on(NAMES.TASK_LOAD, (taskID) => {
+    console.log('Событие load для одной задачи ');
+    storage.loadTaskFromStorage(taskID);
+  } );
+  eventBus.on(NAMES.TASKS_SAVE, (taskData) => {
+    console.log('Событие save одной задачи');
+    storage.saveTaskToStorage(taskData);
+  });
+
+
+  // Работа с local storage - несколько задач
   eventBus.on(NAMES.TASKS_LOAD, () => {
     console.log('Событие load вызвано ');
     storage.loadFromStorage();

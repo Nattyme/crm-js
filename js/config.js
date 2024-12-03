@@ -4,6 +4,7 @@ const NAMES = {
   ADD_TASK : 'add_task',
   
   // Local Storage
+  TASK_LOAD : 'task:load',
   
   TASKS_DATA : 'tasksData',
   TASKS_SAVE : 'tasks:save',
