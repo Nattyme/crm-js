@@ -1,7 +1,7 @@
 class EditFormRender  {
  constructor () {
   this.form = document.querySelector('#form'); 
-  this.noteWrapper = this.form.querySelector('.card-header');
+  this.noteWrapper = this.form.querySelector('.form__buttons');
   this.date = this.form.querySelector('#date');
   this.id = this.form.querySelector('#number');          
   this.select = this.form.querySelector('#product');

@@ -57,7 +57,19 @@
   color: #0056b3;
 }
 
+/* Notification */
+.form__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
+.form__buttons > .alert {
+  margin-bottom: 0;
+  margin-left: 15px;
+  padding: 0;
+  padding: 5px 15px;
+}
 
 /* .button-delete__link::before  {
   z-index: 99;

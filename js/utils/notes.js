@@ -24,7 +24,7 @@ class Notes {
   }
 
   displayNote(note) {
-    this.container.insertAdjacentHTML('beforeend', note);
+    this.container.insertAdjacentHTML('afterbegin', note);
   }
 }
 
