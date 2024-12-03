@@ -56,13 +56,8 @@ class FormActions {
    * 
    * @method resetForm
   */
-  resetForm (select, inputs) {
-
-    for ( const inputName in inputs) {
-      inputs[inputName].value = '';    //  Очищаем инпуты
-    }
-
-    select.selectedIndex = 0;  // Сбросим селектор опций
+  resetForm (formElement) {
+    formElement.reset();
   }
 
   prepareDisplay (taskData) {

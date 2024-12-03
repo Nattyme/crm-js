@@ -21,7 +21,7 @@ class Controller {
     // Прототипы
     this.tableTaskManager = new TableTaskManager( this.manager );
     this.tableActions = new TableActions(  this.renderTable,  this.tableTaskManager, this.status );
-    this.taskEventBus = new EventBus( this.eventBus, this.status, this.tableActions, this.tableTaskManager );
+    this.listeners = new EventBus( this.eventBus, this.status, this.tableActions, this.tableTaskManager );
   }
 
   /**
@@ -29,7 +29,7 @@ class Controller {
   */
   setInit () {
     this.tableActions.setRows();
-    this.taskEventBus.setEventListeners(); // иницал-ция слушателей
+    this.listeners.setEventListeners(); // иницал-ция слушателей
   }
 }
 

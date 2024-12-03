@@ -68,17 +68,17 @@ class Controller {
    * @method
    */
   setTask(e) {
-    e.preventDefault();                                                                      // отмена стандарт. поведение
+    e.preventDefault();   // отмена стандарт. поведение
 
     const id = this.getNextTaskId(); 
-    const taskFormData = this.formActions.getFormData( this.render.getForm() );                 // получим данные задачи из формы
+    const taskFormData = this.formActions.getFormData( this.render.getForm() );  // получим данные задачи из формы
     const task = new Task({...taskFormData});   // Создадим задачу    
 
-    this.manager.addNewData(id, task);                                                      // добавим задачу в массив
-    this.eventBus.emit(NAMES.TASKS_SAVE);                                                   // вызываем событие сохранения
-    this.formActions.resetForm (this.render.getSelect(), this.render.getInputs());         // Очистим форму
+    this.manager.addNewData(id, task);      // добавим задачу в массив
+    this.eventBus.emit(NAMES.TASKS_SAVE);          // вызываем событие сохранения
+    this.formActions.resetForm (this.render.form);    // Очистим форму
 
-    this.setRandomData ();                                                                 // Заново заполним данные
+    this.setRandomData ();        // Заново заполним данные
   }
 
   /**

@@ -69,8 +69,7 @@ class FormEdit  {
   }
 
   setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {  
-    console.log(task);
-    
+   
     // Установим значения в поля формы
     idElem.textContent = task.id;
     dateElem.textContent = task.date;
@@ -101,7 +100,7 @@ class FormEdit  {
     return formData;
   }
 
-  formatFromData(formData) {
+  formatFormData(formData) {
     const formatter = new Formatter();
     
     return {

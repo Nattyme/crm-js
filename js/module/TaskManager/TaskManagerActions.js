@@ -81,6 +81,8 @@ class TaskManagerActions {
 
 
   createDataCopyFormatted (taskData) {
+    console.log(taskData);
+    
     const dataCopy = {...taskData};     // Копия объекта задачи
     dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
 

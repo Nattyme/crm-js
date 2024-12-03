@@ -1,5 +1,5 @@
 import {NAMES} from './../config.js';
-import {subscribeToEvents} from './../module/subscribeToEvents.js';
+
 import { eventBus, TaskManager, TaskManagerActions, FormEdit } from './../model.js';
 import { EditFormRender } from './EditFormRender.js';
 import { Notes } from './../utils/notes.js';
@@ -31,7 +31,7 @@ class Controller {
       );
     });
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
-      const formDataFormatted = this.formEditManager.formatFromData(task);
+      const formDataFormatted = this.formEditManager.formatFormData(task);
   
       this.formEditManager.setFormTaskValue(
         formDataFormatted, 
@@ -63,21 +63,20 @@ class Controller {
   editTask (e) {
     e.preventDefault();
 
-
-
-     // Получим данные из формы
+    // Получим данные из формы
     const formData = this.formEditManager.getFormData(this.render.form);
  
     // Обновим даные задачи, передадим стартовые и новые знач-я задачи
     const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
 
     this.setCurrentTaskData(); // Обновим текущую задачу
+
     const taskSaved = this.taskManager.updateTaskInData(updatedTaskData); // Обновим задачу в массиве
-    const taskFormatted = this.formEditManager.formatFromData(taskSaved);
+    const taskFormatted = this.formEditManager.formatFormData(taskSaved); // Приведем к формату
 
     // Установим новые знач-я в форму
     this.formEditManager.setFormTaskValue(
-      taskFormatted, 
+      taskFormatted,
       this.render.id, 
       this.render.date, 
       this.render.select, 
@@ -97,18 +96,11 @@ class Controller {
   }
 
   setCurrentTaskData() {
-    const dataTaskAll = this.getTasksData ();
-    const id =  this.formEditManager.getTaskID();
-    const currentTask =  this.taskManagerAction.getTaskData(id, dataTaskAll);
+    const dataTaskAll = this.getTasksData (); // Получим все задачи
+    const id =  this.formEditManager.getTaskID(); // ID текущ. задачи
+    const currentTask =  this.taskManagerAction.getTaskData(id, dataTaskAll); // Найдём текущ. задачу
 
-    if(currentTask) {
-      this.currentTaskData = currentTask;
-    } else {
-      console.log('Задача не найдена');
-      
-    }
-    
-    return this.currentTaskData;
+    return currentTask ?  this.currentTaskData = currentTask : console.log('Задача не найдена'); // Найдена - вренем знач-е
   }
 
 
