@@ -1,10 +1,11 @@
+import {Formatter} from "../../../utils/formatter.js";
+
 class TableDisplay {
-  constructor ( renderTable, manager, status ) {
-    console.log(manager);
-    
+  constructor ( renderTable, manager, status ) {  
     this.renderTable = renderTable;
     this.manager = manager;
     this.status = status;
+    this.formatter = new Formatter();
   }
 
   /**
@@ -12,7 +13,7 @@ class TableDisplay {
     * Получает данные задач, форматирует их и добавляет в таблицу с учетом статусов.
   */
   setRows (dataToDisplay) {
-    const dataFormatted = this.manager.prepareDisplay(dataToDisplay); // Отформатируем поля
+    const dataFormatted = this.formatter.formatPrepareDisplayTask(dataToDisplay); // Отформатируем поля
     const statusData = this.status.getStatusData();  // Получили массив со всеми статусами
 
     this.renderTable.tableActions.addRowsToTable(dataFormatted, statusData);
