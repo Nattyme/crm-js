@@ -1,4 +1,4 @@
-import validate from '../../utils/validate.js';
+import {validate} from './../../utils/validate.js';
 import {eventBus} from '../../model.js';
 
 class FormEdit  {

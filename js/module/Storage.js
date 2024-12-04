@@ -1,4 +1,4 @@
-import { NAMES } from '../config.js';
+import { NAMES } from './../config/config.js';
 
 class Storage {
   constructor(data, eventBus) {

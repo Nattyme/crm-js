@@ -1,7 +1,7 @@
 import { Task, manager, eventBus, formManager } from '../model.js';
 import { TestDataFactory } from './TestDataFactory.js';
 import {render} from './TaskRender.js';
-import { NAMES } from '../config.js';
+import { NAMES } from './../config/config.js';
 import { Notes } from './../utils/notes.js';
 /**
  * Контроллер для обработки логики формы задач.

@@ -1,4 +1,4 @@
-import { products } from './../data.js';
+import { products } from './../data/data.js';
 import { Status } from '../module/Status.js';
 
 /**
@@ -157,4 +157,4 @@ const validate = {
   }
 }
 
-export default validate;
+export {validate};

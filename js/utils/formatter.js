@@ -1,4 +1,4 @@
-import { products } from './../data.js';
+import { products } from './../data/data.js';
 import { Status } from '../module/Status.js';
 /**
  * Класс для форматирования данных, таких как телефон, имя и URL.

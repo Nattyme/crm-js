@@ -1,4 +1,4 @@
-import {NAMES} from '../config.js';
+import {NAMES} from './../config/config.js';
 import { eventBus, editFormManager, manager, storage } from '../model.js';
 import { renderEditForm } from './EditFormRender.js';
 import { Notes } from '../utils/notes.js';

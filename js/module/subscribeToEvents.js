@@ -1,4 +1,4 @@
-import {NAMES} from './../config.js';
+import {NAMES} from './../config/config.js';
 import {eventBus} from './EventEmitter.js';
 import {Storage} from './Storage.js';
 import {TaskManager, formatter} from './../model.js';
