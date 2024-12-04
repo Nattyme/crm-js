@@ -57,6 +57,6 @@ class EventEmitter {
  * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
 */
 
-const eventBus = new EventEmitter(); // Общий экз-р эммитера
 
-export { eventBus }
+
+export { EventEmitter }

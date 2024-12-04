@@ -1,7 +1,7 @@
 import { NAMES } from '../../config.js';
 import { Formatter } from '../../utils/formatter.js';
-import {Storage} from  '../Storage.js';
-import {eventBus} from  '../EventEmitter.js';
+import {storage} from  './../../model.js';
+import {eventBus} from  './../../model.js';
 
 const formatter = new Formatter();
 
@@ -26,7 +26,7 @@ class TaskManager {
     this.eventBus = eventBus; // общий EventBus
 
     // STORAGE
-    this.storage = new Storage(); // экз-р хранилища
+    this.storage = storage; // экз-р хранилища
     this.loadFromStorage =  this.storage.loadFromStorage.bind(this);
     this.saveToStorage =  this.storage.saveToStorage.bind(this);
     this.clearStorage =  this.storage.clearStorage.bind(this);

@@ -1,6 +1,6 @@
 import { Formatter } from '../../utils/formatter.js';
 import validate from '../../utils/validate.js';
-import {eventBus} from '../EventEmitter.js';
+import {eventBus} from './../../model.js';
 
 const formatter = new Formatter();
 
