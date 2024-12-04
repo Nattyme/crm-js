@@ -40,18 +40,13 @@ class TaskRender {
     }
   }
 
-  getForm () {
-    return this.form;
+  getFormElems () {
+    return {
+      form : this.form,
+      inputs : this.inputs,
+      select : this.select
+    }
   }
-
-  getSelect() {
-    return this.select;
-  }
-
-  getInputs() {
-    return this.inputs;
-  }
-
 }
 
 export { TaskRender }

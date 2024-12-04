@@ -1,11 +1,8 @@
-import { Formatter } from '../../utils/formatter.js';
 import validate from '../../utils/validate.js';
 import {eventBus} from './../../model.js';
 
-const formatter = new Formatter();
-
 class FormEdit  {
-  constructor () {
+  constructor (formatter) {
     this.eventBus = eventBus;
 
     this.form = null;
@@ -13,6 +10,7 @@ class FormEdit  {
     this.inputs = {};
     this.selectStatus = null;
 
+    this.formatter = formatter;
     this.initFormElems(); // задает элементы формы
   }
 
@@ -58,8 +56,8 @@ class FormEdit  {
 
   getTaskID () {
     // получим и вернём id задачи
-    if ( Formatter.getUrlID() !== null ) {
-      return Formatter.getUrlID();
+    if ( this.formatter.getUrlID() !== null ) {
+      return this.formatter.getUrlID();
     } else {
       console.log('Не получен ID задачи'); 
       return null;
@@ -101,9 +99,9 @@ class FormEdit  {
   formatFormData(formData) {
     return {
       ...formData,
-      phone : formatter.formatPhone(formData.phone),
-      product : formatter.formatProduct(formData.product),
-      status : formatter.formatStatus(formData.status)
+      phone : this.formatter.formatPhone(formData.phone),
+      product : this.formatter.formatProduct(formData.product),
+      status : this.formatter.formatStatus(formData.status)
     }
   }
 }

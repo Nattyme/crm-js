@@ -1,12 +1,9 @@
-import { Formatter } from "../../utils/formatter.js";
-
-const formatter = new Formatter();
-
-class FormActions {
-  constructor (form, select, inputs) {
+class Form {
+  constructor ({form, select, inputs, formatter}) {
     this.form = form;
     this.select = select;
     this.inputs = inputs;
+    this.formatter = formatter;
   }
   
   /**
@@ -17,11 +14,11 @@ class FormActions {
    * @see Task
    */
   getFormData(formElement) {
-    const form = new FormData(formElement);
+    const formDataObj = new FormData(formElement);
     let formData = {}; // Объект для значений формы
 
     // Получим данные из полей
-    for (let pair of form.entries()) {
+    for (let pair of formDataObj.entries()) {
       formData[pair[0]] = pair[1];
     }
     
@@ -38,16 +35,20 @@ class FormActions {
    * @param {string} task.email Адрес электронной почты.
    * @param {string} task.product Выбранный продукт.
    */
-  setFormData (task, select, inputs) {
-    const options = Array.from(select.options);
-
+  setFormData (task, elems) {    
     // Установим значения в поля формы
-    inputs.full_name.value = task.full_name;
-    inputs.phone.value = task.phone;
-    inputs.email.value = task.email;
+    elems.inputs.full_name.value = task.full_name || null;
+    elems.inputs.phone.value = task.phone || null;
+    elems.inputs.email.value = task.email || null;
+    let options = elems.select.options || null;
 
     // Ищем нужную опцию в select и показываем её
-    select.selectedIndex = options.findIndex( (element) => element.value === task.product);
+    elems.select.selectedIndex = Array.from(options).findIndex( (element) => {
+      return element.value === task.product; 
+    });
+
+    if(elems.select.selectedIndex === -1) { console.log('Не удалось задать select. Продукт не найден')}
+
   }
 
   /**
@@ -65,22 +66,14 @@ class FormActions {
   prepareDisplay (taskData) {
     return {
       ...taskData,
-      phone : formatter.formatPhone(taskData.phone),
-      full_name : formatter.formatName(taskData.full_name)
+      phone : this.formatter.formatPhone(taskData.phone),
+      full_name : this.formatter.formatName(taskData.full_name)
     }
     
   }
 
-  /**
-   * Метод для отображения ошибок.
-   * @todo Реализовать отображение ошибок на форме.
-   */
-  setError() {
-
-  }
-
 }
 
-export default FormActions;
+export { Form };
 
 

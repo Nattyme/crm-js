@@ -7,7 +7,7 @@ import { Storage } from './module/Storage.js';
 import {Formatter} from "./utils/formatter.js";
 // import { Table } from './module/Table.js';
 import { FormEdit } from './module/form/FormEdit.js';
-import FormActions from './module/form/Form.js';
+import {Form} from './module/form/Form.js';
 // import { subscribeToEvents } from './module/subscribeToEvents.js';
 
 
@@ -20,7 +20,7 @@ const storage = new Storage();
 const eventBus = new EventEmitter(); // Общий экз-р эммитера
 const formatter = new Formatter();
 
-export { TaskManager, TaskEditManager, Task, FormActions, FormEdit, status, eventBus, storage, formatter}
+export { TaskManager, TaskEditManager, Task, Form, FormEdit, status, eventBus, storage, formatter}
 
 
 

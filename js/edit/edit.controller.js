@@ -1,14 +1,14 @@
 import {NAMES} from './../config.js';
 
-import { eventBus, TaskManager, FormEdit } from './../model.js';
+import { eventBus, TaskManager, FormEdit, formatter } from './../model.js';
 import { EditFormRender } from './EditFormRender.js';
 import { Notes } from './../utils/notes.js';
 
 class Controller {
-  constructor () {
+  constructor (formatter) {
     this.eventBus = eventBus; // общий EventBus
 
-    this.formEditManager = new FormEdit();
+    this.formEditManager = new FormEdit(formatter);
     this.taskManager = new TaskManager();
     this.render = new EditFormRender();
  
@@ -104,5 +104,5 @@ class Controller {
 
 }
 
-const controller = new Controller();
+const controller = new Controller(formatter);
 controller.setInit();

@@ -19,7 +19,7 @@ class Formatter {
     return this.functionsPack;
   }
 
-  static getUrlID () {
+  getUrlID () {
     const url = window.location.search;  // получим полный адрес страницы
     const params = new URLSearchParams(url);
     const id = params.get('id') ? params.get('id') : console.log('В параметре ID нет значения.');  // если есть парам-р 'id' - возьмем его знач-е
