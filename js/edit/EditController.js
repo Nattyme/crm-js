@@ -1,16 +1,17 @@
 import {NAMES} from './../config/config.js';
 import { eventBus, editFormManager, manager, storage } from '../model.js';
 import { renderEditForm } from './EditFormRender.js';
-import { notes } from '../utils/notes.js';
+import { MESSAGES } from './../data/messages.js';
+import { Notes } from '../utils/notes.js';
 
 class Controller {
-  constructor (editFormManager, eventBus, renderEditForm, manager,  storage, notes) {
+  constructor (editFormManager, eventBus, renderEditForm, manager,  storage) {
     this.eventBus = eventBus; 
     this.formEditManager = editFormManager;
     this.taskManager = manager;
     this.render = renderEditForm;    
     this.storage = storage;
-    this.notes = notes;
+    this.notes = new Notes(this.render.noteWrapper, MESSAGES);
 
     const {form, select, selectStatus, inputs, noteWrapper} = this.render.getFormElements(); // Получим элем-ты формы из render
     this.formEditManager.initFormElems(form, select, selectStatus, inputs, noteWrapper);       // Передадим в методы форм
@@ -52,7 +53,6 @@ class Controller {
   setInit() {
     const dataTask = this.currentTaskData;
     this.eventBus.emit(NAMES.TASKS_LOAD, dataTask);
-    this.notes.setContainer(this.render.noteWrapper);
     this.setEventListener(); // Слушает событие submit
   }
   
@@ -69,14 +69,18 @@ class Controller {
     // Обновим даные задачи, передадим стартовые и новые знач-я задачи
     const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
 
-    this.setCurrentTaskData(); // Обновим текущую задачу
 
+    if ( updatedTaskData === false ) {
+      this.notes.addError('error', this.notes.MESSAGES.ERROR.empty_value());
+      return;
+    }
+
+
+    this.setCurrentTaskData(); // Обновим текущую задачу
     const taskSaved = this.taskManager.updateSingleTaskData(updatedTaskData); // Обновим задачу в массиве
   
     if (!taskSaved) {
-      console.log('ошибка сохранения задачи');
-      
-      this.notes.getNote('error', 'Ошибка сохранения. Проверьте введённые данные.'); //type, text, container
+      this.notes.addError('error', this.notes.MESSAGES.ERROR.unvalid_value()); //type, text, container
       return;
     }
 
@@ -93,7 +97,7 @@ class Controller {
     );
     this.eventBus.emit(NAMES.TASKS_SAVE, taskFormatted);  
 
-    this.notes.getNote('success', 'Задача успешно обновлена!'); //type, text, container
+    this.notes.getNote('success', 'Задача успешно обновлена!'); //type, text
   }
 
 
@@ -120,7 +124,6 @@ const controller = new Controller(
   eventBus,
   renderEditForm,
   manager,
-  storage,
-  notes
+  storage
 );
 controller.setInit();

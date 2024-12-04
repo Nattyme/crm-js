@@ -1,3 +1,4 @@
+import {testData, products} from './data/data.js';
 import { Task } from './module/TaskManagers/Task.js';
 import { TaskManager } from './module/TaskManagers/TaskManager.js';
 import { TaskEditManager } from './module/TaskManagers/TaskEditManager.js';
@@ -16,14 +17,25 @@ import { FormEdit } from './module/FormManagers/FormEditManager.js';
 const status = new Status();
 const storage = new Storage();
 const eventBus = new EventEmitter(); // Общий экз-р эммитера
-const formatter = new Formatter();
+const formatter = new Formatter(status, products);
 
 const manager = new TaskManager(eventBus);
 
 const formManager = new FormManager({formatter});
-const editFormManager = new FormEdit(formatter);
+const editFormManager = new FormEdit(formatter, eventBus);
 
-export { manager, TaskEditManager, Task, formManager, editFormManager, status, eventBus, storage, formatter}
+export { 
+  manager, 
+  TaskEditManager, 
+  Task, 
+  formManager, 
+  editFormManager, 
+  status, 
+  eventBus, 
+  storage, 
+  formatter, 
+  products
+}
 
 
 

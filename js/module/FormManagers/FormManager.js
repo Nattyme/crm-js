@@ -64,6 +64,8 @@ class FormManager {
   }
 
   prepareDisplay (taskData) {
+    console.log(taskData.phone);
+    
     return {
       ...taskData,
       phone : this.formatter.formatPhone(taskData.phone),

@@ -64,7 +64,6 @@ class Status {
       return;
     }
   }
-
 }
 
 export { Status };

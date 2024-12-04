@@ -1,8 +1,8 @@
 import {validate} from './../../utils/validate.js';
-import {eventBus} from '../../model.js';
+// import {Notes} from './../../utils/notes.js';
 
 class FormEdit  {
-  constructor (formatter) {
+  constructor (formatter, eventBus) {
     this.eventBus = eventBus;
 
     this.form = null;
@@ -11,6 +11,7 @@ class FormEdit  {
     this.selectStatus = null;
 
     this.formatter = formatter;
+    // this.notes = new Notes();
     this.initFormElems(); // задает элементы формы
   }
 
@@ -23,10 +24,15 @@ class FormEdit  {
   }
 
   updateTask(startTaskData, updatedTaskData) {
+    updatedTaskData.id = startTaskData.id;
+    console.log(updatedTaskData);
     // Ищем пустые знач-я
-    if ( Object.values(updatedTaskData).some(value => value === null || value === undefined) )  {
+    if ( Object.values(updatedTaskData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
       console.log('Ошибка данных. Запись не добавлена. Поля формы не должны быть пустыми');
-      return;
+      console.log('mistake');
+      console.log(Object.values(updatedTaskData));
+      
+      return false;
     } 
 
     // Вернём отред-мые знач-я
@@ -69,7 +75,10 @@ class FormEdit  {
     idElem.textContent = task.id;
     dateElem.textContent = task.date;
     inputs.full_name.value = task.full_name;
+    if (!validate.phone(inputs.phone.value)) {
+    }
     inputs.phone.value = task.phone;
+    // inputs.phone.value = task.phone;
     inputs.email.value = task.email;
 
     // Ф-ция ищет нужную опцию в селект

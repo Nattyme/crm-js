@@ -1,14 +1,14 @@
-import { products } from './../data/data.js';
-import { Status } from '../module/Status.js';
 /**
  * Класс для форматирования данных, таких как телефон, имя и URL.
  */
 class Formatter {
-  constructor () {
+  constructor (status, products) {
     this.regEx = {
       digit :     /\D/g,
       formatRU : /^[87](\d{3})(\d{3})(\d{2})(\d{2})$/,
     }
+    this.products = products;
+    this.status = status;
   }
 
   /**
@@ -65,8 +65,7 @@ class Formatter {
   }
 
   formatStatus(incomeStatus) {
-    const status = new Status();
-    const statusTypes = status.data;
+    const statusTypes = this.status.data;
 
     for (const item in statusTypes) {
       const currentObj = statusTypes[item];
@@ -82,11 +81,9 @@ class Formatter {
   }
 
   formatProduct(name) {
-    const productData = products;
-
-    for (const product in productData) {
+    for (const product in this.products) {
       if (product === name) {
-        return productData[name];
+        return this.products[name];
       }
     }
   }

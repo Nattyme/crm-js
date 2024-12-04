@@ -22,14 +22,14 @@ class Controller {
    * 
  * @constructor
  */
-  constructor ({ formManager, manager, render }) {
+  constructor ( formManager, manager, render) {
     this.eventBus = eventBus; // общий EventBus
 
     // Конструкторы
     this.form = formManager; // методы формы
     this.manager = manager; // менеджер для обработки задач
     this.render = render; // создадим рендера задачи
-    this.note = new Notes(); // создадим класс увед-ий
+    this.note = new Notes(this.render.notewrapper); // создадим класс увед-ий
 
     this.render.initFormElems();  // Передадим элементы формы в рендер
   }
@@ -134,11 +134,11 @@ class Controller {
 }
 
 // Запуск
-const controller = new Controller({
+const controller = new Controller(
   formManager,
   manager,
   render
- });
+ );
 
 controller.initController();
 
