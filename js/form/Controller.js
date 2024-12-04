@@ -1,4 +1,4 @@
-import { Task, TaskManager, eventBus, Form, formatter  } from '../model.js';
+import { Task, manager, eventBus, formManager } from '../model.js';
 import { TestDataFactory } from './TestDataFactory.js';
 import {render} from './TaskRender.js';
 import { NAMES } from '../config.js';
@@ -22,12 +22,12 @@ class Controller {
    * 
  * @constructor
  */
-  constructor (render, formatter) {
+  constructor ({ formManager, manager, render }) {
     this.eventBus = eventBus; // общий EventBus
 
     // Конструкторы
-    this.form = new Form ({formatter}); // методы формы
-    this.manager = new TaskManager(); // менеджер для обработки задач
+    this.form = formManager; // методы формы
+    this.manager = manager; // менеджер для обработки задач
     this.render = render; // создадим рендера задачи
     this.note = new Notes(); // создадим класс увед-ий
 
@@ -134,7 +134,12 @@ class Controller {
 }
 
 // Запуск
-const controller = new Controller(render, formatter);
+const controller = new Controller({
+  formManager,
+  manager,
+  render
+ });
+
 controller.initController();
 
 

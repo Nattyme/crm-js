@@ -1,5 +1,5 @@
 import validate from '../../utils/validate.js';
-import {eventBus} from './../../model.js';
+import {eventBus} from '../../model.js';
 
 class FormEdit  {
   constructor (formatter) {
@@ -65,7 +65,6 @@ class FormEdit  {
   }
 
   setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {  
-   
     // Установим значения в поля формы
     idElem.textContent = task.id;
     dateElem.textContent = task.date;

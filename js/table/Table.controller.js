@@ -1,4 +1,4 @@
-import {eventBus, status, TaskManager, formatter} from '../model.js';
+import {eventBus, status, manager, formatter} from '../model.js';
 import { renderTable } from './TableView/TableRender.js';
 
 
@@ -6,13 +6,13 @@ import { renderTable } from './TableView/TableRender.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor ({eventBus, status, render, manager, formatter}) {
+  constructor ({eventBus, status, renderTable, manager, formatter}) {
     // Общие
     this.eventBus = eventBus; 
     this.status = status; 
 
     this.manager =  manager; 
-    this.render = render; 
+    this.render = renderTable; 
     this.formatter = formatter;
   }
 
@@ -40,8 +40,8 @@ class Controller {
 const controller = new Controller({
   eventBus, 
   status,
-  render : renderTable,
-  manager : new TaskManager(eventBus),
+  renderTable,
+  manager,
   formatter
 });
 

@@ -4,9 +4,9 @@ import { TaskEditManager } from './module/TaskManagers/TaskEditManager.js';
 import { EventEmitter } from './module/Event/EventEmitter.js';
 import { Status } from './module/Status.js';
 import { Storage } from './module/Storage.js';
-import {Formatter} from "./utils/formatter.js";
-import { FormEdit } from './module/form/FormEdit.js';
-import {Form} from './module/form/Form.js';
+import { Formatter } from "./utils/formatter.js";
+import { FormManager } from './module/FormManagers/FormManager.js';
+import { FormEdit } from './module/FormManagers/FormEditManager.js';
 
 
 /**
@@ -18,7 +18,12 @@ const storage = new Storage();
 const eventBus = new EventEmitter(); // Общий экз-р эммитера
 const formatter = new Formatter();
 
-export { TaskManager, TaskEditManager, Task, Form, FormEdit, status, eventBus, storage, formatter}
+const manager = new TaskManager(eventBus);
+
+const formManager = new FormManager({formatter});
+const editFormManager = new FormEdit(formatter);
+
+export { manager, TaskEditManager, Task, formManager, editFormManager, status, eventBus, storage, formatter}
 
 
 

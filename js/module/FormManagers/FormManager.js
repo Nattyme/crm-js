@@ -1,4 +1,4 @@
-class Form {
+class FormManager {
   constructor ({form, select, inputs, formatter}) {
     this.form = form;
     this.select = select;
@@ -74,6 +74,6 @@ class Form {
 
 }
 
-export { Form };
+export { FormManager };
 
 

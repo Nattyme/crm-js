@@ -1,18 +1,15 @@
-import {NAMES} from './../config.js';
-
-import { eventBus, TaskManager, FormEdit, formatter } from './../model.js';
-import { EditFormRender } from './EditFormRender.js';
-import { Notes } from './../utils/notes.js';
+import {NAMES} from '../config.js';
+import { eventBus, editFormManager, manager, storage } from '../model.js';
+import { renderEditForm } from './EditFormRender.js';
+import { Notes } from '../utils/notes.js';
 
 class Controller {
-  constructor (formatter) {
-    this.eventBus = eventBus; // общий EventBus
-
-    this.formEditManager = new FormEdit(formatter);
-    this.taskManager = new TaskManager();
-    this.render = new EditFormRender();
- 
-    this.storage = this.taskManager.storage;
+  constructor (editFormManager, eventBus, renderEditForm, manager,  storage) {
+    this.eventBus = eventBus; 
+    this.formEditManager = editFormManager;
+    this.taskManager = manager;
+    this.render = renderEditForm;    
+    this.storage = storage;
     
     const {form, select, selectStatus, inputs, noteWrapper} = this.render.getFormElements(); // Получим элем-ты формы из render
     this.formEditManager.initFormElems(form, select, selectStatus, inputs, noteWrapper);       // Передадим в методы форм
@@ -29,9 +26,6 @@ class Controller {
         this.render.inputs
       );
     });
-    console.log( this.render.select);
-    console.log( this.render.selectStatus);
-    console.log(this.render.getFormElements());
     
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
       const formDataFormatted = this.formEditManager.formatFormData(task);
@@ -43,12 +37,16 @@ class Controller {
         this.render.select, 
         this.render.selectStatus, 
         this.render.inputs
+        // this.render.getIdValue(), 
+        // this.render.getDateValue(), 
+        // this.render.getSelectValue(), 
+        // this.render.getStatusValue(), 
+        // this.render.getInputValues()
       );
     })
 
     this.currentTaskData = this.setCurrentTaskData();
   }
-  
 
 
   setInit() {
@@ -108,5 +106,11 @@ class Controller {
 
 }
 
-const controller = new Controller(formatter);
+const controller = new Controller(
+  editFormManager, 
+  eventBus,
+  renderEditForm,
+  manager,
+  storage
+);
 controller.setInit();

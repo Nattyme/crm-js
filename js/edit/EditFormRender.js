@@ -18,10 +18,10 @@ class EditFormRender  {
     this.noteWrapper.textContent = content;
   }
 
-  getTaskId() {
+  getIdValue() {
     return this.id.value;
   }
-  setTaskId(id) {
+  setIdValue(id) {
     this.id = id;
   }
 
@@ -33,7 +33,7 @@ class EditFormRender  {
     this.value = value;
   }
 
-  gitInputValues() {
+  getInputValues() {
     return {
       full_name : this.full_name,
       phone : this.phone,
@@ -46,18 +46,22 @@ class EditFormRender  {
     if (email !== undefined) this.inputs.email.value = email;
   }
 
-  getStatusValue() {
-    return this.selectStatus.value;
+  getProductSelect() {
+    return this.select;
+  }
+
+  getStatusSelect() {
+    return this.selectStatus;
   }
   setSatusValue(statusNew) {
-    this.selectStatus.value = statusNew;
+    this.selectStatus.selectedindex = statusNew;
   }
 
   setFormValues ( {id, date, select, selectStatus, inputs}) {
     if (id !== undefined) this.setTaskId(id);
     if (date !== undefined) this.setDateValue(date);
     if (select !== undefined) this.select.value = select;
-    if (selectStatus !== undefined) this.selectStatus(selectStatus);
+    if (selectStatus !== undefined) this.selectStatus.value = selectStatus;
     if (inputs) this.setInputValues(inputs);
   }
 
@@ -73,7 +77,8 @@ class EditFormRender  {
       inputs : this.inputs
     }
   }
-
 }
 
-export { EditFormRender };
+const renderEditForm = new EditFormRender();
+
+export { renderEditForm };
