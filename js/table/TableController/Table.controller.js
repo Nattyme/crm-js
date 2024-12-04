@@ -11,14 +11,16 @@ import {EventHandle} from './proto/EventHandle.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor () {
-    this.eventBus = eventBus; // Общий EventBus
-    this.status = status; // Общий статус
+  constructor ({eventBus, status, taskManager, tableRender}) {
+    // Общие
+    this.eventBus = eventBus; 
+    this.status = status; 
 
     // Прототипы
-    this.tableTaskManager = new TableTaskManager( new TaskManager(eventBus) ); // Менеджер для работы с задачами в таблице
-    this.tableDisplay = new TableDisplay(  new TableRender,  this.tableTaskManager, this.status );// Рендер таблицы
-    this.listeners = new EventHandle( this.eventBus, this.status, this.tableDisplay, this.tableTaskManager );
+    this.tableTaskManager =  new TableTaskManager(taskManager); 
+    this.tableDisplay = new TableDisplay(tableRender, this.tableTaskManager, this.status); 
+    this.listeners = new EventHandle(this.eventBus, this.status, this.tableDisplay, this.tableTaskManager )
+
   }
 
   /**
@@ -35,5 +37,10 @@ class Controller {
 }
 
 // Запуск приложения
-const controller = new Controller();
+const controller = new Controller({
+  eventBus, 
+  status,
+  taskManager : new TaskManager(eventBus),
+  tableRender : new TableRender
+});
 controller.setInit();
