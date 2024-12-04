@@ -1,12 +1,16 @@
 class Notes {
-  constructor (wrapperElement) {
-    this.container = wrapperElement;
+  constructor () {
+    this.container = this.setContainer();
     if(!this.container) console.log('Нет контейнера!');
+  }
+  
+  setContainer(wrapperElement) {
+    this.container = wrapperElement;
   }
 
   getHTMLTmpl (className, text) {
     return  `
-              <div class="alert ${className}" role="alert">
+              <div class="alert ${className}" role="alert" data-note>
                 ${text}
               </div>
             `;
@@ -24,8 +28,25 @@ class Notes {
   }
 
   displayNote(note) {
+    this.removeNote();
     this.container.insertAdjacentHTML('afterbegin', note);
+  }
+
+  findNotes () {
+    return this.container.querySelectorAll('[data-note]');
+  }
+
+  removeNote() {
+    const notes = this.findNotes();
+
+    if (notes) {
+      notes.forEach(element => {
+        element.remove();
+      });
+    }
+ 
   }
 }
 
-export {Notes};
+const notes = new Notes();
+export {notes};

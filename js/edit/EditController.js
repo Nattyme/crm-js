@@ -1,19 +1,19 @@
 import {NAMES} from './../config/config.js';
 import { eventBus, editFormManager, manager, storage } from '../model.js';
 import { renderEditForm } from './EditFormRender.js';
-import { Notes } from '../utils/notes.js';
+import { notes } from '../utils/notes.js';
 
 class Controller {
-  constructor (editFormManager, eventBus, renderEditForm, manager,  storage) {
+  constructor (editFormManager, eventBus, renderEditForm, manager,  storage, notes) {
     this.eventBus = eventBus; 
     this.formEditManager = editFormManager;
     this.taskManager = manager;
     this.render = renderEditForm;    
     this.storage = storage;
-    
+    this.notes = notes;
+
     const {form, select, selectStatus, inputs, noteWrapper} = this.render.getFormElements(); // Получим элем-ты формы из render
     this.formEditManager.initFormElems(form, select, selectStatus, inputs, noteWrapper);       // Передадим в методы форм
-    this.note = new Notes(this.render.noteWrapper); // создадим класс увед-ий
 
     this.eventBus.on(NAMES.TASKS_SAVE, (task) => {
       // Обновление интерфейса
@@ -52,7 +52,7 @@ class Controller {
   setInit() {
     const dataTask = this.currentTaskData;
     this.eventBus.emit(NAMES.TASKS_LOAD, dataTask);
-
+    this.notes.setContainer(this.render.noteWrapper);
     this.setEventListener(); // Слушает событие submit
   }
   
@@ -72,6 +72,14 @@ class Controller {
     this.setCurrentTaskData(); // Обновим текущую задачу
 
     const taskSaved = this.taskManager.updateSingleTaskData(updatedTaskData); // Обновим задачу в массиве
+  
+    if (!taskSaved) {
+      console.log('ошибка сохранения задачи');
+      
+      this.notes.getNote('error', 'Ошибка сохранения. Проверьте введённые данные.'); //type, text, container
+      return;
+    }
+
     const taskFormatted = this.formEditManager.formatFormData(taskSaved); // Приведем к формату
 
     // Установим новые знач-я в форму
@@ -84,7 +92,8 @@ class Controller {
       this.render.inputs
     );
     this.eventBus.emit(NAMES.TASKS_SAVE, taskFormatted);  
-    this.note.getNote('success', 'Задача успешно обновлена!'); //type, text, container
+
+    this.notes.getNote('success', 'Задача успешно обновлена!'); //type, text, container
   }
 
 
@@ -111,6 +120,7 @@ const controller = new Controller(
   eventBus,
   renderEditForm,
   manager,
-  storage
+  storage,
+  notes
 );
 controller.setInit();
