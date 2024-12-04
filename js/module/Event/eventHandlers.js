@@ -1,8 +1,8 @@
 import {NAMES} from './../../config.js';
 import {eventBus} from './EventEmitter.js';
 import {Storage} from './../Storage.js';
-import {TaskManager} from './../TaskManager/TaskManager.js';
-import {TaskManagerActions} from './../TaskManager/TaskManagerActions.js';
+import {TaskManager} from './../TaskManagers/TaskManager.js';
+import {TaskManagerActions} from './../TaskManagers/TaskManagerActions.js';
 import {TaskRender} from './../../form/TaskRender.js';
 
 const storage = new Storage();

@@ -70,6 +70,7 @@ class Controller {
 
     const id = this.getNextTaskId(); 
     const taskFormData = this.formActions.getFormData( this.render.getForm() );  // получим данные задачи из формы
+    
     const task = new Task({...taskFormData});   // Создадим задачу    
 
     this.manager.addNewTask(id, task);      // добавим задачу в массив

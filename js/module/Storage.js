@@ -63,6 +63,7 @@ class Storage {
     // Получаем все задачи
     const tasksAll = JSON.parse(localStorage.getItem(NAMES.TASKS_DATA)) || [];
 
+
     // Индекс задачи
     const taskIndex = tasksAll.findIndex(task => task.id === taskData.id);
 

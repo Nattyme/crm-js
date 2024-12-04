@@ -1,6 +1,6 @@
-import { NAMES } from './../../../config.js';
+import { NAMES } from '../../../config.js';
 
-class EventBus {
+class EventHandle {
   constructor (eventBus, status, tableActions, manager) {
     this.eventBus = eventBus;
     this.status = status;
@@ -29,4 +29,4 @@ class EventBus {
   
 }
 
-export default EventBus;
+export { EventHandle };

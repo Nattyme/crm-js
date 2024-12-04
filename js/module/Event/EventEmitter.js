@@ -1,3 +1,5 @@
+import {NAMES} from './../../config.js';
+
 /**
  * Класс для управления событиями.
 *
@@ -31,6 +33,7 @@ class EventEmitter {
    */
   on (event, callback) {
     const subs = this.getCallbacksFor(event); // Cписок слушателей event. Если св-ва нет - вернет []
+    console.log(subs);
     subs.push(callback);        // Cохраняем колл бэк в массив 
     this.setCallbacksFor(event, subs);    // Cохрн. массив как св-во объекта
 
@@ -88,4 +91,4 @@ const eventEmitter = new EventEmitter();
  * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.
  * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
 */
-export { EventEmitter }
+export { EventEmitter, eventEmitter }

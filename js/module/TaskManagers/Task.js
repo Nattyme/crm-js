@@ -19,8 +19,6 @@ class Task {
    * @param {string} param.product - Продукт, связанный с задачей.
   */
   constructor ( {full_name, phone, email, product}) {
-    this.eventBus = eventBus;
-    
     this.timestamp = Date.now();
     this.full_name = this.setProperty( full_name, validate.name);
     this.product = this.setProperty( product, validate.product);
@@ -31,6 +29,7 @@ class Task {
 
     // После созда-я задачи отправляем соб-е о статусе
     eventBus.emit(NAMES.TASK_CREATED, this); // Передаем созданную задачу
+    console.log(this);
   }
 
   /**

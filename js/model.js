@@ -1,7 +1,7 @@
 import { Task } from './module/TaskManagers/Task.js';
 import { TaskManager } from './module/TaskManagers/TaskManager.js';
 import { TaskEditManager } from './module/TaskManagers/TaskEditManager.js';
-import { EventEmitter } from './module/EventEmitter.js';
+import { EventEmitter } from './module/Event/EventEmitter.js';
 import { Status } from './module/Status.js';
 import { Storage } from './module/Storage.js';
 // import { Table } from './module/Table.js';

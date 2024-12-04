@@ -83,6 +83,8 @@ class TaskManager {
     record.id = id; // Добавим id
     this.data.push(record); 
     this.eventBus.emit(NAMES.TASKS_SAVE, record); 
+console.log(record);
+console.log('NewTask');
 
     return record;
   }

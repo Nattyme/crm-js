@@ -3,6 +3,8 @@ class TableActions {
   constructor( RowFactory ) {
     this.tbody =  this.setTbody();
     this.row = new RowFactory();
+
+    this.productSelect = document.querySelector('#productSelect');
   }
   /**
  * Создаёт фрагмент строк таблицы на основе массива задач.
@@ -46,6 +48,7 @@ class TableActions {
 
     return tbody;
   }
+
 
 } 
 
