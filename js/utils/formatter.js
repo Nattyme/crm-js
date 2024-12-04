@@ -28,7 +28,7 @@ class Formatter {
   }
 
   formatRows (dataToDisplay) {
-    return this.formatPrepareDisplayTask(dataToDisplay); // Отформатируем поля
+    return this.formatPrepareDisplayTask(dataToDisplay); 
   }
 
   formatPhone (phoneNumber) {

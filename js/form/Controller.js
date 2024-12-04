@@ -1,6 +1,6 @@
 import { Task, TaskManager, eventBus, Form, formatter  } from '../model.js';
-import { TaskRender } from './TaskRender.js';
 import { TestDataFactory } from './TestDataFactory.js';
+import {render} from './TaskRender.js';
 import { NAMES } from '../config.js';
 import { Notes } from './../utils/notes.js';
 /**
@@ -22,13 +22,13 @@ class Controller {
    * 
  * @constructor
  */
-  constructor (formatter) {
+  constructor (render, formatter) {
     this.eventBus = eventBus; // общий EventBus
 
     // Конструкторы
     this.form = new Form ({formatter}); // методы формы
     this.manager = new TaskManager(); // менеджер для обработки задач
-    this.render = new TaskRender(); // создадим рендера задачи
+    this.render = render; // создадим рендера задачи
     this.note = new Notes(); // создадим класс увед-ий
 
     this.render.initFormElems();  // Передадим элементы формы в рендер
@@ -42,7 +42,10 @@ class Controller {
    */
   setEventListeners () {
     // Слушаем submit, запускаем ф-цию добавления задачи
-    this.render.form.addEventListener('submit', (e) => this.setTask(e));
+    this.render.form.addEventListener('submit', (e) => {
+      const task = this.createTask(e);
+      this.saveTask(task);
+    });
   }
 
   /**
@@ -51,7 +54,7 @@ class Controller {
    * 
    * @method
    */
-  setInit() {
+  initController() {
     this.setEventListeners();
     this.eventBus.emit(NAMES.TASKS_LOAD);
     this.setRandomData();  // заполним форму значениями задачи
@@ -64,17 +67,22 @@ class Controller {
    * 
    * @method
    */
-  setTask(e) {
-    e.preventDefault();   // отмена стандарт. поведение
+  createTask(e) {
+    e.preventDefault();   
 
     const id = this.getNextTaskId(); 
-    const taskFormData = this.form.getFormData( this.render.form );  // получим данные задачи из формы
-    
-    const task = new Task({...taskFormData});   // Создадим задачу    
+    const taskFormData = this.form.getFormData( this.render.form );   
+    const newTask = new Task({...taskFormData});
 
-    this.manager.addNewTask(id, task);      // добавим задачу в массив
+    newTask.id = id;
+
+    return (newTask)
+  }
+
+  saveTask(task) {
+    this.manager.addNewTask(task);   
     this.eventBus.emit(NAMES.TASKS_SAVE);          // вызываем событие сохранения
-    this.form.resetForm (this.render.form);    // Очистим форму
+    this.form.resetForm (this.render.form);    
 
     this.setRandomData ();        // Заново заполним данные
   }
@@ -89,15 +97,14 @@ class Controller {
    * @method
    */
   setRandomData () {
-    const testData = this.getRandomData(); // получим случайные тест. данные
-    const taskData = new Task( {...testData} ); // создадим случ-ую задачу 
+    const testData = this.getRandomData(); 
+    const taskData = new Task( {...testData} ); 
+
     // Отформатируем телефон
     const taskFormatted = this.form.prepareDisplay(taskData);
     const formElems = this.render.getFormElems();
     
     this.form.setFormData(taskFormatted, formElems); // заполним форму значениями задачи
-
-    return taskFormatted; 
   }
 
   /**
@@ -126,8 +133,8 @@ class Controller {
 
 }
 
-// Запустим программу
-const controller = new Controller(formatter);
-controller.setInit();
+// Запуск
+const controller = new Controller(render, formatter);
+controller.initController();
 
 

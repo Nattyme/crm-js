@@ -49,4 +49,5 @@ class TaskRender {
   }
 }
 
-export { TaskRender }
+const render = new TaskRender();
+export { render }

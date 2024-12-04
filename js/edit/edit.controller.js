@@ -29,6 +29,10 @@ class Controller {
         this.render.inputs
       );
     });
+    console.log( this.render.select);
+    console.log( this.render.selectStatus);
+    console.log(this.render.getFormElements());
+    
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => {
       const formDataFormatted = this.formEditManager.formatFormData(task);
   
@@ -96,7 +100,7 @@ class Controller {
   setCurrentTaskData() {
     const dataTaskAll = this.getTasksData (); // Получим все задачи
     const id =  this.formEditManager.getTaskID(); // ID текущ. задачи
-    const currentTask =  this.taskManager.getSingleTask(id, dataTaskAll); // Найдём текущ. задачу
+    const currentTask =  this.taskManager.findSingleTask(id, dataTaskAll); // Найдём текущ. задачу
 
     return currentTask ?  this.currentTaskData = currentTask : console.log('Задача не найдена'); // Найдена - вренем знач-е
   }

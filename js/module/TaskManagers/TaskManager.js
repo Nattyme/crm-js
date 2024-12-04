@@ -49,7 +49,6 @@ class TaskManager {
 
     const taskIndex = this.data.findIndex(task => task.id === updatedTask.id);
 
-
     if (taskIndex !== -1) {
       this.data[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
       this.eventBus.emit(NAMES.TASKS_SAVE, updatedTask); // Сохраненеи измен-ий
@@ -69,7 +68,7 @@ class TaskManager {
    * @param {Object} record - Данные задачи.
    * @returns {Object|null} Добавленную задачу или null в случае ошибки.
    */
-  addNewTask(id, record) {
+  addNewTask(record) {
     // Ищем пустые знач-я
     for ( const field in record) {
       if ( record[field] === null || record[field] === undefined) {
@@ -78,11 +77,8 @@ class TaskManager {
       }
     }
 
-    record.id = id; // Добавим id
     this.data.push(record); 
     this.eventBus.emit(NAMES.TASKS_SAVE, record); 
-console.log(record);
-console.log('NewTask');
 
     return record;
   }
@@ -95,17 +91,17 @@ console.log('NewTask');
    * @param {number} recordID - ID задачи.
    * @returns {number} ID удалённой задачи.
    */
-  removeTask (recordID) {
-    const recordIndex = this.data.findIndex(record => record.id === recordID);
-    if (recordIndex !== -1) {
-      this.data.splice(recordIndex, 1);
-    }
+  // removeTask (recordID) {
+  //   const recordIndex = this.data.findIndex(record => record.id === recordID);
+  //   if (recordIndex !== -1) {
+  //     this.data.splice(recordIndex, 1);
+  //   }
 
-    // Уведом-е об удалении 
-    this.eventBus.emit(NAMES.TASK_REMOVED, recordID);
+  //   // Уведом-е об удалении 
+  //   this.eventBus.emit(NAMES.TASK_REMOVED, recordID);
 
-    return recordID;
-  }
+  //   return recordID;
+  // }
 
   /**
    * Возвращает все задачи.
@@ -118,6 +114,7 @@ console.log('NewTask');
     return this.data;
   }
 
+
   /**
    * Возвращает задачу по её ID.
    *
@@ -126,14 +123,18 @@ console.log('NewTask');
    * @param {number} id - ID задачи.
    * @returns {Object|null} Возвращает задачу или null, если не найдено.
    */
-  getSingleTask(id, allTaskData) {
+  findSingleTask(id, allTaskData) {
     // В массиве data найдём нужную по ID
-    let data = allTaskData.find(task => task.id === Number(id) );
+    let data = this.findTaskById(id, allTaskData);
 
     // Если ID не найден
     if (!data) return console.log(`Запись не найдена в ${this.data}`);
 
-    return this.createDataCopyFormatted(data);  // Вернём запись
+    return this.formatTaskData(data);  // Вернём запись
+  }
+
+  findTaskById(id, allTaskData){
+    return allTaskData.find(task => task.id === Number(id) );
   }
 
   
@@ -149,7 +150,7 @@ console.log('NewTask');
     return data.length !== 0   ?    data.reduce( (max, task) => Math.max(max, task.id), 0) + 1   :    1;
   }
 
-  createDataCopyFormatted (taskData) {
+  formatTaskData (taskData) {
     const dataCopy = {...taskData};     // Копия объекта задачи
     dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
 

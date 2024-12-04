@@ -5,10 +5,8 @@ import { EventEmitter } from './module/Event/EventEmitter.js';
 import { Status } from './module/Status.js';
 import { Storage } from './module/Storage.js';
 import {Formatter} from "./utils/formatter.js";
-// import { Table } from './module/Table.js';
 import { FormEdit } from './module/form/FormEdit.js';
 import {Form} from './module/form/Form.js';
-// import { subscribeToEvents } from './module/subscribeToEvents.js';
 
 
 /**

@@ -13,6 +13,12 @@ class EditFormRender  {
     email : this.form.querySelector('#email'),
   }
  }
+
+ updateNoteWrapper (content) {
+  this.noteWrapper.textContent = content;
+ }
+
+
  
  getFormElements(){
   return {
@@ -27,5 +33,5 @@ class EditFormRender  {
  }
 
 }
-// this.setFormData();
+
 export { EditFormRender };
