@@ -53,4 +53,4 @@ class RowFactory {
   }
 }
 
-export default RowFactory;
+export {RowFactory};

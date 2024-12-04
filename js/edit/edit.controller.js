@@ -42,7 +42,6 @@ class Controller {
       );
     })
 
-    
     this.currentTaskData = this.setCurrentTaskData();
   }
   

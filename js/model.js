@@ -4,6 +4,7 @@ import { TaskEditManager } from './module/TaskManagers/TaskEditManager.js';
 import { EventEmitter } from './module/Event/EventEmitter.js';
 import { Status } from './module/Status.js';
 import { Storage } from './module/Storage.js';
+import {Formatter} from "./utils/formatter.js";
 // import { Table } from './module/Table.js';
 import { FormEdit } from './module/form/FormEdit.js';
 import FormActions from './module/form/Form.js';
@@ -17,9 +18,9 @@ import FormActions from './module/form/Form.js';
 const status = new Status();
 const storage = new Storage();
 const eventBus = new EventEmitter(); // Общий экз-р эммитера
+const formatter = new Formatter();
 
-
-export { TaskManager, TaskEditManager, Task, FormActions, FormEdit, status, eventBus, storage}
+export { TaskManager, TaskEditManager, Task, FormActions, FormEdit, status, eventBus, storage, formatter}
 
 
 

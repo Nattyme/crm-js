@@ -1,26 +1,30 @@
-// Table actions
-class TableActions {
-  constructor( RowFactory ) {
-    this.tbody =  this.setTbody();
-    this.row = new RowFactory();
+import {RowFactory} from './elements/Row.js';
 
-    this.productSelect = document.querySelector('#productSelect');
+/**
+ * Класс для управления отображением таблицы задач.
+*/
+class TableRender {
+  constructor ({rowFactory}) {
+    this.row = rowFactory;
+    this.tbody = this.setTbody();
+    this.select = document.querySelector('#productSelect');
   }
+
   /**
  * Создаёт фрагмент строк таблицы на основе массива задач.
  * @param {Object[]} tasks - Массив задач.
  * @returns {DocumentFragment} Фрагмент строк таблицы.
  */
-  addRowsToTable (tasksData, status) {
+  addRowsToTable (tasks) {
     if (!this.tbody) {
-      console.error('Не найден <tbody>. Проверьте наличие элемента в DOM.');
+      console.error('Не найден <tbody>. Проверить наличие элем. в DOM.');
       return;
     }
     
     let container = this.tbody;
 
-    for (let task of tasksData) {
-      container.insertAdjacentHTML('afterbegin', this.setRowHTML(task, status) );
+    for (let task of tasks.data) {
+      container.insertAdjacentHTML('afterbegin', this.setRowHTML(task, task.status) );
     }
 
     return container;
@@ -48,8 +52,10 @@ class TableActions {
 
     return tbody;
   }
+}
 
+const renderTable = new TableRender( { 
+  rowFactory : new RowFactory()
+});
 
-} 
-
-export default TableActions;
+export {renderTable}

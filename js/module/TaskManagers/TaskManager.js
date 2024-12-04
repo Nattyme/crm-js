@@ -1,9 +1,5 @@
 import { NAMES } from '../../config.js';
-import { Formatter } from '../../utils/formatter.js';
-import {storage} from  './../../model.js';
-import {eventBus} from  './../../model.js';
-
-const formatter = new Formatter();
+import {storage, eventBus, formatter} from  './../../model.js';
 
 /**
  * Класс для управления задачами.
@@ -21,7 +17,7 @@ class TaskManager {
    *
    * @param {EventBus} eventBus - Экземпляр EventBus для управления событиями.
    */
-  constructor () {
+  constructor (formatter) {
     this.data = [];
     this.eventBus = eventBus; // общий EventBus
 
@@ -36,6 +32,8 @@ class TaskManager {
     this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
     this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage.bind(this));
+
+    this.formatter = formatter;
 
     // Получим данные из localStorage
     this.loadFromStorage();

@@ -27,6 +27,10 @@ class Formatter {
     return id;
   }
 
+  formatRows (dataToDisplay) {
+    return this.formatPrepareDisplayTask(dataToDisplay); // Отформатируем поля
+  }
+
   formatPhone (phoneNumber) {
     let phone = phoneNumber.replace(this.regEx.digit, '');
 
