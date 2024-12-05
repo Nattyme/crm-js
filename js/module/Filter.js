@@ -9,20 +9,39 @@ class Filter {
   this.category = categoryArray;
  }
 
- getCategories(select) {
-  console.log('here');
+//  getCatFromSelect(select) {
+//   console.log('here');
   
-  for (let item of select.options) {
-    if(!item) { 
-      console.log('В селекторе нет опций');
-      return false;
-    }
-    this.category.push(item.value);
-  }
+//   for (let item of select.options) {
+//     if(!item) { 
+//       console.log('В селекторе нет опций');
+//       return false;
+//     }
+//     this.category.push(item.value);
+//   }
 
-  return this.category;
+//   return this.category;
 
- }
+//  }
+
+//  getCatFromLinks(navContainer) {
+//   console.log('hereNAV');
+  
+//   for (let item of navContainer) {
+//     let currentItem = item.querySelector('a') ? item.querySelector('a') : item;
+//     console.log(tem);
+//     console.log(currentItem);
+    
+//     if(!item) { 
+//       console.log('Нет ссылки с такой опцией');
+//       return false;
+//     }
+//     this.category.push(item.value);
+//   }
+
+//   return this.category;
+
+//  }
 
  setSelector(selector) {
   this.selector = selector;
@@ -33,7 +52,12 @@ class Filter {
  }
 
 
- filterProducts(tasksData, category) {
+ filterSelect(startValues) {
+    let filterData = startValues.data.filter(task => task[startValues.key] === startValues.category);
+    return startValues.category === 'all' ? startValues.data : filterData;
+ }
+
+ filterNotSelect (tasksData, category) {
     let filterData = tasksData.filter(task => task.product === category);
 
     return category === 'all' ? tasksData : filterData;

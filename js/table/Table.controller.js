@@ -27,7 +27,6 @@ class Controller {
     let rowsData = this.getRowsData(data); 
     const selectProduct = this.render.getSelect();
     const statusBar = this.render.getStatusBar();
-    const categoryAll = this.filter.getCategories(selectProduct);
 
     // Скрываем селект, если категорий или задач нет
     if ( !data.length > 0) {
@@ -36,21 +35,29 @@ class Controller {
    
     this.displayRows({data : rowsData, status: statusArray});
 
-   
-    
-
     selectProduct.onchange = ()=>{
       const selectIndex = selectProduct.selectedIndex;
       let currentCategory = selectProduct[selectIndex].value;
 
-      const taskFiltered = this.filter.filterProducts(data, currentCategory);
+      const dataForFilterStart = {
+          data : data,
+          category : currentCategory,
+          key : 'product'
+      }
+      const taskFiltered = this.filter.filterSelect(dataForFilterStart); 
       
-      console.log(taskFiltered);
+     
       this.render.resetTable();
       const rowsData = this.getRowsData(taskFiltered); 
       this.displayRows({data : rowsData, status: statusArray});
       console.log('Массив отфлильтрованных задач', taskFiltered);
     }
+
+    statusBar.addEventListener ('click', (e)=>{
+      let currentCategory = e.target.getAttribute('data-value');
+      console.log(e.target.getAttribute('data-value'));
+      
+    });
     
   }
 
