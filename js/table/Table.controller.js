@@ -40,7 +40,8 @@ class Controller {
     
 
     selectProduct.onchange = ()=>{
-      let currentCategory = selectProduct[selectProduct.selectedIndex].value;
+      const selectIndex = selectProduct.selectedIndex;
+      let currentCategory = selectProduct[selectIndex].value;
 
       const taskFiltered = this.filter.filterProducts(data, currentCategory);
       

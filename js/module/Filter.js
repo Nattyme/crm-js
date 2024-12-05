@@ -34,7 +34,9 @@ class Filter {
 
 
  filterProducts(tasksData, category) {
-    return tasksData.filter(task => task.product === category);
+    let filterData = tasksData.filter(task => task.product === category);
+
+    return category === 'all' ? tasksData : filterData;
  }
 }
 
