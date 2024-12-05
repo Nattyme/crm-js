@@ -31,7 +31,28 @@ class FormEdit  {
       this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
       return false;
     } 
-    // Вернём отред-мые знач-я
+    // Вернём отредак-ные знач-я
+    return {
+      ...startTaskData,
+      email : this.setProperty(updatedTaskData.email, validate.email),
+      full_name : this.setProperty(updatedTaskData.full_name, validate.full_name),
+      product : this.setProperty(updatedTaskData.product, validate.product), //Отформатируем знач-е product 
+      phone :  this.setProperty(updatedTaskData.phone, validate.phone),
+      status : this.setProperty(updatedTaskData.status, validate.status),
+      changed : Date.now()
+    }
+
+  }
+
+  updateTaskToRender(startTaskData, updatedTaskData) {
+    updatedTaskData.id = startTaskData.id;
+   
+    // Ищем пустые знач-я
+    if ( Object.values(updatedTaskData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
+      return false;
+    } 
+    // Вернём отредак-ные знач-я
     return {
       ...startTaskData,
       email : this.setProperty(updatedTaskData.email, validate.email),

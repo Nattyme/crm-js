@@ -20,9 +20,8 @@ class CellFactory {
     return {
           ...task,
           id:         () => { return  { text : task.id } },
-          data:       () => { return  { text : task.date } },
+          date:       () => { return  { text : task.date } },
           product:    () => { return  { text : task.product } },
-          data:       () => { return  { text : task.date } },
           full_name:  () => { return { text : task.full_name } },
           email:      () => { return  { text : task.email } },
           phone:      () => { return  { text : task.phone } },

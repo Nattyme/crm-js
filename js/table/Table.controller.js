@@ -25,6 +25,10 @@ class Controller {
     const data = this.manager.getAllTasksData();
     const statusArray = this.status.getStatusData();  
     let rowsData = this.getRowsData(data); 
+ console.log(data);
+ console.log('rows data at start', rowsData);//ok
+ 
+    
     const selectProduct = this.render.getSelect();
     const statusBar = this.render.getStatusBar();
 
@@ -32,13 +36,14 @@ class Controller {
     if ( !data.length > 0) {
       this.render.hideElements([selectProduct, statusBar]) // если задач нет - спрячем селекты
     }
+   console.log(statusArray);
    
     this.displayRows({data : rowsData, status: statusArray});
 
     selectProduct.onchange = ()=>{
       const selectIndex = selectProduct.selectedIndex;
       let currentCategory = selectProduct[selectIndex].value;
-
+      
       const dataForFilterStart = {
           data : data,
           category : currentCategory,
@@ -56,16 +61,36 @@ class Controller {
     statusBar.addEventListener ('click', (e)=>{
       let currentCategory = e.target.getAttribute('data-value');
       console.log(e.target.getAttribute('data-value'));
+
+      const dataForFilterStart = {
+        data : data,
+        category : currentCategory
+        // key : 'status'
+      }
+
+      const taskFiltered = this.filter.filterNotSelect(dataForFilterStart); 
+      
+      this.render.resetTable();
+      rowsData = this.getRowsData(taskFiltered); 
+      console.log(rowsData);
+      
+      this.displayRows({data : rowsData, status: statusArray});
+      console.log('Массив отфлильтрованных задач', taskFiltered);
       
     });
     
   }
 
   getRowsData (dataToDisplay) {
-    return this.formatter.formatRows(dataToDisplay);
+    console.log('get rows data', dataToDisplay);
+    
+    // return this.formatter.formatRows(dataToDisplay);
+    return this.formatter.formatPrepareDisplayTask(dataToDisplay);
   }
 
   displayRows (dataArray, statusArray) {
+    console.log('display rows', dataArray);
+    
     this.render.addRowsToTable(dataArray, statusArray);
   }
 }

@@ -53,15 +53,32 @@ class Filter {
 
 
  filterSelect(startValues) {
+  console.log('DATA IN FILTER: ', startValues);
+  
     let filterData = startValues.data.filter(task => task[startValues.key] === startValues.category);
+    console.log(filterData);
+    
     return startValues.category === 'all' ? startValues.data : filterData;
  }
 
- filterNotSelect (tasksData, category) {
-    let filterData = tasksData.filter(task => task.product === category);
+  filterNotSelect (startValues) {
+    console.log('filter start value: ', startValues);
+    
+    let filterData = startValues.data.filter(task => {
+      if (startValues.category === 'all') {
+        return true; // если "all"
+      }
+      console.log('filter task', task);
+      console.log(typeof startValues.category);
+  
+      
+      return task.status.key === startValues.category;
+   
+    });
+console.log('filter back data', filterData);
 
-    return category === 'all' ? tasksData : filterData;
- }
+    return filterData;
+  }
 }
 
 

@@ -27,9 +27,9 @@ class Formatter {
     return id;
   }
 
-  formatRows (dataToDisplay) {
-    return this.formatPrepareDisplayTask(dataToDisplay); 
-  }
+  // formatRows (dataToDisplay) {
+  //   return this.formatPrepareDisplayTask(dataToDisplay); 
+  // }
 
   formatPhone (phoneNumber) {
     let phone = phoneNumber.replace(this.regEx.digit, '');
@@ -106,6 +106,7 @@ class Formatter {
       product : this.formatProduct(record.product),
       status : this.formatStatus(record.status)
     }));
+console.log(updatedData);
 
     return updatedData;
   }

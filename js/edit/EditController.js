@@ -68,6 +68,8 @@ class Controller {
  
     // Обновим даные задачи, передадим стартовые и новые знач-я задачи
     const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
+console.log(updatedTaskData.data);
+console.log(updatedTaskData.render);
 
     // Если не получили отред. задачу - ошибка
     if ( updatedTaskData === false ) {
