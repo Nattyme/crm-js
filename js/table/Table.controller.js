@@ -24,7 +24,7 @@ class Controller {
   setInit () {
     const data = this.manager.getAllTasksData();
     const statusArray = this.status.getStatusData();  
-    const rowsData = this.getRowsData(data); 
+    let rowsData = this.getRowsData(data); 
     const selectProduct = this.render.getSelect();
     const statusBar = this.render.getStatusBar();
     const categoryAll = this.filter.getCategories(selectProduct);
@@ -46,7 +46,8 @@ class Controller {
       
       console.log(taskFiltered);
       this.render.resetTable();
-      this.displayRows({data : taskFiltered, status: statusArray});
+      const rowsData = this.getRowsData(taskFiltered); 
+      this.displayRows({data : rowsData, status: statusArray});
       console.log('Массив отфлильтрованных задач', taskFiltered);
     }
     
