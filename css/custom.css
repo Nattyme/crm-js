@@ -1,3 +1,16 @@
+/*utils*/
+.none {
+  display: none;
+}
+
+.button-wrapper {
+  display: flex;
+}
+
+.button--delete {
+  background-color: red;
+}
+
 .link-abs {
   color: #000;
 }

@@ -8,6 +8,7 @@ class TableRender {
     this.row = rowFactory;
     this.tbody = this.setTbody();
     this.select = document.querySelector('#productSelect');
+    this.statusBar = document.querySelector('#topStatusBar');
   }
 
   /**
@@ -30,8 +31,25 @@ class TableRender {
     return container;
   }
 
+  resetTable() {
+    this.tbody.textContent = '';
+  }
+
   getSelect () {
     return this.select;
+  }
+
+  getStatusBar() {
+    return this.statusBar;
+  }
+
+  hideElements(elements) {
+    console.log(elements);
+    
+    elements.forEach(element => element.classList.add('none'));
+  }
+  unhideElements(element) {
+    element.classList.remove('none');
   }
 
   /**

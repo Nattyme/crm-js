@@ -10,9 +10,18 @@ class Filter {
  }
 
  getCategories(select) {
-  console.log(select);
-  console.log(select.options);
+  console.log('here');
   
+  for (let item of select.options) {
+    if(!item) { 
+      console.log('В селекторе нет опций');
+      return false;
+    }
+    this.category.push(item.value);
+  }
+
+  return this.category;
+
  }
 
  setSelector(selector) {
@@ -24,7 +33,7 @@ class Filter {
  }
 
 
- filterProduct(tasksData, category) {
+ filterProducts(tasksData, category) {
     return tasksData.filter(task => task.product === category);
  }
 }

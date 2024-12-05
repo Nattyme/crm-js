@@ -25,19 +25,27 @@ class Controller {
     const data = this.manager.getAllTasksData();
     const statusArray = this.status.getStatusData();  
     const rowsData = this.getRowsData(data); 
+    const selectProduct = this.render.getSelect();
+    const statusBar = this.render.getStatusBar();
+    const categoryAll = this.filter.getCategories(selectProduct);
+
+    // Скрываем селект, если категорий или задач нет
+    if ( !data.length > 0) {
+      this.render.hideElements([selectProduct, statusBar]) // если задач нет - спрячем селекты
+    }
    
     this.displayRows({data : rowsData, status: statusArray});
 
-    const select = this.render.getSelect();
-    this.filter.getCategories(select);
+   
     
-    select.onchange = ()=>{
-      console.log(select[select.selectedIndex].value);
-      let currentCategory = select[select.selectedIndex].value;
-      console.log(this.filter);
-      console.log(rowsData);
+
+    selectProduct.onchange = ()=>{
+      let currentCategory = selectProduct[selectProduct.selectedIndex].value;
+
+      const taskFiltered = this.filter.filterProducts(data, currentCategory);
       
-      const taskFiltered = this.filter.filterProduct(rowsData, currentCategory);
+      console.log(taskFiltered);
+      this.render.resetTable();
       this.displayRows({data : taskFiltered, status: statusArray});
       console.log('Массив отфлильтрованных задач', taskFiltered);
     }
