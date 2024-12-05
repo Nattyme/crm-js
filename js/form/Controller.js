@@ -29,7 +29,7 @@ class Controller {
     this.form = formManager; // методы формы
     this.manager = manager; // менеджер для обработки задач
     this.render = render; // создадим рендера задачи
-    this.note = new Notes(this.render.notewrapper); // создадим класс увед-ий
+    this.notes = new Notes(); // создадим класс увед-ий
 
     this.render.initFormElems();  // Передадим элементы формы в рендер
   }
@@ -56,6 +56,7 @@ class Controller {
    */
   initController() {
     this.setEventListeners();
+    this.notes.setContainer(this.render.notewrapper);
     this.eventBus.emit(NAMES.TASKS_LOAD);
     this.setRandomData();  // заполним форму значениями задачи
   }
@@ -80,7 +81,14 @@ class Controller {
   }
 
   saveTask(task) {
-    this.manager.addNewTask(task);   
+    let result = this.manager.addNewTask(task);   
+    if(!result) {
+      console.log('ERROR HERE');
+      console.log(this.render.notewrapper);
+      console.log(this.notes);
+      
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.empty_value());
+    }
     this.eventBus.emit(NAMES.TASKS_SAVE);          // вызываем событие сохранения
     this.form.resetForm (this.render.form);    
 
@@ -102,7 +110,10 @@ class Controller {
 
     // Отформатируем телефон
     const taskFormatted = this.form.prepareDisplay(taskData);
+    console.log(taskData);
+    
     const formElems = this.render.getFormElems();
+    console.log(formElems);
     
     this.form.setFormData(taskFormatted, formElems); // заполним форму значениями задачи
   }

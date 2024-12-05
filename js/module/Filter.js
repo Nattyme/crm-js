@@ -2,6 +2,17 @@ class Filter {
  constructor() {
   this.selector = '';
   this.selectedIndex = '';
+  this.category = [];
+ }
+
+ setCategories(categoryArray) {
+  this.category = categoryArray;
+ }
+
+ getCategories(select) {
+  console.log(select);
+  console.log(select.options);
+  
  }
 
  setSelector(selector) {
@@ -12,12 +23,9 @@ class Filter {
   this.selectedIndex = selected;
  }
 
- doFilter(){
- 
- }
 
- filterProduct(category, tasksData) {
-  tasksData.map(task => task.product === category);
+ filterProduct(tasksData, category) {
+    return tasksData.filter(task => task.product === category);
  }
 }
 

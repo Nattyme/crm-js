@@ -19,6 +19,8 @@ class Task {
    * @param {string} param.product - Продукт, связанный с задачей.
   */
   constructor ( {full_name, phone, email, product}) {
+    console.log(product);
+    
     this.timestamp = Date.now();
     this.full_name = this.setProperty( full_name, validate.full_name);
     this.product = this.setProperty( product, validate.product);

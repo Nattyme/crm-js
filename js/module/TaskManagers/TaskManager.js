@@ -70,6 +70,18 @@ class TaskManager {
    * @returns {Object|null} Добавленную задачу или null в случае ошибки.
    */
   addNewTask(record) {
+    let recordValid = this.taskFieldValidate(record);
+    
+    if(recordValid) {
+      this.data.push(recordValid); 
+      this.eventBus.emit(NAMES.TASKS_SAVE, recordValid); 
+  
+      return recordValid;
+    }
+   
+  }
+
+  taskFieldValidate(record) {
     // Ищем пустые знач-я
     for ( const field in record) {
       if ( record[field] === null || record[field] === undefined) {
@@ -89,8 +101,9 @@ class TaskManager {
             return;
         }
 
-        // Проверяем значение через соответствующий метод валидации
+        // Проверяем значение 
         const validationMethod = validate[field];
+
         if (validationMethod) {
             const validationResult = validationMethod(record[field]);
             
@@ -101,19 +114,11 @@ class TaskManager {
 
             // Обновляем значение поля на валидированное
             record[field] = validationResult.value;
-        } else {
-            console.log(`Ошибка: нет метода валидации для поля ${field}`);
-            return;
-        }
+            console.log(record);
+            
+            return record;
+        } 
     }
- 
-    this.data.push(record); 
-    console.log(this.data);
-    console.log(this);
-    
-    this.eventBus.emit(NAMES.TASKS_SAVE, record); 
-
-    return record;
   }
 
   /**

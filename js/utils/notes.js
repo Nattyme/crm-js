@@ -1,7 +1,8 @@
 import { NAMES } from '../config/config.js';
+import { MESSAGES } from './../data/messages.js';
 
 class Notes {
-  constructor (wrapper, MESSAGES) {
+  constructor (wrapper) {
     this.container = wrapper;
 
     if(!this.container){return 'Нет контейнера!'};

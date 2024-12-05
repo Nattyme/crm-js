@@ -7,14 +7,14 @@ import { Filter } from './../module/Filter.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor ({eventBus, status, renderTable, manager, filter, formatter}) {
+  constructor ({eventBus, status, renderTable, manager, formatter}) {
     // Общие
     this.eventBus = eventBus; 
     this.status = status; 
 
     this.manager =  manager; 
     this.render = renderTable;
-    this.filter = filter; 
+    this.filter =  new Filter(); 
     this.formatter = formatter;
   }
 
@@ -29,10 +29,16 @@ class Controller {
     this.displayRows({data : rowsData, status: statusArray});
 
     const select = this.render.getSelect();
+    this.filter.getCategories(select);
+    
     select.onchange = ()=>{
       console.log(select[select.selectedIndex].value);
-      currentCategory = select[select.selectedIndex].value;
-      const taskFiltered = this.filter.doFilter(currentCategory);
+      let currentCategory = select[select.selectedIndex].value;
+      console.log(this.filter);
+      console.log(rowsData);
+      
+      const taskFiltered = this.filter.filterProduct(rowsData, currentCategory);
+      this.displayRows({data : taskFiltered, status: statusArray});
       console.log('Массив отфлильтрованных задач', taskFiltered);
     }
     
@@ -53,7 +59,6 @@ const controller = new Controller({
   status,
   renderTable,
   manager,
-  filter : new Filter(),
   formatter
 });
 
