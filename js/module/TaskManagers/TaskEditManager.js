@@ -10,15 +10,15 @@ class TaskEditManager {
     return formatter.formatPrepareDisplayTask(taskDataAll); 
   }
 
-  formatDateTime (timestamp, type = 'date') {
-    if (type === 'date') {
-      return formatter.formatDate(timestamp);
-    }
+  // formatDateTime (timestamp, type = 'date') {
+  //   if (type === 'date') {
+  //     return formatter.formatDate(timestamp);
+  //   }
 
-    if (type === 'date-time') {
-      return formatter.formatDateTime(timestamp);
-    }
-  }
+  //   if (type === 'date-time') {
+  //     return formatter.formatDateTime(timestamp);
+  //   }
+  // }
 }
 
 export { TaskEditManager };

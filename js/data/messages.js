@@ -1,7 +1,7 @@
 const MESSAGES = {
   ERROR : {
-            unvalid_value : function () {
-              return 'Ошибка: некорректный ввод.';
+            unvalid_value : function (value) {
+              return `Ошибка: некорректный ввод.`;
             },
 
             empty_value : function () {
@@ -11,7 +11,7 @@ const MESSAGES = {
 
   SUCCESS : {
               save : function () {
-                return 'УспехЖ задача обновлена.'
+                return 'Успех: задача обновлена.'
               }
   }
 }

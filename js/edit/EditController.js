@@ -69,9 +69,9 @@ class Controller {
     // Обновим даные задачи, передадим стартовые и новые знач-я задачи
     const updatedTaskData = this.formEditManager.updateTask(this.currentTaskData, formData);
 
-
+    // Если не получили отред. задачу - ошибка
     if ( updatedTaskData === false ) {
-      this.notes.addError('error', this.notes.MESSAGES.ERROR.empty_value());
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.empty_value());
       return;
     }
 
@@ -80,7 +80,7 @@ class Controller {
     const taskSaved = this.taskManager.updateSingleTaskData(updatedTaskData); // Обновим задачу в массиве
   
     if (!taskSaved) {
-      this.notes.addError('error', this.notes.MESSAGES.ERROR.unvalid_value()); //type, text, container
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value()); //type, text, container
       return;
     }
 
@@ -97,7 +97,8 @@ class Controller {
     );
     this.eventBus.emit(NAMES.TASKS_SAVE, taskFormatted);  
 
-    this.notes.getNote('success', 'Задача успешно обновлена!'); //type, text
+    // Уведом-е об успехе
+    this.notes.addNote('success', this.notes.MESSAGES.SUCCESS.save()); // type, text
   }
 
 

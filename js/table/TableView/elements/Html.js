@@ -68,7 +68,9 @@ class HTMLFactory {
               <tr 
                 class="task-table__row task-table__row--link" 
                 scope=${content.id} 
-                data-status=${content.status.key}>
+                data-status=${content.status.key}
+                data-display
+              >
                 ${extra}
               </tr>
              `;

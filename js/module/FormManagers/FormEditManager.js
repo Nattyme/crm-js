@@ -1,5 +1,5 @@
 import {validate} from './../../utils/validate.js';
-// import {Notes} from './../../utils/notes.js';
+import {Notes} from './../../utils/notes.js';
 
 class FormEdit  {
   constructor (formatter, eventBus) {
@@ -11,7 +11,7 @@ class FormEdit  {
     this.selectStatus = null;
 
     this.formatter = formatter;
-    // this.notes = new Notes();
+    this.notes = new Notes();
     this.initFormElems(); // задает элементы формы
   }
 
@@ -25,13 +25,10 @@ class FormEdit  {
 
   updateTask(startTaskData, updatedTaskData) {
     updatedTaskData.id = startTaskData.id;
-    console.log(updatedTaskData);
+   
     // Ищем пустые знач-я
     if ( Object.values(updatedTaskData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
-      console.log('Ошибка данных. Запись не добавлена. Поля формы не должны быть пустыми');
-      console.log('mistake');
-      console.log(Object.values(updatedTaskData));
-      
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
       return false;
     } 
 
@@ -51,13 +48,12 @@ class FormEdit  {
   setProperty ( value, validate) {
     const result = validate(value);
    
-    if(!result.valid) {
-      console.log(`Ошибка: неверное поле ${value}`);
-      
+    if(!result.valid || result.valid === null) { 
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value(value));
       return null;
-    } 
-    
-    return result.value;
+    }; 
+
+    return result.value
   }
 
   getTaskID () {

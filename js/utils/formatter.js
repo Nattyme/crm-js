@@ -111,8 +111,14 @@ class Formatter {
   }
 
   formatCamelWords (dataString) {
+    console.log('Check names');
+    console.log(dataString);
+    
     dataString = dataString.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-    dataString = newString.join(' ');
+    console.log(dataString);
+    dataString = dataString.join(' ');
+    console.log(dataString);
+    return dataString;
   }
 }
 

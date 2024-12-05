@@ -20,7 +20,7 @@ class Task {
   */
   constructor ( {full_name, phone, email, product}) {
     this.timestamp = Date.now();
-    this.full_name = this.setProperty( full_name, validate.name);
+    this.full_name = this.setProperty( full_name, validate.full_name);
     this.product = this.setProperty( product, validate.product);
     this.email = this.setProperty( email, validate.email);
     this.phone = this.setProperty( phone, validate.phone);

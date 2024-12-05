@@ -15,28 +15,32 @@ class Notes {
     this.container = wrapperElement;
   }
 
-  addError(type, content) {
+  addNote(type, content) {
     if (!type || !content) {
-      console.log('Не получилось добавить ошибку. Нет параметра');
+      return console.log('Не получилось добавить ошибку. Нет параметра');
     }
-    console.log(type);
-    console.log(content);
-    console.log(this.errors);
+
     this.removeNotes();
-    console.log('После удаления', this.errors);
-    
-    this.errors.push({type: type, title: content});
-    console.log(this.errors);
+
+
+    if(type === 'error') {
+      this.errors.push({type: type, title: content});
+    }
+
+    if ( type === 'success' && !this.errors.length > 0) {
+      this.success.push({type: type, title: content});
+    }
+
     this.getNote(type, content);
-    
   }
 
   existErrors() {
     return this.errors.length > 0;
   }
 
-  resetErrors() {
+  resetNotes () {
     this.errors = [];
+    this.success = [];
   }
 
   getHTMLTmpl (className, text) {
@@ -48,26 +52,18 @@ class Notes {
   }
 
   getNote(type, text) {
-    console.log(type);
+    let note;
     if(!this.container) return console.log('Нет контейнера');
    
     if(type === 'error') {
-      let note = this.getHTMLTmpl('alert-danger', text);
-      console.log(note);
-      
-      this.displayNote(note, this.container);
-      console.log('here error');
-      console.log(this.errors, 'massive errors');
-      
-      return;
+      note = this.getHTMLTmpl('alert-danger', text);
     }
     if(type === 'success') {
-      let note = this.getHTMLTmpl('alert-success', text);
-      this.displayNote(note, this.container);
-      console.log('here success');
-      
-      return;
+      note = this.getHTMLTmpl('alert-success', text);
     }
+
+    this.displayNote(note, this.container);
+    return;
   }
 
   displayNote(note) {
@@ -81,16 +77,16 @@ class Notes {
 
   removeNotes() {
     const notes = this.findNotes();
-console.log('removing');
 
     if (notes) {
       notes.forEach(element => {
+        console.log('удалено:', element);
+        
         element.remove();
       });
     }
 
-    this.resetErrors();
- 
+    this.resetNotes();
   }
 }
 

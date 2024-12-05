@@ -1,5 +1,6 @@
 import { NAMES } from './../../config/config.js';
 import {storage, eventBus, formatter} from  './../../model.js';
+import {validate} from  './../../utils/validate.js';
 
 /**
  * Класс для управления задачами.
@@ -75,9 +76,41 @@ class TaskManager {
         console.log('Ошибка данных. Запись не добавлена.');
         return;
       }
+  
     }
+    
+    // Список полей для проверки
+    const checkValues = ['full_name', 'phone', 'email'];
+    
+    // Проверяем только указанные поля
+    for (const field of checkValues) {
+        if (!(field in record)) {
+            console.log(`Ошибка: отсутствует поле ${field}. Запись не добавлена.`);
+            return;
+        }
 
+        // Проверяем значение через соответствующий метод валидации
+        const validationMethod = validate[field];
+        if (validationMethod) {
+            const validationResult = validationMethod(record[field]);
+            
+            if (!validationResult.valid) {
+                console.log(`Ошибка в поле ${field}: ${validationResult.error}`);
+                return;
+            }
+
+            // Обновляем значение поля на валидированное
+            record[field] = validationResult.value;
+        } else {
+            console.log(`Ошибка: нет метода валидации для поля ${field}`);
+            return;
+        }
+    }
+ 
     this.data.push(record); 
+    console.log(this.data);
+    console.log(this);
+    
     this.eventBus.emit(NAMES.TASKS_SAVE, record); 
 
     return record;
@@ -156,10 +189,6 @@ class TaskManager {
 
     return dataCopy;  // Вернём запись
   }
-
-  // tasksPrepareDisplay (taskDataAll) {
-  //   return formatter.formatPrepareDisplayTask(taskDataAll); 
-  // }
 
   formatDateTime (timestamp, type = 'date') {
     if (type === 'date') {

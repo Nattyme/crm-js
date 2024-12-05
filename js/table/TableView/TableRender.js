@@ -30,6 +30,10 @@ class TableRender {
     return container;
   }
 
+  getSelect () {
+    return this.select;
+  }
+
   /**
    * Создаёт строку таблицы на основе задачи.
    * @param {Object} task - Объект задачи с данными.

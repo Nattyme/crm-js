@@ -1,11 +1,11 @@
 import { products } from './../data/data.js';
 import { Status } from '../module/Status.js';
+import { formatter } from './../model.js';
 
 /**
  * Объект `validate` содержит методы для проверки корректности значений различных полей формы.
  */
 const validate = {
-
   /**
    * Проверяет значение поля `name` (имя и фамилия).
    * 
@@ -15,7 +15,7 @@ const validate = {
    * - `value` {string}: Приведённое значение (при успешной валидации).
    * - `error` {string}: Сообщение об ошибке (при некорректной валидации).
    */
-  name(full_name) {
+  full_name(full_name) {
     if(!full_name) {
       return {
         valid : false,
@@ -23,7 +23,7 @@ const validate = {
       };
     } 
  
-    const nameValid = String(full_name).trim(); // Преобразуем в строку, удалим пробелы
+    let nameValid = String(full_name).trim(); // Преобразуем в строку, удалим пробелы
     
     const nameRegex = /^[a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввел фамилию и имя
     const threeNameRegex = /^[a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+[\s][a-zA-Za-яА-ЯёЁ]+$/; // Если пользователь ввёл ФИО
@@ -43,6 +43,8 @@ const validate = {
         error: 'Ошибка. Неверный формат имени. Введите имя и фамилию в текстовом формате.'
       } 
     } 
+
+    nameValid = formatter.formatCamelWords(nameValid);
     
     // Если всё ок 
     return {valid: true, value : nameValid};
@@ -136,7 +138,9 @@ const validate = {
 
     for (const product in productData) {
       if (product === name) { return {valid: true, value: product} }
-    }
+    } 
+
+
   },
 
   status (incomeStatus) {
