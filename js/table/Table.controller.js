@@ -1,4 +1,4 @@
-import {eventBus, status, manager, formatter, storage} from '../model.js';
+import {eventBus, status, managerTask, formatter, storage} from '../model.js';
 import { renderTable } from './TableView/TableRender.js';
 import { Filter } from './../module/Filter.js';
 
@@ -7,13 +7,13 @@ import { Filter } from './../module/Filter.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor (eventBus, storage, status, renderTable, manager, formatter) {
+  constructor (eventBus, storage, status, renderTable, managerTask, formatter) {
     // Общие
     this.eventBus = eventBus; 
     this.storage = storage;
     this.status = status; 
 
-    this.manager =  manager; 
+    this.manager =  managerTask; 
     this.render = renderTable;
     this.filter =  new Filter(); 
     this.formatter = formatter;
@@ -24,20 +24,20 @@ class Controller {
   */
   setInit () {
     const dataTaskAll = this.storage.getAllTasksData();
-    const statusArray = this.status.getStatusData();  
-    let rowsData = this.getRowsData(dataTaskAll); 
- console.log(data);
- console.log('rows data at start', rowsData);//ok
- 
-    
+    const statusArray = this.status.getStatusData();
     const selectProduct = this.render.getSelect();
     const statusBar = this.render.getStatusBar();
 
+    let rowsData = this.getRowsData(dataTaskAll); 
+
+
+//  console.log('rows data at start', rowsData);//ok
+
     // Скрываем селект, если категорий или задач нет
-    if ( !data.length > 0) {
+    if ( !dataTaskAll.length > 0) {
       this.render.hideElements([selectProduct, statusBar]) // если задач нет - спрячем селекты
     }
-   console.log(statusArray);
+  //  console.log(statusArray);
    
     this.displayRows({data : rowsData, status: statusArray});
 
@@ -46,7 +46,7 @@ class Controller {
       let currentCategory = selectProduct[selectIndex].value;
       
       const dataForFilterStart = {
-          data : data,
+          data : dataTaskAll,
           category : currentCategory,
           key : 'product'
       }
@@ -64,14 +64,16 @@ class Controller {
       console.log(e.target.getAttribute('data-value'));
 
       const dataForFilterStart = {
-        data : data,
-        category : currentCategory
-        // key : 'status'
+        data : dataTaskAll,
+        category : currentCategory,
+        key : 'status'
       }
 
       const taskFiltered = this.filter.filterNotSelect(dataForFilterStart); 
       
-      this.render.resetTable();
+      this.render.resetTable(); // Удалили все поля таблицы
+
+
       rowsData = this.getRowsData(taskFiltered); 
       console.log(rowsData);
       
@@ -102,7 +104,7 @@ const controller = new Controller(
   storage,
   status,
   renderTable,
-  manager,
+  managerTask,
   formatter
 );
 
