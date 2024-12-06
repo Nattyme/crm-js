@@ -30,14 +30,10 @@ class Controller {
 
     let rowsData = this.getRowsData(dataTaskAll); 
 
-
-//  console.log('rows data at start', rowsData);//ok
-
     // Скрываем селект, если категорий или задач нет
     if ( !dataTaskAll.length > 0) {
       this.render.hideElements([selectProduct, statusBar]) // если задач нет - спрячем селекты
     }
-  //  console.log(statusArray);
    
     this.displayRows({data : rowsData, status: statusArray});
 
@@ -85,15 +81,10 @@ class Controller {
   }
 
   getRowsData (dataToDisplay) {
-    console.log('get rows data', dataToDisplay);
-    
-    // return this.formatter.formatRows(dataToDisplay);
     return this.formatter.formatPrepareDisplayTask(dataToDisplay);
   }
 
   displayRows (dataArray, statusArray) {
-    console.log('display rows', dataArray);
-    
     this.render.addRowsToTable(dataArray, statusArray);
   }
 }

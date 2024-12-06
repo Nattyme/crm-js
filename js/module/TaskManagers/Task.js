@@ -94,7 +94,7 @@ class Task {
 
     if (!taskData) return console.log(`Запись не найдена в ${this.getData()}`);   // Если ID не найден
 
-    return this.formatTaskData(taskData); 
+    return this.formatter.formatTaskWithDateTime(taskData); 
   }
 
   findTaskById(id){

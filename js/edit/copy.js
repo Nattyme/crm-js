@@ -101,20 +101,20 @@ class Controller {
   }
 
 
-  getTasksData () {
-    const data = this.taskManager.getAllTasksData(); // Получим данные всех задач из массива data
-    const dataCopy = [...data];     // Создадим копию массива
+  // getTasksData () {
+  //   const data = this.taskManager.getAllTasksData(); // Получим данные всех задач из массива data
+  //   const dataCopy = [...data];     // Создадим копию массива
 
-    return dataCopy;
-  }
+  //   return dataCopy;
+  // }
 
-  setCurrentTaskData() {
-    const dataTaskAll = this.getTasksData (); // Получим все задачи
-    const id =  this.formEditManager.getTaskID(); // ID текущ. задачи
-    const currentTask =  this.taskManager.findSingleTask(id, dataTaskAll); // Найдём текущ. задачу
+  // setCurrentTaskData() {
+  //   const dataTaskAll = this.getTasksData (); // Получим все задачи
+  //   const id =  this.formEditManager.getTaskID(); // ID текущ. задачи
+  //   const currentTask =  this.taskManager.findSingleTask(id, dataTaskAll); // Найдём текущ. задачу
 
-    return currentTask ?  this.currentTaskData = currentTask : console.log('Задача не найдена'); // Найдена - вренем знач-е
-  }
+  //   return currentTask ?  this.currentTaskData = currentTask : console.log('Задача не найдена'); // Найдена - вренем знач-е
+  // }
 
 
 }

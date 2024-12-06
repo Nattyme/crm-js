@@ -1,18 +1,32 @@
 class EditFormRender  {
  constructor () {
-  this.form = document.querySelector('#form'); 
-  this.noteWrapper = this.form.querySelector('.form__buttons');
-  this.date = this.form.querySelector('#date');
-  this.id = this.form.querySelector('#number');          
-  this.select = this.form.querySelector('#product');
-  this.selectStatus = this.form.querySelector('#status');
-
-  this.inputs =  {
-    full_name  : this.form.querySelector('#full_name'),
-    phone : this.form.querySelector('#phone'),
-    email : this.form.querySelector('#email'),
-  }
+    this.formElems = {}; 
+    this.noteWrapper = null;
  }
+
+  initEditFormRender() {
+  this.setFormElements();
+  this.setNoteWrapper();
+  }
+
+  setFormElements(){
+  this.formElems.form = document.querySelector('#form');
+  this.formElems.id = this.formElems.form.querySelector('#number');
+  this.formElems.date = this.formElems.form.querySelector('#date');
+  this.formElems.select = this.formElems.form.querySelector('#product');
+  this.formElems.selectStatus = this.formElems.form.querySelector('#status');
+  this.formElems.inputs.full_name  = this.form.querySelector('#full_name');
+  this.formElems.inputs.phone = this.form.querySelector('#phone');
+  this.formElems.inputs.email = this.form.querySelector('#email');
+  }
+  getFormElements(){
+    return this.formElems;
+  }
+
+
+  setNoteWrapper () {
+    this.noteWrapper = this.form.querySelector('.form__buttons');
+  }
 
 
 
@@ -74,17 +88,6 @@ class EditFormRender  {
   }
 
  
-  getFormElements(){
-    return {
-      form : this.form,
-      noteWrapper : this.noteWrapper,
-      id : this.id,
-      date : this.date,
-      select : this.select,
-      selectStatus : this.selectStatus,
-      inputs : this.inputs
-    }
-  }
 }
 
 const renderEditForm = new EditFormRender();

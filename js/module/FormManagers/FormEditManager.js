@@ -12,7 +12,14 @@ class FormEdit  {
 
     this.formatter = formatter;
     this.notes = new Notes();
-    this.initFormElems(); // задает элементы формы
+  }
+
+  // Задает значения элементов в конструктор
+  initFormEdit(form, select, selectStatus, inputs) {
+    this.form = form || null;                          
+    this.select = select || null;
+    this.inputs = inputs || null;              
+    this.selectStatus = selectStatus || null;
   }
 
   getTaskId () {
@@ -23,6 +30,7 @@ class FormEdit  {
       return null;
     }
   }
+  
 
 
 
@@ -30,14 +38,7 @@ class FormEdit  {
 
 
 
-
-  // Задает значения элементов в конструктор
-  initFormElems(form, select, selectStatus, inputs) {
-    this.form = form || null;                          
-    this.select = select || null;
-    this.inputs = inputs || null;              
-    this.selectStatus = selectStatus || null;
-  }
+  
 
   updateTask(startTaskData, updatedTaskData) {
     updatedTaskData.id = startTaskData.id;

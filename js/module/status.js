@@ -51,19 +51,19 @@ class Status {
     return this.data[name] || null;
   }
 
-  /**
-   * Устанавливает новые данные для статуса.
-   * @param {string} name - Имя статуса.
-   * @param {Object} statusData - Данные нового статуса.
-  */
-  setStatus (name, statusData) {
-    if (this.data[name] ) {
-      this.data[name] = statusData;
-    } else {
-      console.log('Статус не найден');
-      return;
-    }
-  }
+  // /**
+  //  * Устанавливает новые данные для статуса.
+  //  * @param {string} name - Имя статуса.
+  //  * @param {Object} statusData - Данные нового статуса.
+  // */
+  // setStatus (name, statusData) {
+  //   if (this.data[name] ) {
+  //     this.data[name] = statusData;
+  //   } else {
+  //     console.log('Статус не найден');
+  //     return;
+  //   }
+  // }
 }
 
 export { Status };
