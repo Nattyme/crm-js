@@ -14,6 +14,14 @@ class EditFormRender  {
   }
  }
 
+
+
+
+
+
+
+ 
+
   updateNoteWrapper (content) {
     this.noteWrapper.textContent = content;
   }

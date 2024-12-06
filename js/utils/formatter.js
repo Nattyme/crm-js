@@ -19,17 +19,13 @@ class Formatter {
     return this.functionsPack;
   }
 
-  getUrlID () {
+  getUrlId () {
     const url = window.location.search;  // получим полный адрес страницы
     const params = new URLSearchParams(url);
     const id = params.get('id') ? params.get('id') : console.log('В параметре ID нет значения.');  // если есть парам-р 'id' - возьмем его знач-е
 
     return id;
   }
-
-  // formatRows (dataToDisplay) {
-  //   return this.formatPrepareDisplayTask(dataToDisplay); 
-  // }
 
   formatPhone (phoneNumber) {
     let phone = phoneNumber.replace(this.regEx.digit, '');
@@ -121,6 +117,25 @@ console.log(updatedData);
     console.log(dataString);
     return dataString;
   }
+
+  
+  formatTaskWithDateTime (timestamp, type = 'date') {
+    if (type === 'date') {
+      return this.formatDate(timestamp);
+    }
+
+    if (type === 'date-time') {
+      return this.formatTaskWithDate(timestamp);
+    }
+  }
+
+  formatTaskWithDate (taskData) {
+    const dataCopy = {...taskData};     // Копия объекта задачи
+    dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
+
+    return dataCopy;  // Вернём запись
+  }
+
 }
 
 export { Formatter };

@@ -1,4 +1,4 @@
-import {eventBus, status, manager, formatter} from '../model.js';
+import {eventBus, status, manager, formatter, storage} from '../model.js';
 import { renderTable } from './TableView/TableRender.js';
 import { Filter } from './../module/Filter.js';
 
@@ -7,9 +7,10 @@ import { Filter } from './../module/Filter.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor ({eventBus, status, renderTable, manager, formatter}) {
+  constructor (eventBus, storage, status, renderTable, manager, formatter) {
     // Общие
     this.eventBus = eventBus; 
+    this.storage = storage;
     this.status = status; 
 
     this.manager =  manager; 
@@ -22,9 +23,9 @@ class Controller {
   * Инициализация: загружает данные и заполняет таблицу.
   */
   setInit () {
-    const data = this.manager.getAllTasksData();
+    const dataTaskAll = this.storage.getAllTasksData();
     const statusArray = this.status.getStatusData();  
-    let rowsData = this.getRowsData(data); 
+    let rowsData = this.getRowsData(dataTaskAll); 
  console.log(data);
  console.log('rows data at start', rowsData);//ok
  
@@ -96,12 +97,13 @@ class Controller {
 }
 
 // Запуск приложения
-const controller = new Controller({
+const controller = new Controller(
   eventBus, 
+  storage,
   status,
   renderTable,
   manager,
   formatter
-});
+);
 
 controller.setInit();

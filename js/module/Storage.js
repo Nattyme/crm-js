@@ -1,10 +1,30 @@
 import { NAMES } from './../config/config.js';
 
 class Storage {
-  constructor(data, eventBus) {
-    this.data = data;
+  constructor(eventBus) {
+    this.data = []; // ??
     this.eventBus = eventBus;
+
+    // Подписка на события
+    this.eventBus.on(NAMES.TASKS_LOAD, this.loadFromStorage.bind(this));
+    this.eventBus.on(NAMES.TASKS_SAVE, this.saveToStorage.bind(this));
+    // this.eventBus.on(NAMES.TASKS_CLEAR, this.clearStorage());
+
+    // Получим данные из localStorage
+    this.loadFromStorage();
   }
+
+  /**
+   * Возвращает все задачи.
+   *
+   * @method getTaskAllData
+   * @memberof TaskManager
+   * @returns {Array} Массив всех задач.
+   */
+  getAllTasksData() {
+    return this.data;
+  }
+
   /**
    * Загружает данные из localStorage.
    *
@@ -35,12 +55,12 @@ class Storage {
    * @method clearStorage
    * @memberof TaskManager
    */
-  clearStorage() {
-    localStorage.removeItem(NAMES.TASKS_DATA);
-    this.data = [];
-    this.eventBus.emit(NAMES.TASKS_SAVE, this.data); // Уведом-е об изменениях
-    console.log('Данные удалены из local storage. Массив data пуст');
-  }
+  // clearStorage() {
+  //   localStorage.removeItem(NAMES.TASKS_DATA);
+  //   this.data = [];
+  //   this.eventBus.emit(NAMES.TASKS_SAVE, this.data); // Уведом-е об изменениях
+  //   console.log('Данные удалены из local storage. Массив data пуст');
+  // }
 
 
   /*  Одна задача*/

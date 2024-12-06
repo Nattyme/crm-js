@@ -158,7 +158,58 @@ const validate = {
 
     return null;
     
+  },
+
+  empty (dataObj) {
+    for ( const field in dataObj) {
+      if ( dataObj[field] === null || dataObj[field] === undefined) {
+        return false;
+      }
+      return true;
+    }
+  },
+
+  valuesInObject (dataObj, fieldsArray) {
+    let result = true;
+    // Проверяем только указанные поля
+    for (const field of fieldsArray) {
+      if (!(field in dataObj)) {
+        result = false;
+        return; 
+      }
+
+      const validationMethod = validate[field];  // Проверяем значение 
+
+      if (validationMethod) {
+          const validationResult = validationMethod(dataObj[field]);
+        
+          if (!validationResult.valid) {return  console.log(`Ошибка в поле ${field}`);}
+          dataObj[field] = validationResult.value; // Обновляем значение поля на валидированное
+          
+          return dataObj;
+      } 
+    }
+
+    return result;
+  },
+
+  fieldsOfTaskObj (task, valuesToCheck) {
+    let result = true;
+    let isFilled = this.empty(task);
+
+    if(!isFilled) {
+      result = false;
+      console.log('Ошибка данных: есть пустое поле. Запись не добавлена.')
+      return;
+    }; 
+
+    const valuesValid = this.valuesInObject(task, valuesToCheck);  // Проверяем только указанные поля
+
+    if (!valuesValid) result = false;
+    return result;
   }
+
+
 }
 
 export {validate};

@@ -16,9 +16,11 @@ class TaskRender {
     this.select = null;
     this.inputs = {};
     this.options = {};
-    this.noteWrapper = document.querySelector('#noteWrapper');
-    this.initFormElems(); // задает элементы формы
+    // this.noteWrapper = document.querySelector('#noteWrapper');
+  }
 
+  initTaskRender() {
+    this.initFormElems();
   }
 
   initFormElems() {

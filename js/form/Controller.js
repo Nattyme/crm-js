@@ -1,4 +1,4 @@
-import { Task, manager, eventBus, formManager } from '../model.js';
+import { managerTask, eventBus, formManager } from '../model.js';
 import { TestDataFactory } from './TestDataFactory.js';
 import {render} from './TaskRender.js';
 import { NAMES } from './../config/config.js';
@@ -22,30 +22,12 @@ class Controller {
    * 
  * @constructor
  */
-  constructor ( formManager, manager, render) {
-    this.eventBus = eventBus; // общий EventBus
-
-    // Конструкторы
-    this.form = formManager; // методы формы
-    this.manager = manager; // менеджер для обработки задач
-    this.render = render; // создадим рендера задачи
-    this.notes = new Notes(); // создадим класс увед-ий
-
-    this.render.initFormElems();  // Передадим элементы формы в рендер
-  }
-
-  /**
-   * Устанавливает обработчики событий для формы.
-   * Подключает обработчик на событие отправки формы.
-   * 
-   * @method
-   */
-  setEventListeners () {
-    // Слушаем submit, запускаем ф-цию добавления задачи
-    this.render.form.addEventListener('submit', (e) => {
-      const task = this.createTask(e);
-      this.saveTask(task);
-    });
+  constructor ( eventBus, managerTask, formManager, render) {
+    this.eventBus = eventBus; 
+    this.managerTask = managerTask;
+    this.formManager = formManager; // методы формы
+    this.render = render; 
+    this.notes = new Notes(); //  увед-ия
   }
 
   /**
@@ -55,11 +37,33 @@ class Controller {
    * @method
    */
   initController() {
-    this.setEventListeners();
-    this.notes.setContainer(this.render.notewrapper);
-    this.eventBus.emit(NAMES.TASKS_LOAD);
+    this.managerTask.initTask();
+    this.render.initTaskRender();
     this.setRandomData();  // заполним форму значениями задачи
+    this.eventBus.emit(NAMES.TASKS_LOAD);
+    this.setEventListeners();
+    console.log(this.managerTask.data);
+    this.notes.setContainer(this.render.notewrapper);
   }
+
+  /**
+   * Устанавливает обработчики событий для формы.
+   * Подключает обработчик на событие отправки формы.
+   * 
+   * @method
+   */
+  setEventListeners () {
+    console.log( this.render);
+    
+    // Слушаем submit, запускаем ф-цию добавления задачи
+    this.render.form.addEventListener('submit', (e) => {
+      const task = this.createTask(e);
+      console.log(task);
+      this.saveTask(task);
+    });
+  }
+
+  
 
   /**
    * Метод обработки отправки формы. Создаёт новую задачу и сохраняет её в менеджер задач.
@@ -71,28 +75,24 @@ class Controller {
   createTask(e) {
     e.preventDefault();   
 
-    const id = this.getNextTaskId(); 
-    const taskFormData = this.form.getFormData( this.render.form );   
-    const newTask = new Task({...taskFormData});
+    const id = this.managerTask.getNextTaskId(); 
+    const taskFormData = this.formManager.getFormData( this.render.form );   
+    const newTask = this.managerTask.createNewTask(taskFormData);
 
     newTask.id = id;
 
     return (newTask)
   }
 
-  saveTask(task) {
-    let result = this.manager.addNewTask(task);   
-    if(!result) {
-      console.log('ERROR HERE');
-      console.log(this.render.notewrapper);
-      console.log(this.notes);
-      
-      this.notes.addNote('error', this.notes.MESSAGES.ERROR.empty_value());
-    }
-    this.eventBus.emit(NAMES.TASKS_SAVE);          // вызываем событие сохранения
-    this.form.resetForm (this.render.form);    
+  saveTask(newTask) {
+    if(!newTask) { console.log(this.notes.MESSAGES.ERROR.empty_value())};
 
-    this.setRandomData ();        // Заново заполним данные
+    const taskAdd = this.managerTask.addTaskToStorage(newTask);     
+    this.eventBus.emit(NAMES.TASKS_SAVE, taskAdd); // вызываем событие сохранения
+    console.log('EMIT Сохран-е задачи после создания', taskAdd);
+
+    this.formManager.resetForm (this.render.form);    
+    this.setRandomData ();// Заново заполним данные
   }
 
   
@@ -106,29 +106,19 @@ class Controller {
    */
   setRandomData () {
     const testData = this.getRandomData(); 
-    const taskData = new Task( {...testData} ); 
+    const taskData = managerTask.setTestData(testData); 
 
-    // Отформатируем телефон
-    const taskFormatted = this.form.prepareDisplay(taskData);
+    // Подготовим данные к рендеру
+    const taskFormatted = this.formManager.prepareDisplay(taskData);
     console.log(taskData);
     
     const formElems = this.render.getFormElems();
     console.log(formElems);
     
-    this.form.setFormData(taskFormatted, formElems); // заполним форму значениями задачи
+    this.formManager.setFormData(taskFormatted, formElems); // заполним форму значениями задачи
   }
 
-  /**
-   * Получает следующий доступный ID для новой задачи.
-   * 
-   * @returns {number} Следующий доступный ID.
-   * @see model.TaskManager#calcID
-   * 
-   * @method
-   */
-  getNextTaskId() {
-    return this.manager.calcID( this.manager.getAllTasksData() ); 
-  }
+ 
 
   /**
    * Метод для получения случайных данных (тестовых записей).
@@ -146,10 +136,11 @@ class Controller {
 
 // Запуск
 const controller = new Controller(
+  eventBus,
+  managerTask,
   formManager,
-  manager,
   render
- );
+);
 
 controller.initController();
 

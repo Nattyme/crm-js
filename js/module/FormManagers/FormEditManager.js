@@ -15,6 +15,22 @@ class FormEdit  {
     this.initFormElems(); // задает элементы формы
   }
 
+  getTaskId () {
+    if ( this.formatter.getUrlId() !== null ) {
+      return this.formatter.getUrlId();
+    } else {
+      console.log('Не получен ID задачи'); 
+      return null;
+    }
+  }
+
+
+
+
+
+
+
+
   // Задает значения элементов в конструктор
   initFormElems(form, select, selectStatus, inputs) {
     this.form = form || null;                          
@@ -76,26 +92,23 @@ class FormEdit  {
     return result.value
   }
 
-  getTaskID () {
-    // получим и вернём id задачи
-    if ( this.formatter.getUrlID() !== null ) {
-      return this.formatter.getUrlID();
-    } else {
-      console.log('Не получен ID задачи'); 
-      return null;
-    }
-  }
-
-  setFormTaskValue(task, idElem, dateElem, selectElem, selectStatusElem, inputs) {  
+  // getTaskId () {
+  //   // получим и вернём id задачи
+  //   if ( this.formatter.getUrlID() !== null ) {
+  //     return this.formatter.getUrlID();
+  //   } else {
+  //     console.log('Не получен ID задачи'); 
+  //     return null;
+  //   }
+  // }
+ 
+  setFormTaskValue(task, elements) {  
     // Установим значения в поля формы
-    idElem.textContent = task.id;
-    dateElem.textContent = task.date;
-    inputs.full_name.value = task.full_name;
-    if (!validate.phone(inputs.phone.value)) {
-    }
-    inputs.phone.value = task.phone;
-    // inputs.phone.value = task.phone;
-    inputs.email.value = task.email;
+    elements.id.textContent = task.id;
+    elements.date.textContent = task.date;
+    elements.inputs.full_name.value = task.full_name;
+    elements.inputs.phone.value = task.phone;
+    elements.inputs.email.value = task.email;
 
     // Ф-ция ищет нужную опцию в селект
     const getSelectedIndex = function (options, value) {
@@ -103,9 +116,9 @@ class FormEdit  {
     }
 
     // Находим и выбираем нужный продукт
-    selectElem.selectedIndex = getSelectedIndex([...selectElem.options], task.product);
+    elements.select.selectedIndex = getSelectedIndex([...elements.select.options], task.product);
     // Находим и выбирем нужный статус
-    selectStatusElem.selectedIndex = getSelectedIndex([...selectStatusElem.options], task.status.text);  
+    elements.status.selectedIndex = getSelectedIndex([...elements.status.options], task.status.text);  
   }
 
   getFormData(formElement) {
