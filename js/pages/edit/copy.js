@@ -1,8 +1,8 @@
-import {NAMES} from './../config/config.js';
-import { eventBus, editFormManager, manager, storage } from '../model.js';
+import {NAMES} from '../../config/config.js';
+import { eventBus, editFormManager, manager, storage } from '../../model.js';
 import { renderEditForm } from './EditFormRender.js';
-import { MESSAGES } from './../data/messages.js';
-import { Notes } from '../utils/notes.js';
+import { MESSAGES } from '../../data/messages.js';
+import { Notes } from '../../utils/notes.js';
 
 class Controller {
   constructor (editFormManager, eventBus, renderEditForm, manager,  storage) {

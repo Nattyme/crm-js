@@ -1,6 +1,6 @@
-import {eventBus, status, managerTask, formatter, storage} from '../model.js';
-import { renderTable } from './TableView/TableRender.js';
-import { Filter } from './../module/Filter.js';
+import {eventBus, status, managerTask, formatter, storage} from '../../model.js';
+import { renderTable } from './TableRender.js';
+import { Filter } from './../../modules/Filter.js';
 
 
 /**
@@ -24,10 +24,12 @@ class Controller {
   */
   setInit () {
     const dataTaskAll = this.storage.getAllTasksData();
+    console.log(dataTaskAll);
+    
     const statusArray = this.status.getStatusData();
     const selectProduct = this.render.getSelect();
     const statusBar = this.render.getStatusBar();
-
+    console.log(dataTaskAll);
     let rowsData = this.getRowsData(dataTaskAll); 
 
     // Скрываем селект, если категорий или задач нет

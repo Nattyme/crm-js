@@ -42,24 +42,6 @@ class Formatter {
     return fullName.split(' ').slice(0, 2).join(' ');   // если больше двух слов - убирает лишнее
   }
 
-  formatDate (timestamp) {
-    const formatter = new Intl.DateTimeFormat ( 'ru-RU', {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-      }
-    );
-
-    return formatter.format( new Date(timestamp));
-  }
-
-  formatDateTime (timestamp) {
-    const dateStamp = new Date(timestamp);
-    let date = dateStamp.toISOString();
-    date = date.slice(0, -5).replace('T', ' ');
-    return date;
-  }
-
   formatStatus(incomeStatus) {
     const statusTypes = this.status.data;
 
@@ -92,8 +74,10 @@ class Formatter {
    * @param {Function} data.date - Функция, возвращающая дату.
    * @returns {Object} Объект данных для отображения с применением форматирования.
  */
-  formatPrepareDisplayTask ( data ) {
-    const updatedData = data.map( record => ({
+  formatPrepareDisplayTask ( taskData ) {
+    console.log(taskData);
+    
+    const updatedData = taskData.map( record => ({
       ...record,
       id : String(record.id),
       full_name : this.formatName(record.full_name),
@@ -118,23 +102,49 @@ console.log(updatedData);
     return dataString;
   }
 
+  formatTaskEdit(taskData) {
+    let taskWithDate = this.formatTaskDateTime(taskData, 'date-time');
+    taskWithDate.phone = this.formatPhone(taskWithDate.phone);
+    return taskWithDate;
+  }
+  formatTaskDateTime (taskData, type = 'date') {
+    const dataCopy = {...taskData};  
   
-  formatTaskWithDateTime (timestamp, type = 'date') {
     if (type === 'date') {
-      return this.formatDate(timestamp);
+      dataCopy.date = this.formatDate( dataCopy.timestamp);
     }
 
     if (type === 'date-time') {
-      return this.formatTaskWithDate(timestamp);
+      dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time')
     }
+    return dataCopy;
+  }
+  formatDateTime (timestamp) {
+    const dateStamp = new Date(timestamp);
+    let dateTime = dateStamp.toISOString();
+
+    return dateTime = dateTime.slice(0, -5).replace('T', ' ');
+  }
+  formatDate (timestamp) {
+    console.log(timestamp);
+    
+    const formatter = new Intl.DateTimeFormat ( 'ru-RU', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      }
+    );
+
+    return formatter.format( new Date(timestamp));
   }
 
-  formatTaskWithDate (taskData) {
-    const dataCopy = {...taskData};     // Копия объекта задачи
-    dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
+  // formatTaskWithDate (taskData) {
 
-    return dataCopy;  // Вернём запись
-  }
+  //   const dataCopy = {...taskData};     // Копия объекта задачи
+  //   dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
+
+  //   return dataCopy;  // Вернём запись
+  // }
 
 }
 

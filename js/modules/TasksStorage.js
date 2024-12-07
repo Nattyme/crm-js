@@ -1,6 +1,3 @@
-import { NAMES } from '../../config/config.js';
-import {validate} from  '../../utils/validate.js';
-
 /**
  * Класс для управления задачами.
  * Позволяет добавлять, удалять, сохранять и загружать задачи.
@@ -10,7 +7,7 @@ import {validate} from  '../../utils/validate.js';
  * @see {@link ./model.js|Модуль }
  * @see {@link EventBus|EventBus - Объект для управления событиями}
  */
-class TaskManager {
+class TasksStorage {
   /**
    * Конструктор класса TaskManager.
    * Подключает обработку событий и загружает задачи из хранилища.
@@ -167,4 +164,4 @@ class TaskManager {
 
 }
 
-export { TaskManager };
+export { TasksStorage };

@@ -1,5 +1,5 @@
 import { products } from './../data/data.js';
-import { Status } from '../module/Status.js';
+import { Status } from '../modules/Status.js';
 import { formatter } from './../model.js';
 
 /**

@@ -1,4 +1,4 @@
-import { testData } from './../data/data.js';
+import { testData } from '../../data/data.js';
 
 
 /**

@@ -1,8 +1,8 @@
-import { managerTask, eventBus, formManager } from '../model.js';
+import { managerTask, eventBus, formManager } from '../../model.js';
 import { TestDataFactory } from './TestDataFactory.js';
 import {render} from './TaskRender.js';
-import { NAMES } from './../config/config.js';
-import { Notes } from './../utils/notes.js';
+import { NAMES } from '../../config/config.js';
+import { Notes } from '../../utils/notes.js';
 /**
  * Контроллер для обработки логики формы задач.
  * Этот класс управляет взаимодействием между моделью, видом и данными, включая обработку событий и управление задачами.
@@ -75,7 +75,7 @@ class Controller {
   createTask(e) {
     e.preventDefault();   
 
-    const id = this.managerTask.getNextTaskId(); 
+    const id = this.managerTask.calcTaskId(); 
     const taskFormData = this.formManager.getFormData( this.render.form );   
     const newTask = this.managerTask.createNewTask(taskFormData);
 

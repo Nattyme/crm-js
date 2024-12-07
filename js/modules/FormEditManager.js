@@ -1,25 +1,11 @@
-import {validate} from './../../utils/validate.js';
-import {Notes} from './../../utils/notes.js';
+import {validate} from './../utils/validate.js';
+import {Notes} from './../utils/notes.js';
 
 class FormEdit  {
-  constructor (formatter, eventBus) {
+  constructor (eventBus, taskManager, formatter) {
     this.eventBus = eventBus;
-
-    this.form = null;
-    this.select = null;
-    this.inputs = {};
-    this.selectStatus = null;
-
+    this.taskManager = taskManager;
     this.formatter = formatter;
-    this.notes = new Notes();
-  }
-
-  // Задает значения элементов в конструктор
-  initFormEdit(form, select, selectStatus, inputs) {
-    this.form = form || null;                          
-    this.select = select || null;
-    this.inputs = inputs || null;              
-    this.selectStatus = selectStatus || null;
   }
 
   getTaskId () {
@@ -30,6 +16,45 @@ class FormEdit  {
       return null;
     }
   }
+
+  setFormElems(elements) {  
+    const id =  this.getTaskId ();
+    const currentTask = this.taskManager.findTaskById(id);
+    const taskDisplayFormat = this.formatter.formatTaskEdit(currentTask);
+
+    // Установим значения в поля формы
+    elements.id.textContent = taskDisplayFormat.id;
+    elements.date.textContent = taskDisplayFormat.date;
+    elements.inputs.full_name.value = taskDisplayFormat.full_name;
+    elements.inputs.phone.value = taskDisplayFormat.phone;
+    elements.inputs.email.value = taskDisplayFormat.email;
+
+    // Ф-ция ищет нужную опцию в селект
+    const getSelectedIndex = function (options, value) {
+      return [...options].findIndex( (element) => element.value.trim() === value);
+    }
+
+    // Находим и выбираем нужный продукт
+    elements.select.selectedIndex = getSelectedIndex([...elements.select.options], taskDisplayFormat.product);
+    // Находим и выбирем нужный статус
+    elements.selectStatus.selectedIndex = getSelectedIndex([...elements.selectStatus.options], taskDisplayFormat.status);  
+    
+    
+    return elements;
+  }
+
+
+
+
+
+
+
+
+  
+
+  // setFormElems (elems) {
+  //   return this.formElems = elems;
+  // }
   
 
 
@@ -93,34 +118,7 @@ class FormEdit  {
     return result.value
   }
 
-  // getTaskId () {
-  //   // получим и вернём id задачи
-  //   if ( this.formatter.getUrlID() !== null ) {
-  //     return this.formatter.getUrlID();
-  //   } else {
-  //     console.log('Не получен ID задачи'); 
-  //     return null;
-  //   }
-  // }
- 
-  setFormTaskValue(task, elements) {  
-    // Установим значения в поля формы
-    elements.id.textContent = task.id;
-    elements.date.textContent = task.date;
-    elements.inputs.full_name.value = task.full_name;
-    elements.inputs.phone.value = task.phone;
-    elements.inputs.email.value = task.email;
 
-    // Ф-ция ищет нужную опцию в селект
-    const getSelectedIndex = function (options, value) {
-      return [...options].findIndex( (element) => element.textContent.trim() === value);
-    }
-
-    // Находим и выбираем нужный продукт
-    elements.select.selectedIndex = getSelectedIndex([...elements.select.options], task.product);
-    // Находим и выбирем нужный статус
-    elements.status.selectedIndex = getSelectedIndex([...elements.status.options], task.status.text);  
-  }
 
   getFormData(formElement) {
     const form = new FormData(formElement);
@@ -135,6 +133,8 @@ class FormEdit  {
   }
 
   formatFormData(formData) {
+    console.log(formData);
+    
     return {
       ...formData,
       phone : this.formatter.formatPhone(formData.phone),

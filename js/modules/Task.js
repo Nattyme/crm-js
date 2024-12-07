@@ -1,5 +1,5 @@
-import { validate } from './../../utils/validate.js';
-import { NAMES } from './../../config/config.js';
+import { validate } from '../utils/validate.js';
+import { NAMES } from '../config/config.js';
 
 /**
  * Класс для создания задачи и её валидации.
@@ -89,12 +89,11 @@ class Task {
  * @param {number} id - ID задачи.
  * @returns {Object|null} Возвращает задачу или null, если не найдено.
  */
-  findOneTask(id) {
+  findOneTask(id, dateType) {
     let taskData = this.findTaskById(id, this.getData()); 
-
     if (!taskData) return console.log(`Запись не найдена в ${this.getData()}`);   // Если ID не найден
-
-    return this.formatter.formatTaskWithDateTime(taskData); 
+    
+    return this.formatter.formatTaskDateTime(taskData, dateType); 
   }
 
   findTaskById(id){
@@ -135,18 +134,6 @@ class Task {
   calcTaskId () {
     return this.getData().length !== 0 ? this.getData().reduce( (max, task) => Math.max(max, task.id), 0) + 1 : 1;
   }
-  /**
-   * Получает следующий доступный ID для новой задачи.
-   * 
-   * @returns {number} Следующий доступный ID.
-   * @see model.TaskManager#calcID
-   * 
-   * @method
-   */
-  getNextTaskId() {
-    return this.calcTaskId( this.data); 
-  }
-
  
   // this.phone = this.setProperty( phone, validate.phone);
   /**

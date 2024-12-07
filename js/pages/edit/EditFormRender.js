@@ -1,32 +1,34 @@
 class EditFormRender  {
  constructor () {
     this.formElems = {}; 
+    this.formElems.inputs = {}
     this.noteWrapper = null;
  }
 
-  initEditFormRender() {
-  this.setFormElements();
-  this.setNoteWrapper();
-  }
-
-  setFormElements(){
-  this.formElems.form = document.querySelector('#form');
-  this.formElems.id = this.formElems.form.querySelector('#number');
-  this.formElems.date = this.formElems.form.querySelector('#date');
-  this.formElems.select = this.formElems.form.querySelector('#product');
-  this.formElems.selectStatus = this.formElems.form.querySelector('#status');
-  this.formElems.inputs.full_name  = this.form.querySelector('#full_name');
-  this.formElems.inputs.phone = this.form.querySelector('#phone');
-  this.formElems.inputs.email = this.form.querySelector('#email');
-  }
-  getFormElements(){
-    return this.formElems;
+  // Задает значения элементов в конструктор
+  initFormEdit() {
+    this.formElements = {
+      form: document.querySelector('#form') || null,
+      id : document.querySelector('#number') || null,
+      date : document.querySelector('#date') || null,
+      select: document.querySelector('#product') || null,
+      selectStatus: document.querySelector('#status') || null,
+      inputs: {
+        full_name: document.querySelector('#full_name') || null,
+        email: document.querySelector('#email') || null,
+        phone: document.querySelector('#phone') || null,
+      }
+    };
+    this.noteWrapper = document.querySelector('.form__buttons');
   }
 
 
-  setNoteWrapper () {
-    this.noteWrapper = this.form.querySelector('.form__buttons');
+  getFormElems(){
+    this.initFormEdit();
+    console.log(this.formElements);
+    return this.formElements;
   }
+
 
 
 
@@ -41,6 +43,8 @@ class EditFormRender  {
   }
 
   getIdValue() {
+console.log(this.id);
+
     return this.id.value;
   }
   setIdValue(id) {
