@@ -22,10 +22,6 @@ class Filter {
       return filter.method({ ...filter.params, data: filteredData});
     }, data);
   }
-
-  // getAllFilters () {
-  //   return this.filters;
-  // }
 }
 
 

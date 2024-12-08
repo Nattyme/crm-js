@@ -61,6 +61,18 @@ class TableRender {
   unhideElements(element) {
     element.classList.remove('none');
   }
+  // e.target, this.statusAside, 'active'
+  navActiveMark(target, navList, className) {
+    const navItems = navList.querySelectorAll('li');
+  
+    navItems.forEach( (item) => {
+      let classOwner = item.querySelector('[class="active"]');
+      if(classOwner) {
+        classOwner.classList.remove('active');
+      }
+    }) 
+    target.classList.add(className);
+  }
 
 
   /**

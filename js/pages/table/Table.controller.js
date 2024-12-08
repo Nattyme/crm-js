@@ -71,7 +71,6 @@ class Controller {
     if (!dataTaskAll.length) {
       this.render.hideElements([this.selectProduct, this.statusBar]) // если задач нет - спрячем селекты
     } 
-    console.log(rowsData);
     
     this.displayRows(rowsData); // отобразим таблицу
   }
@@ -95,6 +94,12 @@ class Controller {
   
     this.statusBar.addEventListener('click', (e) => {
       this.currentStatus = e.target.getAttribute('data-value');
+      this.applyFilters(); // Применяем фильтры
+    });
+
+    this.statusAside.addEventListener('click', (e) => {
+      this.currentStatus = e.target.getAttribute('data-value');
+      this.render.navActiveMark(e.target, this.statusAside, 'active');
       this.applyFilters(); // Применяем фильтры
     });
   }
@@ -142,12 +147,6 @@ class Controller {
     const rowsData = this.getRowsData(filteredData); // Преобразуем данные для отображения
     this.displayRows(rowsData); // Отображаем данные
   }
-
-  countAsideStatus(taskDataAll) {
-    this.asideStatusCounter
-  }
-  
-
 }
 
 // Запуск приложения

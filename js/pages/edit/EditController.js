@@ -51,7 +51,6 @@ class Controller {
     }
 
     this.currentTaskData = task;
-    console.log(this.currentTaskData);
     this.eventBus.emit(NAMES.TASKS_LOAD, task);
     
   }
