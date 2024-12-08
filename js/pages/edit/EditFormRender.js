@@ -74,7 +74,7 @@ class EditFormRender  {
   setSatusValue(statusNew) {
     this.selectStatus.selectedindex = statusNew;
   }
-
+  
   setFormValues ( {id, date, select, selectStatus, inputs}) {
     if (id !== undefined) this.setTaskId(id);
     if (date !== undefined) this.setDateValue(date);

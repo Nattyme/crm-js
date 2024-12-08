@@ -25,13 +25,10 @@ class Task {
     this.formatter = formatter;
 
     eventBus.emit(NAMES.TASK_CREATED, this.testData); // Передаем созданную задачу
-    console.log('emot из TASK, создана задача TASK CREATED', this.testData);
   }
 
   initTask() {
-    const dataTaskAll = this.getData(); // получим данные всех задач
-    console.log('Массив задач на старте ', this.getData());
-    
+    const dataTaskAll = this.storage.data; // получим данные всех задач
     this.setTestData(dataTaskAll); 
   }
 
@@ -56,58 +53,27 @@ class Task {
 
     return task;
   }
-  addTaskToStorage(newTask){
-    newTask.phone = validate.phone(newTask.phone).value;
-    return this.getData().push(newTask); // добавляем задачу в массив
-  }
   updateSingleTaskData(taskUpdated) {
   
     const updatedTask = taskUpdated;
     if (!updatedTask || !updatedTask.id) {
-      console.error("Нельзя обновить задачу", updatedTask);
+      console.log("Нельзя обновить задачу", updatedTask);
       return
     }
 
-    const taskIndex = this.getData().findIndex(task => task.id === updatedTask.id);
+    const taskIndex = this.storage.getAllTasksData().findIndex(task => task.id === updatedTask.id);
 
     if (taskIndex !== -1) {
-      this.getData()[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
+      this.storage.getAllTasksData()[taskIndex] = updatedTask; // Обновление статуса задачи в массиве
       this.eventBus.emit(NAMES.TASKS_SAVE, updatedTask); // Сохраненеи измен-ий
     } else {
-      console.error("Задача с указанным id не найдена:", updatedTask.id);
+      console.log("Задача с указанным id не найдена:", updatedTask.id);
     }
     return updatedTask;
 
   }
 
 
-  /**
- * Возвращает задачу по её ID.
- *
- * @method getData
- * @memberof TaskManager
- * @param {number} id - ID задачи.
- * @returns {Object|null} Возвращает задачу или null, если не найдено.
- */
-  findOneTask(id, dateType) {
-    let taskData = this.findTaskById(id, this.getData()); 
-    if (!taskData) return console.log(`Запись не найдена в ${this.getData()}`);   // Если ID не найден
-    
-    return this.formatter.formatTaskDateTime(taskData, dateType); 
-  }
-
-  findTaskById(id){
-    return this.getData().find(task => task.id === Number(id) );
-  }
-
-
-
-  getData() {
-    return this.storage.getAllTasksData();
-  }
-  setData() {
-    this.data = this.getData();
-  }
   setTestData(testData) {
     this.testData = testData;
     return testData;
@@ -122,20 +88,6 @@ class Task {
     return this.status.data.NEW.key; 
   }
  
-
-  /**
-   * Рассчитывает ID для новой задачи.
-   *
-   * @method calcID
-   * @memberof TaskManager
-   * @param {Array} data - Массив всех задач.
-   * @returns {number} Новый ID.
-   */
-  calcTaskId () {
-    return this.getData().length !== 0 ? this.getData().reduce( (max, task) => Math.max(max, task.id), 0) + 1 : 1;
-  }
- 
-  // this.phone = this.setProperty( phone, validate.phone);
   /**
    * Валидирует значение с использованием соответствующей функции.
    *

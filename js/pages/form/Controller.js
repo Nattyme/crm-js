@@ -1,8 +1,11 @@
-import { managerTask, eventBus, formManager } from '../../model.js';
+import { eventBus, storage, managerTask, formManager } from '../../model.js';
 import { TestDataFactory } from './TestDataFactory.js';
-import {render} from './TaskRender.js';
+import { render } from './TaskRender.js';
 import { NAMES } from '../../config/config.js';
 import { Notes } from '../../utils/notes.js';
+import { validate } from './../../utils/validate.js';
+
+
 /**
  * Контроллер для обработки логики формы задач.
  * Этот класс управляет взаимодействием между моделью, видом и данными, включая обработку событий и управление задачами.
@@ -22,8 +25,9 @@ class Controller {
    * 
  * @constructor
  */
-  constructor ( eventBus, managerTask, formManager, render) {
+  constructor ( eventBus, storage, managerTask, formManager, render) {
     this.eventBus = eventBus; 
+    this.storage = storage;
     this.managerTask = managerTask;
     this.formManager = formManager; // методы формы
     this.render = render; 
@@ -42,7 +46,6 @@ class Controller {
     this.setRandomData();  // заполним форму значениями задачи
     this.eventBus.emit(NAMES.TASKS_LOAD);
     this.setEventListeners();
-    console.log(this.managerTask.data);
     this.notes.setContainer(this.render.notewrapper);
   }
 
@@ -53,17 +56,13 @@ class Controller {
    * @method
    */
   setEventListeners () {
-    console.log( this.render);
-    
     // Слушаем submit, запускаем ф-цию добавления задачи
     this.render.form.addEventListener('submit', (e) => {
       const task = this.createTask(e);
-      console.log(task);
       this.saveTask(task);
     });
   }
 
-  
 
   /**
    * Метод обработки отправки формы. Создаёт новую задачу и сохраняет её в менеджер задач.
@@ -75,7 +74,7 @@ class Controller {
   createTask(e) {
     e.preventDefault();   
 
-    const id = this.managerTask.calcTaskId(); 
+    const id = this.storage.calcTaskId(); 
     const taskFormData = this.formManager.getFormData( this.render.form );   
     const newTask = this.managerTask.createNewTask(taskFormData);
 
@@ -87,9 +86,9 @@ class Controller {
   saveTask(newTask) {
     if(!newTask) { console.log(this.notes.MESSAGES.ERROR.empty_value())};
 
-    const taskAdd = this.managerTask.addTaskToStorage(newTask);     
+    newTask.phone = validate.phone(newTask.phone).value; // Отформатируем телефон
+    const taskAdd = this.storage.addTaskToStorage(newTask);     
     this.eventBus.emit(NAMES.TASKS_SAVE, taskAdd); // вызываем событие сохранения
-    console.log('EMIT Сохран-е задачи после создания', taskAdd);
 
     this.formManager.resetForm (this.render.form);    
     this.setRandomData ();// Заново заполним данные
@@ -137,6 +136,7 @@ class Controller {
 // Запуск
 const controller = new Controller(
   eventBus,
+  storage,
   managerTask,
   formManager,
   render

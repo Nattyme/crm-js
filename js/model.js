@@ -1,6 +1,5 @@
 import {testData, products} from './data/data.js';
 import { Task } from './modules/Task.js';
-import { TasksStorage } from './modules/TasksStorage.js';
 import { TaskEditManager } from './modules/TaskEditManager.js';
 import { EventEmitter } from './modules/Event/EventEmitter.js';
 import { Status } from './modules/Status.js';
@@ -20,13 +19,13 @@ const storage = new Storage(eventBus);
 const formatter = new Formatter(status, products);
 
 const managerTask = new Task(eventBus, storage, formatter, status);
-const manager = new TasksStorage(eventBus, storage, formatter);
-
 const formManager = new FormManager({formatter});
 const editFormManager = new FormEdit(eventBus, managerTask, formatter);
 
+
+
+
 export { 
-  manager, 
   TaskEditManager, 
   managerTask, 
   formManager, 

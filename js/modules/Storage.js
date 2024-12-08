@@ -14,6 +14,7 @@ class Storage {
     this.loadFromStorage();
   }
 
+  // Работа с задачами
   /**
    * Возвращает все задачи.
    *
@@ -25,12 +26,38 @@ class Storage {
     return this.data;
   }
 
+  findTaskById(id){
+    const taskData =  this.data.find(task => task.id === Number(id) );
+    if (!taskData) return console.log('Запись не найдена');   // Если ID не найден
+    return taskData;
+  }
+
+  addTaskToStorage(task){
+    return this.data.push(task); 
+  }
+
+
+  // Подсчёты
+  /**
+ * Рассчитывает ID для новой задачи.
+ *
+ * @method calcID
+ * @memberof TaskManager
+ * @param {Array} data - Массив всех задач.
+ * @returns {number} Новый ID.
+ */
+  calcTaskId () {
+    return this.data.length !== 0 ? this.data.reduce( (max, task) => Math.max(max, task.id), 0) + 1 : 1;
+  }
+
   calcTasksByStatus(statusType) {
     return this.data.reduce((accumulator, currentValue) => {
       return currentValue.status === statusType ? accumulator + 1 : accumulator;
     }, 0);
   }
 
+
+  // Работа с Local Storage
   /**
    * Загружает данные из localStorage.
    *
@@ -54,42 +81,6 @@ class Storage {
     localStorage.setItem(NAMES.TASKS_DATA, JSON.stringify(this.data));
     console.log('Данные сохранены (обновлены) в local storage', this.data);
   }
-
-  /*  Одна задача*/
-  loadTaskFromStorage(taskID) {
-    // Все задачи
-    const tasksAll = JSON.parse(localStorage.getItem('task')) || [];
-
-    // Задача по ID
-    const task = tasksAll.find( item => item.id === taskID);
-
-    if (task) {
-      console.log('Успех. Задача загружена из local storage');
-      this.eventBus.emit(NAMES.TASK_LOAD, task); // Отправка задачи после загрузки 
-    } else {
-      console.log('Ошибка. Задача не найдена в local storage');
-    }
-  }
-
-  saveTaskToStorage(taskData) {
-    // Получаем все задачи
-    const tasksAll = JSON.parse(localStorage.getItem(NAMES.TASKS_DATA)) || [];
-
-
-    // Индекс задачи
-    const taskIndex = tasksAll.findIndex(task => task.id === taskData.id);
-
-    if ( taskIndex !== - 1) {
-      // Если задача существует - обновляем ее
-      tasksAll[taskIndex] = taskData;
-    } else {
-      console.log('Ошибка. Такой задачи нет');
-    }
-
-    console.log('Успех. Задача сохранена');
-    localStorage.setItem(NAMES.TASKS_DATA, JSON.stringify(taskData));
-  }
-
 }
 
 export { Storage };

@@ -43,7 +43,7 @@ class Controller {
      
     };
  
-    const task = this.managerTask.findTaskById(id);
+    const task = this.storage.findTaskById(id);
 
     if(!task) {
       console.log('Задача не найдена');
