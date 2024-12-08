@@ -49,11 +49,7 @@ class TableRender {
     return this.asideStatus;
   }
   setCounterStatusData(value) {
-    if(value) {
-      this.asideStatusCounter.textContent = value;
-    } else {
-      this.asideStatusCounter.remove();
-    }
+    this.asideStatusCounter.textContent = value ? value : '';
   }
 
 
