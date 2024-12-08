@@ -6,8 +6,10 @@ class FormEdit  {
     this.eventBus = eventBus;
     this.taskManager = taskManager;
     this.formatter = formatter;
+    this.formElements = {};
   }
 
+  // Найдём задачу по id
   getTaskId () {
     if ( this.formatter.getUrlId() !== null ) {
       return this.formatter.getUrlId();
@@ -17,17 +19,20 @@ class FormEdit  {
     }
   }
 
-  setFormElems(elements) {  
-    const id =  this.getTaskId ();
-    const currentTask = this.taskManager.findTaskById(id);
-    const taskDisplayFormat = this.formatter.formatTaskEdit(currentTask);
+  setFormElems(elemetns) {
+    this.formElements = elemetns;
+  }
+
+  // Заполним данные формы
+  setFormTasksValues(task) {  
+    const taskDisplayFormat = this.formatter.formatTaskEdit(task);
 
     // Установим значения в поля формы
-    elements.id.textContent = taskDisplayFormat.id;
-    elements.date.textContent = taskDisplayFormat.date;
-    elements.inputs.full_name.value = taskDisplayFormat.full_name;
-    elements.inputs.phone.value = taskDisplayFormat.phone;
-    elements.inputs.email.value = taskDisplayFormat.email;
+    this.formElements.id.textContent = taskDisplayFormat.id;
+    this.formElements.date.textContent = taskDisplayFormat.date;
+    this.formElements.inputs.full_name.value = taskDisplayFormat.full_name;
+    this.formElements.inputs.phone.value = taskDisplayFormat.phone;
+    this.formElements.inputs.email.value = taskDisplayFormat.email;
 
     // Ф-ция ищет нужную опцию в селект
     const getSelectedIndex = function (options, value) {
@@ -35,90 +40,10 @@ class FormEdit  {
     }
 
     // Находим и выбираем нужный продукт
-    elements.select.selectedIndex = getSelectedIndex([...elements.select.options], taskDisplayFormat.product);
+    this.formElements.select.selectedIndex = getSelectedIndex([... this.formElements.select.options], taskDisplayFormat.product);
     // Находим и выбирем нужный статус
-    elements.selectStatus.selectedIndex = getSelectedIndex([...elements.selectStatus.options], taskDisplayFormat.status);  
-    
-    
-    return elements;
+    this.formElements.selectStatus.selectedIndex = getSelectedIndex([... this.formElements.selectStatus.options], taskDisplayFormat.status);  
   }
-
-
-
-
-
-
-
-
-  
-
-  // setFormElems (elems) {
-  //   return this.formElems = elems;
-  // }
-  
-
-
-
-
-
-
-
-  
-
-  updateTask(startTaskData, updatedTaskData) {
-    updatedTaskData.id = startTaskData.id;
-   
-    // Ищем пустые знач-я
-    if ( Object.values(updatedTaskData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
-      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
-      return false;
-    } 
-    // Вернём отредак-ные знач-я
-    return {
-      ...startTaskData,
-      email : this.setProperty(updatedTaskData.email, validate.email),
-      full_name : this.setProperty(updatedTaskData.full_name, validate.full_name),
-      product : this.setProperty(updatedTaskData.product, validate.product), //Отформатируем знач-е product 
-      phone :  this.setProperty(updatedTaskData.phone, validate.phone),
-      status : this.setProperty(updatedTaskData.status, validate.status),
-      changed : Date.now()
-    }
-
-  }
-
-  updateTaskToRender(startTaskData, updatedTaskData) {
-    updatedTaskData.id = startTaskData.id;
-   
-    // Ищем пустые знач-я
-    if ( Object.values(updatedTaskData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
-      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
-      return false;
-    } 
-    // Вернём отредак-ные знач-я
-    return {
-      ...startTaskData,
-      email : this.setProperty(updatedTaskData.email, validate.email),
-      full_name : this.setProperty(updatedTaskData.full_name, validate.full_name),
-      product : this.setProperty(updatedTaskData.product, validate.product), //Отформатируем знач-е product 
-      phone :  this.setProperty(updatedTaskData.phone, validate.phone),
-      status : this.setProperty(updatedTaskData.status, validate.status),
-      changed : Date.now()
-    }
-
-  }
-
-  setProperty ( value, validate) {
-    const result = validate(value);
-   
-    if(!result.valid || result.valid === null) { 
-      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value(value));
-      return null;
-    }; 
-
-    return result.value
-  }
-
-
 
   getFormData(formElement) {
     const form = new FormData(formElement);
@@ -129,19 +54,47 @@ class FormEdit  {
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
+    console.log(formData);
+    
     return formData;
   }
 
-  formatFormData(formData) {
+  updateTask(startTaskData, formData) {
+    formData.id = startTaskData.id;
+   
+    // Ищем пустые знач-я
+    if ( Object.values(formData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
+      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
+      return false;
+    } 
+    console.log(startTaskData);
     console.log(formData);
-    
-    return {
-      ...formData,
-      phone : this.formatter.formatPhone(formData.phone),
-      product : this.formatter.formatProduct(formData.product),
-      status : this.formatter.formatStatus(formData.status)
+    // Вернём отредак-ные знач-я
+    let updatedTaskData = {
+        ...startTaskData,
+        email : this.setValidValue(formData.email, validate.email),
+        full_name : this.setValidValue(formData.full_name, validate.full_name),
+        product : this.setValidValue(formData.product, validate.product), //Отформатируем знач-е product 
+        phone :  this.setValidValue(formData.phone, validate.phone),
+        status : this.setValidValue(formData.status, validate.status).key,
+        changed : Date.now()
     }
+    
+    // updatedTaskData.status =  updatedTaskData.status.key;
+    return  updatedTaskData;
   }
+
+  setValidValue ( value, validate) {
+    console.log(value);
+    
+    const result = validate(value);
+   
+    if(!result.valid || result.valid === null) { return null;}; 
+
+    return result.value
+  }
+
+
 }
 
 export { FormEdit };

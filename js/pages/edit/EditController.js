@@ -13,9 +13,8 @@ class Controller {
     this.managerTask = managerTask; 
     this.storage = storage;
 
-    this.notes = new Notes(this.render.noteWrapper, MESSAGES);
+    this.notes = new Notes();
     this.currentTaskData = null;
-
   }
 
   // Старт контроллера
@@ -27,18 +26,17 @@ class Controller {
 
   initForm() {
     const formElems = this.render.getFormElems(); // получаем элем-ты формы
-    console.log(formElems);
-    
-    this.formEditManager.setFormElems(formElems); // заполнения форму данными
+    this.formEditManager.setFormElems(formElems); // передадим в editForm
   }
 
   initListeners(){
-    this.render.form.addEventListener('submit', (e)=> this.saveTask(e));
+    this.render.formElements.form.addEventListener('submit', (e)=> this.saveTask(e));
     this.eventBus.on(NAMES.TASKS_LOAD, (task) => this.fillForm(task));
   }
 
   loadCurrentTask(){
-    const id = this.formEditManager.getTaskById();
+    const id = this.formEditManager.getTaskId();
+
     if(!id) {
      console.log('Задача не найдена');
      return;
@@ -47,17 +45,18 @@ class Controller {
  
     const task = this.managerTask.findTaskById(id);
 
-    if(!currentTask) {
+    if(!task) {
       console.log('Задача не найдена');
       return;
     }
 
     this.currentTaskData = task;
-    this.eventBus.emit(TASKS_LOAD, task);
+    console.log(this.currentTaskData);
+    this.eventBus.emit(NAMES.TASKS_LOAD, task);
     
   }
 
-  fill_form(task){
+  fillForm(task){
     this.formEditManager.setFormTasksValues(task);
   }
   
@@ -65,7 +64,8 @@ class Controller {
     event.preventDefault();
 
     //  Получаем данные из формы
-    const formData = this.formEditManager.getFormData(this.render.form);
+    const formData = this.formEditManager.getFormData(this.render.formElements.form);
+console.log(formData);
 
     if(!formData) {
       console.log('Ошибка: форма заполнена не верно');
@@ -73,7 +73,7 @@ class Controller {
     }
 
     // Обновляем задачу
-    const updatedTask = this.formEditManager.updateTask(this.currentTaskData, formValues);
+    const updatedTask = this.formEditManager.updateTask(this.currentTaskData, formData);
 
     if(!updatedTask) {
       console.log('Ошибка: не удалось сохрвнить изменения. Проверьте введённый данные');
@@ -82,10 +82,11 @@ class Controller {
 
     this.currentTaskData = updatedTask; // Обновим текущ. задачу в контроллере
 
-    this.eventBus.emit(TASKS_SAVE, updatedTask);
+    this.eventBus.emit(NAMES.TASKS_SAVE, updatedTask);
 
     // Сохранить задачу
     const isSaved = this.managerTask.updateSingleTaskData(updatedTask);
+    console.log( this.notes);
     if (!isSaved) {
       this.notes.addNote('error', 'Ошибка при сохранении задачи');
       return;

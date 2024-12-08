@@ -4,6 +4,7 @@ import { MESSAGES } from './../data/messages.js';
 class Notes {
   constructor (wrapper) {
     this.container = wrapper;
+console.log( this.container);
 
     if(!this.container){return 'Нет контейнера!'};
     this.MESSAGES = MESSAGES;

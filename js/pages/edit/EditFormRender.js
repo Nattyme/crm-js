@@ -20,6 +20,8 @@ class EditFormRender  {
       }
     };
     this.noteWrapper = document.querySelector('.form__buttons');
+  
+    
   }
 
 
@@ -27,6 +29,10 @@ class EditFormRender  {
     this.initFormEdit();
     console.log(this.formElements);
     return this.formElements;
+  }
+
+  getNoteWtapper() {
+    return this.noteWrapper;
   }
 
 

@@ -209,7 +209,6 @@ const validate = {
     return result;
   }
 
-
 }
 
 export {validate};
