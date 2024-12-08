@@ -2,7 +2,6 @@ import {eventBus, status, managerTask, formatter, storage} from '../../model.js'
 import { renderTable } from './TableRender.js';
 import { Filter } from './../../modules/Filter.js';
 
-
 /**
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
@@ -28,8 +27,28 @@ class Controller {
   */
   setInit () {
     this.initSelectElems();
+    this.initFilters();
     this.initTable();
     this.initEventListeners();
+  }
+
+  initFilters(){
+    this.filters =  [
+      {
+        method: this.filter.filterSelect,
+        params: {
+          category: this.currentCategory, 
+          key: 'product'
+        }
+      },
+      {
+        method: this.filter.filterNotSelect,
+        params: {
+          category: this.currentCategory,
+          key: 'status'
+        }
+      }
+    ];
   }
 
   initSelectElems() {
@@ -60,49 +79,23 @@ class Controller {
   }
 
   initEventListeners() {
-    this.eventBus.on(NAMES.FILTER_STATUS, () => this.mainFilter('status'));
-    this.eventBus.on(NAMES.FILTER_PRODUCT, () => this.mainFilter('product'));
     this.selectProduct.onchange = () => {
       const selectedIndex = this.selectProduct.selectedIndex;
-      this.currentCategory =  this.selectProduct[selectedIndex].value;
-      this.doFilter(
-        this.filter.filterSelect,
-        {
-          category : this.currentCategory,
-          key: 'product'
-        }
-      )
-    }
-      
-    this.statusBar.addEventListener ('click', (e)=> {
-      this.currentCategory = e.target.getAttribute('data-value');
-      this.doFilter(
-        this.filter.filterSelect,
-        {
-          category : this.currentCategory,
-          key: 'status'
-        }
-      )
+      this.currentCategory = this.selectProduct[selectedIndex].value;
+      this.applyFilters(); // Применяем фильтры
+    };
+  
+    this.statusBar.addEventListener('click', (e) => {
+      this.currentStatus = e.target.getAttribute('data-value');
+      this.applyFilters(); // Применяем фильтры
     });
-
-    this.doFilter(this.filter.filterSelect, {
-      category : currentCategory,
-      key: 'product'
-    })
   }
 
-  doSeveralFilters(data, filtersArr) {
-    return filtersArr.reduce( (filteredData, filter) => {
-      return filter.method({ ...filter.params, data: filteredData});
-    }, data);
-  }
-  
-  
   doFilter (filterType, filterParams) {
     const dataTaskAll = this.storage.getAllTasksData();
 
     // Парам-ры для работы фильтра
-    const filteredData = filterType({
+    let filteredData = filterType({
       data: dataTaskAll,
       ...filterParams
     });
@@ -111,24 +104,38 @@ class Controller {
 
     const rowsData = this.getRowsData(filteredData);
     this.displayRows( rowsData, this.statusArray);
+    console.log('Массив отфильрованных задач: ', filteredData);
+  }
 
-    const filters = [
+  updateFilters() {
+    this.filters = [
       {
         method: this.filter.filterSelect,
         params: {
-          category: currentCategory, key: 'product'
+          category: this.currentCategory, 
+          key: 'product'
         }
       },
       {
-        method: this.filter.filterNotSelect,
-        params: {category: currentStatus}
+        method: this.filter.filterSelect,
+        params: {
+          category: this.currentStatus,
+          key: 'status'
+        }
       }
     ];
-
-    // const filteredData = this.filter.doSeveralFilters(dataTasksAll, filters);
-
-    console.log('Массив отфильрованных задач: ', filteredData);
   }
+
+  applyFilters() {
+    const dataTaskAll = this.storage.getAllTasksData(); // Получаем все данные
+    this.updateFilters(); // Обновляем фильтры
+    const filteredData = this.filter.doSeveralFilters(dataTaskAll, this.filters); // Применяем фильтры
+  
+    this.render.resetTable(); // Сбрасываем таблицу
+    const rowsData = this.getRowsData(filteredData); // Преобразуем данные для отображения
+    this.displayRows(rowsData); // Отображаем данные
+  }
+  
 
 }
 

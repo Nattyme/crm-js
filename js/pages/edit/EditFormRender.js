@@ -20,14 +20,10 @@ class EditFormRender  {
       }
     };
     this.noteWrapper = document.querySelector('.form__buttons');
-  
-    
   }
-
 
   getFormElems(){
     this.initFormEdit();
-    console.log(this.formElements);
     return this.formElements;
   }
 
@@ -36,21 +32,11 @@ class EditFormRender  {
   }
 
 
-
-
-
-
-
-
- 
-
   updateNoteWrapper (content) {
     this.noteWrapper.textContent = content;
   }
 
   getIdValue() {
-console.log(this.id);
-
     return this.id.value;
   }
   setIdValue(id) {
@@ -95,9 +81,7 @@ console.log(this.id);
     if (select !== undefined) this.select.value = select;
     if (selectStatus !== undefined) this.selectStatus.value = selectStatus;
     if (inputs) this.setInputValues(inputs);
-  }
-
- 
+  } 
 }
 
 const renderEditForm = new EditFormRender();

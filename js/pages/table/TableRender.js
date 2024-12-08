@@ -23,10 +23,8 @@ class TableRender {
     }
     
     let container = this.tbody;
-
-    for (let task of tasks.data) {
-      console.log('addrowsto table task: ', task);//ok
-      
+  
+    for (let task of tasks) {
       container.insertAdjacentHTML('afterbegin', this.setRowHTML(task, task.status) );
     }
 
@@ -59,9 +57,6 @@ class TableRender {
    * @param {Object} task - Объект задачи с данными.
    */
   setRowHTML (task, status) {
-    console.log('set row html task: ', task);
-    console.log('set row html status: ', status);
-    
     return  this.row.getTableRow(task, status);
   }
 

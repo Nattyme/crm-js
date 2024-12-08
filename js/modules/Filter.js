@@ -1,11 +1,8 @@
 class Filter {
+  
   filterSelect(startValues) {
-    console.log('DATA IN FILTER: ', startValues);
-    
-      let filterData = startValues.data.filter(task => task[startValues.key] === startValues.category);
-      console.log(filterData);
-      
-      return startValues.category === 'all' ? startValues.data : filterData;
+    let filterData = startValues.data.filter(task => task[startValues.key] === startValues.category);
+    return startValues.category === 'all' ? startValues.data : filterData;
   }
 
   filterNotSelect (startValues) {
@@ -18,6 +15,16 @@ class Filter {
     });
 
     return filterData;
+  }
+
+  doSeveralFilters(data, filtersArr) {
+    return filtersArr.reduce( (filteredData, filter) => {
+      return filter.method({ ...filter.params, data: filteredData});
+    }, data);
+  }
+
+  getAllFilters () {
+    return this.filters;
   }
 }
 
