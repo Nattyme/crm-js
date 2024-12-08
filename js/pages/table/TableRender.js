@@ -9,6 +9,8 @@ class TableRender {
     this.tbody = this.setTbody();
     this.select = document.querySelector('#productSelect');
     this.statusBar = document.querySelector('#topStatusBar');
+    this.asideStatus = document.querySelector('#asideStatusNav');
+    this.asideStatusCounter = document.querySelector('#badge-new');
   }
 
   /**
@@ -35,6 +37,7 @@ class TableRender {
     this.tbody.textContent = '';
   }
 
+
   getSelect () {
     return this.select;
   }
@@ -42,6 +45,17 @@ class TableRender {
   getStatusBar() {
     return this.statusBar;
   }
+  getStatusAside(){
+    return this.asideStatus;
+  }
+  setCounterStatusData(value) {
+    if(value) {
+      this.asideStatusCounter.textContent = value;
+    } else {
+      this.asideStatusCounter.remove();
+    }
+  }
+
 
   hideElements(elements) {
     console.log(elements);
@@ -51,6 +65,7 @@ class TableRender {
   unhideElements(element) {
     element.classList.remove('none');
   }
+
 
   /**
    * Создаёт строку таблицы на основе задачи.
@@ -73,6 +88,10 @@ class TableRender {
     }
 
     return tbody;
+  }
+
+  setAsideNavActive() {
+
   }
 }
 

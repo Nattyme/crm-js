@@ -25,6 +25,12 @@ class Storage {
     return this.data;
   }
 
+  calcTasksByStatus(statusType) {
+    return this.data.reduce((accumulator, currentValue) => {
+      return currentValue.status === statusType ? accumulator + 1 : accumulator;
+    }, 0);
+  }
+
   /**
    * Загружает данные из localStorage.
    *
@@ -48,20 +54,6 @@ class Storage {
     localStorage.setItem(NAMES.TASKS_DATA, JSON.stringify(this.data));
     console.log('Данные сохранены (обновлены) в local storage', this.data);
   }
-
-  /**
-   * Очищает данные из localStorage и обновляет данные в памяти.
-   *
-   * @method clearStorage
-   * @memberof TaskManager
-   */
-  // clearStorage() {
-  //   localStorage.removeItem(NAMES.TASKS_DATA);
-  //   this.data = [];
-  //   this.eventBus.emit(NAMES.TASKS_SAVE, this.data); // Уведом-е об изменениях
-  //   console.log('Данные удалены из local storage. Массив data пуст');
-  // }
-
 
   /*  Одна задача*/
   loadTaskFromStorage(taskID) {

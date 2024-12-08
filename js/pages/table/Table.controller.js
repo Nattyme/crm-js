@@ -32,6 +32,8 @@ class Controller {
     this.initEventListeners();
   }
 
+
+
   initFilters(){
     this.filters =  [
       {
@@ -55,10 +57,14 @@ class Controller {
     this.statusArray = this.status.getStatusData();
     this.selectProduct = this.render.getSelect();
     this.statusBar = this.render.getStatusBar();
+    this.statusAside = this.render.getStatusAside();
   }
 
   initTable() {
     const dataTaskAll = this.storage.getAllTasksData(); // даннные из хранилища
+    const newTasksAmount =  this.storage.calcTasksByStatus('new');
+    this.render.setCounterStatusData(newTasksAmount);
+   
     const rowsData = this.getRowsData(dataTaskAll); // данные в формате для отображения
  
     // Скрываем селект и статус, если категорий или задач нет
@@ -69,6 +75,8 @@ class Controller {
     
     this.displayRows(rowsData); // отобразим таблицу
   }
+
+
 
   getRowsData (dataToDisplay) {
     return this.formatter.formatPrepareDisplayTask(dataToDisplay);
@@ -104,7 +112,6 @@ class Controller {
 
     const rowsData = this.getRowsData(filteredData);
     this.displayRows( rowsData, this.statusArray);
-    console.log('Массив отфильрованных задач: ', filteredData);
   }
 
   updateFilters() {
@@ -134,6 +141,10 @@ class Controller {
     this.render.resetTable(); // Сбрасываем таблицу
     const rowsData = this.getRowsData(filteredData); // Преобразуем данные для отображения
     this.displayRows(rowsData); // Отображаем данные
+  }
+
+  countAsideStatus(taskDataAll) {
+    this.asideStatusCounter
   }
   
 

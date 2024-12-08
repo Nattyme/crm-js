@@ -23,9 +23,9 @@ class Filter {
     }, data);
   }
 
-  getAllFilters () {
-    return this.filters;
-  }
+  // getAllFilters () {
+  //   return this.filters;
+  // }
 }
 
 
