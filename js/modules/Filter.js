@@ -1,23 +1,4 @@
 class Filter {
-  constructor() {
-  this.selector = '';
-  this.selectedIndex = '';
-  this.category = [];
-  }
-
-  setCategories(categoryArray) {
-    this.category = categoryArray;
-  }
-
-  setSelector(selector) {
-    this.selector = selector;
-  }
-
-  setIndex(selected) {
-    this.selectedIndex = selected;
-  }
-
-
   filterSelect(startValues) {
     console.log('DATA IN FILTER: ', startValues);
     
@@ -33,7 +14,7 @@ class Filter {
         return true; // если "all"
       }
     
-      return task.status === startValues.category;
+      return task[startValues.key] === startValues.category;
     });
 
     return filterData;

@@ -126,8 +126,6 @@ console.log(updatedData);
     return dateTime = dateTime.slice(0, -5).replace('T', ' ');
   }
   formatDate (timestamp) {
-    console.log(timestamp);
-    
     const formatter = new Intl.DateTimeFormat ( 'ru-RU', {
         year: 'numeric',
         month: 'numeric',
@@ -137,15 +135,6 @@ console.log(updatedData);
 
     return formatter.format( new Date(timestamp));
   }
-
-  // formatTaskWithDate (taskData) {
-
-  //   const dataCopy = {...taskData};     // Копия объекта задачи
-  //   dataCopy.date = this.formatDateTime( dataCopy.timestamp, 'date-time'); // Cв-во 'дата' в нужно формате
-
-  //   return dataCopy;  // Вернём запись
-  // }
-
 }
 
 export { Formatter };

@@ -13,82 +13,123 @@ class Controller {
     this.storage = storage;
     this.status = status; 
 
-    this.manager =  managerTask; 
+    this.managerTask =  managerTask; 
     this.render = renderTable;
     this.filter =  new Filter(); 
     this.formatter = formatter;
+
+    this.currentCategory = 'all'; 
+    this.currentStatus = 'all';
+
   }
 
   /**
   * Инициализация: загружает данные и заполняет таблицу.
   */
   setInit () {
-    const dataTaskAll = this.storage.getAllTasksData();
-    console.log(dataTaskAll);
+    this.initSelectElems();
+    this.initTable();
+    this.initEventListeners();
+  }
+
+  initSelectElems() {
+    this.statusArray = this.status.getStatusData();
+    this.selectProduct = this.render.getSelect();
+    this.statusBar = this.render.getStatusBar();
+  }
+
+  initTable() {
+    const dataTaskAll = this.storage.getAllTasksData(); // даннные из хранилища
+    const rowsData = this.getRowsData(dataTaskAll); // данные в формате для отображения
+ 
+    // Скрываем селект и статус, если категорий или задач нет
+    if (!dataTaskAll.length) {
+      this.render.hideElements([this.selectProduct, this.statusBar]) // если задач нет - спрячем селекты
+    } 
+    console.log(rowsData);
     
-    const statusArray = this.status.getStatusData();
-    const selectProduct = this.render.getSelect();
-    const statusBar = this.render.getStatusBar();
-    console.log(dataTaskAll);
-    let rowsData = this.getRowsData(dataTaskAll); 
-
-    // Скрываем селект, если категорий или задач нет
-    if ( !dataTaskAll.length > 0) {
-      this.render.hideElements([selectProduct, statusBar]) // если задач нет - спрячем селекты
-    }
-   
-    this.displayRows({data : rowsData, status: statusArray});
-
-    selectProduct.onchange = ()=>{
-      const selectIndex = selectProduct.selectedIndex;
-      let currentCategory = selectProduct[selectIndex].value;
-      
-      const dataForFilterStart = {
-          data : dataTaskAll,
-          category : currentCategory,
-          key : 'product'
-      }
-      const taskFiltered = this.filter.filterSelect(dataForFilterStart); 
-      
-     
-      this.render.resetTable();
-      const rowsData = this.getRowsData(taskFiltered); 
-      this.displayRows({data : rowsData, status: statusArray});
-      console.log('Массив отфлильтрованных задач', taskFiltered);
-    }
-
-    statusBar.addEventListener ('click', (e)=>{
-      let currentCategory = e.target.getAttribute('data-value');
-      console.log(e.target.getAttribute('data-value'));
-
-      const dataForFilterStart = {
-        data : dataTaskAll,
-        category : currentCategory,
-        key : 'status'
-      }
-
-      const taskFiltered = this.filter.filterNotSelect(dataForFilterStart); 
-      
-      this.render.resetTable(); // Удалили все поля таблицы
-
-
-      rowsData = this.getRowsData(taskFiltered); 
-      console.log(rowsData);
-      
-      this.displayRows({data : rowsData, status: statusArray});
-      console.log('Массив отфлильтрованных задач', taskFiltered);
-      
-    });
-    
+    this.displayRows(rowsData); // отобразим таблицу
   }
 
   getRowsData (dataToDisplay) {
     return this.formatter.formatPrepareDisplayTask(dataToDisplay);
   }
 
-  displayRows (dataArray, statusArray) {
-    this.render.addRowsToTable(dataArray, statusArray);
+  displayRows (rowsData) {
+    this.render.addRowsToTable(rowsData, this.statusArray);
   }
+
+  initEventListeners() {
+    this.eventBus.on(NAMES.FILTER_STATUS, () => this.mainFilter('status'));
+    this.eventBus.on(NAMES.FILTER_PRODUCT, () => this.mainFilter('product'));
+    this.selectProduct.onchange = () => {
+      const selectedIndex = this.selectProduct.selectedIndex;
+      this.currentCategory =  this.selectProduct[selectedIndex].value;
+      this.doFilter(
+        this.filter.filterSelect,
+        {
+          category : this.currentCategory,
+          key: 'product'
+        }
+      )
+    }
+      
+    this.statusBar.addEventListener ('click', (e)=> {
+      this.currentCategory = e.target.getAttribute('data-value');
+      this.doFilter(
+        this.filter.filterSelect,
+        {
+          category : this.currentCategory,
+          key: 'status'
+        }
+      )
+    });
+
+    this.doFilter(this.filter.filterSelect, {
+      category : currentCategory,
+      key: 'product'
+    })
+  }
+
+  doSeveralFilters(data, filtersArr) {
+    return filtersArr.reduce( (filteredData, filter) => {
+      return filter.method({ ...filter.params, data: filteredData});
+    }, data);
+  }
+  
+  
+  doFilter (filterType, filterParams) {
+    const dataTaskAll = this.storage.getAllTasksData();
+
+    // Парам-ры для работы фильтра
+    const filteredData = filterType({
+      data: dataTaskAll,
+      ...filterParams
+    });
+
+    this.render.resetTable(); 
+
+    const rowsData = this.getRowsData(filteredData);
+    this.displayRows( rowsData, this.statusArray);
+
+    const filters = [
+      {
+        method: this.filter.filterSelect,
+        params: {
+          category: currentCategory, key: 'product'
+        }
+      },
+      {
+        method: this.filter.filterNotSelect,
+        params: {category: currentStatus}
+      }
+    ];
+
+    // const filteredData = this.filter.doSeveralFilters(dataTasksAll, filters);
+
+    console.log('Массив отфильрованных задач: ', filteredData);
+  }
+
 }
 
 // Запуск приложения

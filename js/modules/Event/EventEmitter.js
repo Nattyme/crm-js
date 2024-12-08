@@ -72,23 +72,8 @@ class EventEmitter {
   }
 }
 
-const eventEmitter = new EventEmitter();
-// eventEmitter.on('on', () => {
-//   console.log('Лампочка 1 включилась');
-// });
-// const unsub = eventEmitter.on('on', () => {
-//   console.log('Лампочка 2 включилась');
-// });
-// eventEmitter.on('on', () => {
-//   console.log('Чайник включился');
-// });
-
-
-// eventEmitter.emit('on');
-// eventEmitter.emit('on');
-
 /**
  * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.
  * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
 */
-export { EventEmitter, eventEmitter }
+export { EventEmitter }

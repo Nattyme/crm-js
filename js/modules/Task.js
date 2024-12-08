@@ -154,26 +154,6 @@ class Task {
     
     return result.value;
   }
-
-  /**
-   * Удаляет задачу по ID.
-   *
-   * @method removeData
-   * @memberof TaskManager
-   * @param {number} recordID - ID задачи.
-   * @returns {number} ID удалённой задачи.
-   */
-  // removeTask (recordID) {
-  //   const recordIndex = this.data.findIndex(record => record.id === recordID);
-  //   if (recordIndex !== -1) {
-  //     this.data.splice(recordIndex, 1);
-  //   }
-
-  //   // Уведом-е об удалении 
-  //   this.eventBus.emit(NAMES.TASK_REMOVED, recordID);
-
-  //   return recordID;
-  // }
 }
 
 export { Task };
