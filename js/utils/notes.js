@@ -1,13 +1,8 @@
-import { NAMES } from '../config/config.js';
-import { MESSAGES } from './../data/messages.js';
-
 class Notes {
   constructor (wrapper) {
     this.container = wrapper;
-console.log( this.container);
 
     if(!this.container){return 'Нет контейнера!'};
-    this.MESSAGES = MESSAGES;
 
     this.errors = [];
     this.success = [];
@@ -16,6 +11,11 @@ console.log( this.container);
   setContainer(wrapperElement) {
     this.container = wrapperElement;
   }
+  
+  existErrors() {
+    return this.errors.length > 0;
+  }
+
 
   addNote(type, content) {
     if (!type || !content) {
@@ -29,21 +29,41 @@ console.log( this.container);
       this.errors.push({type: type, title: content});
     }
 
-    if ( type === 'success' && !this.errors.length > 0) {
+    if ( type === 'success' && !this.errors.length) {
       this.success.push({type: type, title: content});
     }
 
     this.getNote(type, content);
   }
 
-  existErrors() {
-    return this.errors.length > 0;
+  displayNote(note) {
+    if(!note) return;
+    this.container.insertAdjacentHTML('afterbegin', note);
   }
+
+  
+  findNotes () {
+    return this.container.querySelectorAll('[data-note]');
+  }
+
 
   resetNotes () {
     this.errors = [];
     this.success = [];
   }
+
+  removeNotes() {
+    const notes = this.findNotes();
+
+    if (notes) {
+      notes.forEach(element => {  
+        element.remove();
+      });
+    }
+
+    this.resetNotes();
+  }
+
 
   getHTMLTmpl (className, text) {
     return  `
@@ -55,7 +75,6 @@ console.log( this.container);
 
   getNote(type, text) {
     let note;
-    if(!this.container) return console.log('Нет контейнера');
    
     if(type === 'error') {
       note = this.getHTMLTmpl('alert-danger', text);
@@ -66,29 +85,6 @@ console.log( this.container);
 
     this.displayNote(note, this.container);
     return;
-  }
-
-  displayNote(note) {
-    if(!note) return;
-    this.container.insertAdjacentHTML('afterbegin', note);
-  }
-
-  findNotes () {
-    return this.container.querySelectorAll('[data-note]');
-  }
-
-  removeNotes() {
-    const notes = this.findNotes();
-
-    if (notes) {
-      notes.forEach(element => {
-        console.log('удалено:', element);
-        
-        element.remove();
-      });
-    }
-
-    this.resetNotes();
   }
 }
 

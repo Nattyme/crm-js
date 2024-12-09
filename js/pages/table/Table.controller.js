@@ -1,31 +1,28 @@
-import {eventBus, status, managerTask, formatter, storage} from '../../model.js';
+import {eventBus, storage, status, managerTask, filter, formatter} from '../../model.js';
 import { renderTable } from './TableRender.js';
-import { Filter } from './../../modules/Filter.js';
 
 /**
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
-  constructor (eventBus, storage, status, renderTable, managerTask, formatter) {
-    // Общие
+  constructor (eventBus, storage, status, renderTable, managerTask, filter, formatter) {
     this.eventBus = eventBus; 
     this.storage = storage;
     this.status = status; 
 
     this.managerTask =  managerTask; 
     this.render = renderTable;
-    this.filter =  new Filter(); 
+    this.filter = filter; 
     this.formatter = formatter;
 
     this.currentCategory = 'all'; 
     this.currentStatus = 'all';
-
   }
 
   /**
   * Инициализация: загружает данные и заполняет таблицу.
   */
-  setInit () {
+  initController () {
     this.initSelectElems();
     this.initFilters();
     this.initTable();
@@ -74,17 +71,6 @@ class Controller {
     
     this.displayRows(rowsData); // отобразим таблицу
   }
-
-
-
-  getRowsData (dataToDisplay) {
-    return this.formatter.formatPrepareDisplayTask(dataToDisplay);
-  }
-
-  displayRows (rowsData) {
-    this.render.addRowsToTable(rowsData, this.statusArray);
-  }
-
   initEventListeners() {
     this.selectProduct.onchange = () => {
       const selectedIndex = this.selectProduct.selectedIndex;
@@ -104,19 +90,25 @@ class Controller {
     });
   }
 
-  doFilter (filterType, filterParams) {
-    const dataTaskAll = this.storage.getAllTasksData();
 
-    // Парам-ры для работы фильтра
-    let filteredData = filterType({
-      data: dataTaskAll,
-      ...filterParams
-    });
 
-    this.render.resetTable(); 
+  getRowsData (dataToDisplay) {
+    return this.formatter.formatDataInTable(dataToDisplay);
+  }
 
-    const rowsData = this.getRowsData(filteredData);
-    this.displayRows( rowsData, this.statusArray);
+  displayRows (rowsData) {
+    this.render.addRowsToTable(rowsData, this.statusArray);
+  }
+
+
+  applyFilters() {
+    const dataTaskAll = this.storage.getAllTasksData(); // Получаем все данные
+    this.updateFilters(); // Обновляем фильтры
+    const filteredData = this.filter.doSeveralFilters(dataTaskAll, this.filters); // Применяем фильтры
+  
+    this.render.resetTable(); // Сбрасываем таблицу
+    const rowsData = this.getRowsData(filteredData); // Преобразуем данные для отображения
+    this.displayRows(rowsData); // Отображаем данные
   }
 
   updateFilters() {
@@ -138,25 +130,31 @@ class Controller {
     ];
   }
 
-  applyFilters() {
-    const dataTaskAll = this.storage.getAllTasksData(); // Получаем все данные
-    this.updateFilters(); // Обновляем фильтры
-    const filteredData = this.filter.doSeveralFilters(dataTaskAll, this.filters); // Применяем фильтры
-  
-    this.render.resetTable(); // Сбрасываем таблицу
-    const rowsData = this.getRowsData(filteredData); // Преобразуем данные для отображения
-    this.displayRows(rowsData); // Отображаем данные
+  doFilter (filterType, filterParams) {
+    const dataTaskAll = this.storage.getAllTasksData();
+
+    // Парам-ры для работы фильтра
+    let filteredData = filterType({
+      data: dataTaskAll,
+      ...filterParams
+    });
+
+    this.render.resetTable(); 
+
+    const rowsData = this.getRowsData(filteredData);
+    this.displayRows( rowsData, this.statusArray);
   }
 }
 
-// Запуск приложения
-const controller = new Controller(
+
+const controller = new Controller (
   eventBus, 
   storage,
   status,
   renderTable,
   managerTask,
+  filter,
   formatter
 );
 
-controller.setInit();
+controller.initController(); // Запуск 

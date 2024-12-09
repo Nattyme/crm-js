@@ -1,12 +1,12 @@
-import {testData, products} from './data/data.js';
-import { Task } from './modules/Task.js';
-import { TaskEditManager } from './modules/TaskEditManager.js';
-import { EventEmitter } from './modules/Event/EventEmitter.js';
+import {products} from './data/data.js';
 import { Status } from './modules/Status.js';
+import { emitter } from './modules/EventEmitter.js';
 import { Storage } from './modules/Storage.js';
-import { Formatter } from "./utils/Formatter.js";
+import { Task } from './modules/Task.js';
 import { FormManager } from './modules/FormManager.js';
 import { FormEdit } from './modules/FormEditManager.js';
+import { Filter } from './modules/Filter.js';
+import { Formatter } from "./utils/Formatter.js";
 
 
 /**
@@ -14,25 +14,23 @@ import { FormEdit } from './modules/FormEditManager.js';
  * @constant {Status} status - Экземпляр класса Status, содержащий данные статусов.
  */
 const status = new Status();
-const eventBus = new EventEmitter(); // Общий экз-р эммитера
+const eventBus = emitter;
 const storage = new Storage(eventBus);
 const formatter = new Formatter(status, products);
+const filter = new Filter();
 
 const managerTask = new Task(eventBus, storage, formatter, status);
 const formManager = new FormManager({formatter});
 const editFormManager = new FormEdit(eventBus, managerTask, formatter);
 
-
-
-
 export { 
-  TaskEditManager, 
   managerTask, 
   formManager, 
   editFormManager, 
   status, 
   eventBus, 
   storage, 
+  filter,
   formatter, 
   products
 }

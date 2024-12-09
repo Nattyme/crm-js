@@ -23,12 +23,10 @@ class Task {
     this.testData = {};
     this.status = status;
     this.formatter = formatter;
-
-    eventBus.emit(NAMES.TASK_CREATED, this.testData); // Передаем созданную задачу
   }
 
   initTask() {
-    const dataTaskAll = this.storage.data; // получим данные всех задач
+    const dataTaskAll = this.storage.getAllTasksData(); // получим данные всех задач
     this.setTestData(dataTaskAll); 
   }
 
@@ -73,22 +71,7 @@ class Task {
 
   }
 
-
-  setTestData(testData) {
-    this.testData = testData;
-    return testData;
-  }
-  setTaskId () {
-    return this.testData.id = this.calcId();
-  }
-  setTimeStamp() {
-    return Date.now();
-  }
-  setStatus() {
-    return this.status.data.NEW.key; 
-  }
- 
-  /**
+   /**
    * Валидирует значение с использованием соответствующей функции.
    *
    * @method setProperty
@@ -105,6 +88,16 @@ class Task {
     } 
     
     return result.value;
+  }
+  setTestData(testData) {
+    this.testData = testData;
+    return testData;
+  }
+  setTimeStamp() {
+    return Date.now();
+  }
+  setStatus() {
+    return this.status.data.NEW.key; 
   }
 }
 

@@ -63,12 +63,10 @@ class FormEdit  {
     formData.id = startTaskData.id;
    
     // Ищем пустые знач-я
-    if ( Object.values(formData).some(value => value === null || value === undefined || String(value).trim() === '') )  {
-      this.notes.addNote('error', this.notes.MESSAGES.ERROR.unvalid_value());
+    if ( Object.values(formData).some(value => !value ||  String(value).trim() === '') )  {
       return false;
     } 
-    console.log(startTaskData);
-    console.log(formData);
+   
     // Вернём отредак-ные знач-я
     let updatedTaskData = {
         ...startTaskData,
@@ -80,7 +78,6 @@ class FormEdit  {
         changed : Date.now()
     }
     
-    // updatedTaskData.status =  updatedTaskData.status.key;
     return  updatedTaskData;
   }
 

@@ -1,7 +1,6 @@
 import {NAMES} from './../../config/config.js';
 import { eventBus, editFormManager, managerTask, storage } from './../../model.js';
 import { renderEditForm } from './EditFormRender.js';
-import { MESSAGES } from './../../data/messages.js';
 import { Notes } from './../../utils/notes.js';
 
 
@@ -20,6 +19,7 @@ class Controller {
   // Старт контроллера
   initController() {
    this.initForm();
+   this.initNotes();
    this.initListeners();
    this.loadCurrentTask();
   }
@@ -27,6 +27,11 @@ class Controller {
   initForm() {
     const formElems = this.render.getFormElems(); // получаем элем-ты формы
     this.formEditManager.setFormElems(formElems); // передадим в editForm
+  }
+
+  initNotes(){
+    let container = document.querySelector('.form__buttons')
+    this.notes.setContainer(container);
   }
 
   initListeners(){
@@ -75,7 +80,7 @@ console.log(formData);
     const updatedTask = this.formEditManager.updateTask(this.currentTaskData, formData);
 
     if(!updatedTask) {
-      console.log('Ошибка: не удалось сохрвнить изменения. Проверьте введённый данные');
+      this.notes.addNote('error', 'Ошибка: не удалось сохранить изменения. Проверьте введённые данные');
       return;
     }
 
@@ -85,9 +90,9 @@ console.log(formData);
 
     // Сохранить задачу
     const isSaved = this.managerTask.updateSingleTaskData(updatedTask);
-    console.log( this.notes);
+  
     if (!isSaved) {
-      this.notes.addNote('error', 'Ошибка при сохранении задачи');
+      this.notes.addNote('error', 'Ошибка: не удалось сохранить изменения. Повторите попытку.');
       return;
     }
 

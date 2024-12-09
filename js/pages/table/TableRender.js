@@ -2,8 +2,14 @@ import {RowFactory} from './elements/Row.js';
 
 /**
  * Класс для управления отображением таблицы задач.
+ * @class
 */
 class TableRender {
+  /**
+   * Создает экземпляр класса TableRender для отображения таблицы.
+   * @param {Object} param0 - Параметры для конфигурации.
+   * @param {RowFactory} param0.rowFactory - Экземпляр RowFactory для создания строк таблицы.
+  */
   constructor ({rowFactory}) {
     this.row = rowFactory;
     this.tbody = this.setTbody();
@@ -14,10 +20,10 @@ class TableRender {
   }
 
   /**
- * Создаёт фрагмент строк таблицы на основе массива задач.
- * @param {Object[]} tasks - Массив задач.
- * @returns {DocumentFragment} Фрагмент строк таблицы.
- */
+   * Создает фрагмент строк таблицы на основе массива задач.
+   * @param {Object[]} tasks - Массив объектов задач.
+   * @returns {DocumentFragment} Фрагмент строк таблицы.
+  */
   addRowsToTable (tasks) {
     if (!this.tbody) {
       console.error('Не найден <tbody>. Проверить наличие элем. в DOM.');
@@ -70,7 +76,8 @@ class TableRender {
       if(classOwner) {
         classOwner.classList.remove('active');
       }
-    }) 
+    });
+    
     target.classList.add(className);
   }
 

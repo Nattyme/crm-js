@@ -1,5 +1,3 @@
-import {NAMES} from './../../config/config.js';
-
 /**
  * Класс для управления событиями.
 *
@@ -72,8 +70,9 @@ class EventEmitter {
   }
 }
 
+const emitter = new EventEmitter();
 /**
  * Создаёт новый экземпляр EventBus, который будет использоваться для управления событиями.
  * @constant {EventBus} eventBus - Экземпляр класса EventBus для обработки событий.
 */
-export { EventEmitter }
+export { emitter }

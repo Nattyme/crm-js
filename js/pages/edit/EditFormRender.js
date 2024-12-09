@@ -72,7 +72,7 @@ class EditFormRender  {
     return this.selectStatus;
   }
   setSatusValue(statusNew) {
-    this.selectStatus.selectedindex = statusNew;
+    this.selectStatus.selectedIndex = statusNew;
   }
   
   setFormValues ( {id, date, select, selectStatus, inputs}) {
