@@ -107,7 +107,6 @@ class Storage {
  * @memberof TaskManager
  */
   saveToStorage() {
-    console.log('Перед сохранением в localStorage:', this.data);
     localStorage.setItem(NAMES.TASKS_DATA, JSON.stringify(this.data));
     console.log('Данные сохранены (обновлены) в local storage', this.data);
   }

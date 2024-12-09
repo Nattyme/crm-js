@@ -54,7 +54,6 @@ class FormEdit  {
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
     }
-    console.log(formData);
     
     return formData;
   }
@@ -83,8 +82,16 @@ class FormEdit  {
         full_name : this.setValidValue(formData.full_name, validate.full_name),
         product : this.setValidValue(formData.product, validate.product), //Отформатируем знач-е product 
         phone :  this.setValidValue(formData.phone, validate.phone),
-        status : this.setValidValue(formData.status, validate.status).key,
+        status : this.setValidValue(formData.status, validate.status),
         changed : Date.now()
+    }
+
+    // Проверка валидации для знач-ий
+    for (const key in updatedTaskData) {
+      const validationResult = updatedTaskData[key];
+      if (validationResult && validationResult.valid === false || null) {
+        return false;  //  false, если поле не прошло проверку
+      }
     }
     
     return  updatedTaskData;
@@ -112,6 +119,8 @@ class FormEdit  {
   setFormTasksValues(task) {  
     const taskDisplayFormat = this.formatter.formatTaskEdit(task);
 
+    if(!taskDisplayFormat) return;
+  
     // Установим значения в поля формы
     this.formElements.id.textContent = taskDisplayFormat.id;
     this.formElements.date.textContent = taskDisplayFormat.date;
@@ -139,15 +148,18 @@ class FormEdit  {
    * @param {Function} validate - Функция для валидации значения.
    * @returns {string|null} Валидное значение или null, если оно невалидно.
   */
-  setValidValue ( value, validate) {
-    console.log(value);
-    
-    const result = validate(value);
+  setValidValue(value, validate) {
+    const result = validate(value);  
    
-    if(!result.valid || result.valid === null) { return null;}; 
-
-    return result.value
+    if (!result || !result.valid) {
+      return null;  
+    }
+  
+    // Если значение валидно
+    return result.value;
   }
+  
+  
 }
 
 export { FormEdit };

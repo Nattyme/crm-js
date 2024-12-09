@@ -40,8 +40,7 @@ class Formatter {
       return phone.replace(this.regEx.formatRU, '+7 ($1) $2-$3-$4'); // формат RU
     } 
 
-    console.log('Неверный номер');
-    return null;
+    return false;
   }
 
   /**
@@ -112,13 +111,9 @@ class Formatter {
    * @returns {string} Строка с правильным капитализацией.
   */
   formatCamelWords (dataString) {
-    console.log('Check names');
-    console.log(dataString);
-    
     dataString = dataString.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
-    console.log(dataString);
     dataString = dataString.join(' ');
-    console.log(dataString);
+ 
     return dataString;
   }
 
@@ -129,7 +124,11 @@ class Formatter {
   */
   formatTaskEdit(taskData) {
     let taskWithDate = this.formatTaskDateTime(taskData, 'date-time');
-    taskWithDate.phone = this.formatPhone(taskWithDate.phone);
+    let formattedPhone = this.formatPhone(taskWithDate.phone);
+
+    if(!formattedPhone) return;
+    
+    taskWithDate.phone = formattedPhone;
     return taskWithDate;
   }
 

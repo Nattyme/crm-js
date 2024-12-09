@@ -93,8 +93,6 @@ class FormManager {
    * @returns {Object} Объект с отформатированными данными для отображения.
   */
   prepareDisplay (taskData) {
-    console.log(taskData.phone);
-    
     return {
       ...taskData,
       phone : this.formatter.formatPhone(taskData.phone),

@@ -5,6 +5,19 @@ import { renderTable } from './TableRender.js';
  * Контроллер для управления задачами, обработки событий и обновления данных на странице.
  */
 class Controller {
+  /**
+   * Создаёт экземпляр класса Controller.
+   * Инициализирует контроллер с необходимыми зависимостями и состоянием.
+   * 
+   * @constructor
+   * @param {Object} eventBus - Объект для работы с событиями.
+   * @param {Object} storage - Модуль для работы с хранилищем данных.
+   * @param {Object} status - Модуль для работы с состояниями задач.
+   * @param {Object} renderTable - Модуль для рендеринга таблицы.
+   * @param {Object} managerTask - Модуль для управления задачами.
+   * @param {Object} filter - Модуль для фильтрации данных.
+   * @param {Object} formatter - Модуль для форматирования данных.
+  */
   constructor (eventBus, storage, status, renderTable, managerTask, filter, formatter) {
     this.eventBus = eventBus; 
     this.storage = storage;
@@ -50,6 +63,11 @@ class Controller {
     ];
   }
 
+  /**
+   * Инициализирует элементы формы выбора (категория, статус).
+   * 
+   * @method initSelectElems
+  */
   initSelectElems() {
     this.statusArray = this.status.getStatusData();
     this.selectProduct = this.render.getSelect();
@@ -71,6 +89,7 @@ class Controller {
     
     this.displayRows(rowsData); // отобразим таблицу
   }
+
   initEventListeners() {
     this.selectProduct.onchange = () => {
       const selectedIndex = this.selectProduct.selectedIndex;
@@ -101,6 +120,11 @@ class Controller {
   }
 
 
+  /**
+   * Применяет фильтры к данным задач.
+   * 
+   * @method applyFilters
+  */
   applyFilters() {
     const dataTaskAll = this.storage.getAllTasksData(); // Получаем все данные
     this.updateFilters(); // Обновляем фильтры
@@ -111,6 +135,11 @@ class Controller {
     this.displayRows(rowsData); // Отображаем данные
   }
 
+  /**
+   * Обновляет фильтры с актуальными параметрами.
+   * 
+   * @method updateFilters
+  */
   updateFilters() {
     this.filters = [
       {
@@ -130,6 +159,13 @@ class Controller {
     ];
   }
 
+  /**
+   * Применяет конкретный фильтр к данным.
+   * 
+   * @method doFilter
+   * @param {Function} filterType - Тип фильтра (метод фильтрации).
+   * @param {Object} filterParams - Параметры фильтрации.
+  */
   doFilter (filterType, filterParams) {
     const dataTaskAll = this.storage.getAllTasksData();
 

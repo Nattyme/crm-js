@@ -109,10 +109,7 @@ class Controller {
 
     // Подготовим данные к рендеру
     const taskFormatted = this.formManager.prepareDisplay(taskData);
-    console.log(taskData);
-    
     const formElems = this.render.getFormElems();
-    console.log(formElems);
     
     this.formManager.setFormData(taskFormatted, formElems); // заполним форму значениями задачи
   }

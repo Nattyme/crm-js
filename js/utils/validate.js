@@ -67,7 +67,7 @@ const validate = {
         error : 'Ошибка.Поле phone пустое или некорректно заполнено'
       };
     } 
-    
+
     const phoneValid = String(phone).replace(/\D/g, '').trim(); // Удалим все, кроме цифр. Приведем к строке
     const phoneRegex = /^\+?[0-9\s\-()]{10,}$/; // Проверка номера
 
@@ -133,6 +133,15 @@ const validate = {
     return {valid: true, value : emailValid};
   },
 
+  /**
+   * Проверяет значение поля `product` (название продукта).
+   * 
+   * @param {string} name - Название продукта.
+   * @returns {Object} Результат валидации с полями:
+   * - `valid` {boolean}: Указывает, корректно ли значение.
+   * - `value` {string}: Приведённое значение (при успешной валидации).
+   * - `error` {string}: Сообщение об ошибке (при некорректной валидации).
+  */
   product (name) {
     const productData = products;
 
@@ -143,6 +152,15 @@ const validate = {
 
   },
 
+  /**
+   * Проверяет значение поля `status` (статус).
+   * 
+   * @param {string} incomeStatus - Статус.
+   * @returns {Object} Результат валидации с полями:
+   * - `valid` {boolean}: Указывает, корректно ли значение.
+   * - `value` {Object}: Приведённое значение (объект статуса при успешной валидации).
+   * - `error` {string}: Сообщение об ошибке (при некорректной валидации).
+  */
   status (incomeStatus) {
     const status = new Status();
     const statusTypes = status.data;
@@ -151,7 +169,7 @@ const validate = {
       const currentObj = statusTypes[item];
      
       if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
-        return {valid: true, value: currentObj};
+        return {valid: true, value: currentObj.key};
       }
 
     }
@@ -160,6 +178,12 @@ const validate = {
     
   },
 
+  /**
+   * Проверяет, заполнены ли все поля в объекте.
+   * 
+   * @param {Object} dataObj - Объект, поля которого проверяются.
+   * @returns {boolean} Возвращает `true`, если все поля заполнены, и `false`, если хотя бы одно поле пустое.
+  */
   empty (dataObj) {
     for ( const field in dataObj) {
       if ( dataObj[field] === null || dataObj[field] === undefined) {
@@ -169,6 +193,13 @@ const validate = {
     }
   },
 
+  /**
+   * Проверяет указанные поля в объекте и валидирует их.
+   * 
+   * @param {Object} dataObj - Объект, в котором проверяются поля.
+   * @param {Array<string>} fieldsArray - Массив полей, которые нужно проверить.
+   * @returns {boolean} Возвращает `true`, если все поля корректны, иначе `false`.
+  */
   valuesInObject (dataObj, fieldsArray) {
     let result = true;
     // Проверяем только указанные поля
@@ -193,6 +224,13 @@ const validate = {
     return result;
   },
 
+  /**
+   * Проверяет все указанные поля задачи и валидирует их.
+   * 
+   * @param {Object} task - Задача, поля которой проверяются.
+   * @param {Array<string>} valuesToCheck - Массив полей для проверки.
+   * @returns {boolean} Возвращает `true`, если все поля задачи корректны, иначе `false`.
+  */
   fieldsOfTaskObj (task, valuesToCheck) {
     let result = true;
     let isFilled = this.empty(task);
