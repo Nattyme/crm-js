@@ -1,7 +1,19 @@
 import {validate} from './../utils/validate.js';
-import {Notes} from './../utils/notes.js';
 
+/**
+ * Класс для редактирования формы задач.
+ *
+ * @class FormEdit
+*/
 class FormEdit  {
+  /**
+   * Создаёт экземпляр класса FormEdit для работы с формой редактирования.
+   *
+   * @constructor
+   * @param {Object} eventBus - Объект для управления событиями.
+   * @param {Object} taskManager - Менеджер задач для работы с данными задач.
+   * @param {Object} formatter - Форматировщик для обработки данных задачи.
+  */
   constructor (eventBus, taskManager, formatter) {
     this.eventBus = eventBus;
     this.taskManager = taskManager;
@@ -9,7 +21,13 @@ class FormEdit  {
     this.formElements = {};
   }
 
-  // Найдём задачу по id
+  /**
+   * Получает ID задачи из URL.
+   *
+   * @method getTaskId
+   * @memberof FormEdit
+   * @returns {string|null} ID задачи или null, если не найдено.
+  */
   getTaskId () {
     if ( this.formatter.getUrlId() !== null ) {
       return this.formatter.getUrlId();
@@ -19,32 +37,14 @@ class FormEdit  {
     }
   }
 
-  setFormElems(elemetns) {
-    this.formElements = elemetns;
-  }
-
-  // Заполним данные формы
-  setFormTasksValues(task) {  
-    const taskDisplayFormat = this.formatter.formatTaskEdit(task);
-
-    // Установим значения в поля формы
-    this.formElements.id.textContent = taskDisplayFormat.id;
-    this.formElements.date.textContent = taskDisplayFormat.date;
-    this.formElements.inputs.full_name.value = taskDisplayFormat.full_name;
-    this.formElements.inputs.phone.value = taskDisplayFormat.phone;
-    this.formElements.inputs.email.value = taskDisplayFormat.email;
-
-    // Ф-ция ищет нужную опцию в селект
-    const getSelectedIndex = function (options, value) {
-      return [...options].findIndex( (element) => element.value.trim() === value);
-    }
-
-    // Находим и выбираем нужный продукт
-    this.formElements.select.selectedIndex = getSelectedIndex([... this.formElements.select.options], taskDisplayFormat.product);
-    // Находим и выбирем нужный статус
-    this.formElements.selectStatus.selectedIndex = getSelectedIndex([... this.formElements.selectStatus.options], taskDisplayFormat.status);  
-  }
-
+  /**
+   * Извлекает данные формы в виде объекта.
+   *
+   * @method getFormData
+   * @memberof FormEdit
+   * @param {HTMLFormElement} formElement - Элемент формы, данные которой нужно извлечь.
+   * @returns {Object} Объект с данными формы.
+  */
   getFormData(formElement) {
     const form = new FormData(formElement);
  
@@ -59,6 +59,15 @@ class FormEdit  {
     return formData;
   }
 
+  /**
+   * Обновляет задачу на основе данных из формы.
+   *
+   * @method updateTask
+   * @memberof FormEdit
+   * @param {Object} startTaskData - Исходные данные задачи.
+   * @param {Object} formData - Данные формы для обновления задачи.
+   * @returns {Object|boolean} Обновлённые данные задачи или false, если в форме есть пустые поля.
+  */
   updateTask(startTaskData, formData) {
     formData.id = startTaskData.id;
    
@@ -81,6 +90,55 @@ class FormEdit  {
     return  updatedTaskData;
   }
 
+
+  /**
+   * Устанавливает элементы формы.
+   *
+   * @method setFormElems
+   * @memberof FormEdit
+   * @param {Object} elements - Объект с элементами формы.
+  */
+  setFormElems(elemetns) {
+    this.formElements = elemetns;
+  }
+
+  /**
+   * Заполняет данные формы значениями из задачи.
+   *
+   * @method setFormTasksValues
+   * @memberof FormEdit
+   * @param {Object} task - Объект задачи с данными для заполнения формы.
+  */
+  setFormTasksValues(task) {  
+    const taskDisplayFormat = this.formatter.formatTaskEdit(task);
+
+    // Установим значения в поля формы
+    this.formElements.id.textContent = taskDisplayFormat.id;
+    this.formElements.date.textContent = taskDisplayFormat.date;
+    this.formElements.inputs.full_name.value = taskDisplayFormat.full_name;
+    this.formElements.inputs.phone.value = taskDisplayFormat.phone;
+    this.formElements.inputs.email.value = taskDisplayFormat.email;
+
+    // Ф-ция ищет нужную опцию в селект
+    const getSelectedIndex = function (options, value) {
+      return [...options].findIndex( (element) => element.value.trim() === value);
+    }
+
+    // Находим и выбираем нужный продукт
+    this.formElements.select.selectedIndex = getSelectedIndex([... this.formElements.select.options], taskDisplayFormat.product);
+    // Находим и выбирем нужный статус
+    this.formElements.selectStatus.selectedIndex = getSelectedIndex([... this.formElements.selectStatus.options], taskDisplayFormat.status);  
+  }
+
+  /**
+   * Проверяет и возвращает валидное значение, или null, если значение не прошло валидацию.
+   *
+   * @method setValidValue
+   * @memberof FormEdit
+   * @param {string} value - Значение для проверки.
+   * @param {Function} validate - Функция для валидации значения.
+   * @returns {string|null} Валидное значение или null, если оно невалидно.
+  */
   setValidValue ( value, validate) {
     console.log(value);
     
@@ -90,8 +148,6 @@ class FormEdit  {
 
     return result.value
   }
-
-
 }
 
 export { FormEdit };

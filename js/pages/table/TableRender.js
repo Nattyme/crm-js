@@ -39,35 +39,69 @@ class TableRender {
     return container;
   }
 
+  /**
+   * Очищает таблицу, удаляя все строки.
+  */
   resetTable() {
     this.tbody.textContent = '';
   }
 
-
+  /**
+   * Получает элемент выбора продукта.
+   * @returns {HTMLElement} Элемент выбора продукта.
+  */
   getSelect () {
     return this.select;
   }
 
+  /**
+   * Получает элемент верхней панели состояния.
+   * @returns {HTMLElement} Элемент верхней панели состояния.
+  */
   getStatusBar() {
     return this.statusBar;
   }
+
+  /**
+   * Получает элемент боковой панели состояния.
+   * @returns {HTMLElement} Элемент боковой панели состояния.
+  */
   getStatusAside(){
     return this.asideStatus;
   }
+
+  /**
+   * Устанавливает значение счетчика на боковой панели состояния.
+   * @param {string|number} value - Значение для отображения в счетчике.
+  */
   setCounterStatusData(value) {
     this.asideStatusCounter.textContent = value ? value : '';
   }
 
-
+  /**
+   * Скрывает элементы, добавляя класс 'none'.
+   * @param {HTMLElement[]} elements - Массив элементов для скрытия.
+  */
   hideElements(elements) {
     console.log(elements);
     
     elements.forEach(element => element.classList.add('none'));
   }
+
+  /**
+   * Отображает элемент, удаляя класс 'none'.
+   * @param {HTMLElement} element - Элемент, который нужно отобразить.
+  */
   unhideElements(element) {
     element.classList.remove('none');
   }
-  // e.target, this.statusAside, 'active'
+
+  /**
+   * Помечает элемент навигации как активный, удаляя класс 'active' с других элементов.
+   * @param {HTMLElement} target - Элемент, который должен стать активным.
+   * @param {HTMLElement} navList - Список навигационных элементов.
+   * @param {string} className - Класс для добавления активному элементу.
+  */
   navActiveMark(target, navList, className) {
     const navItems = navList.querySelectorAll('li');
   
@@ -83,17 +117,19 @@ class TableRender {
 
 
   /**
-   * Создаёт строку таблицы на основе задачи.
+   * Создает строку таблицы на основе данных задачи.
    * @param {Object} task - Объект задачи с данными.
-   */
+   * @param {string} status - Статус задачи.
+   * @returns {string} Строка HTML для отображения задачи в таблице.
+  */
   setRowHTML (task, status) {
     return  this.row.getTableRow(task, status);
   }
 
   /**
-   * Получает элемент `<tbody>` таблицы.
-   * @returns {HTMLElement} Элемент `tbody`.
-   */
+   * Получает элемент <tbody> таблицы.
+   * @returns {HTMLElement} Элемент <tbody>.
+  */
   setTbody() {
     let tbody = document.querySelector('#tbody');
 
@@ -103,10 +139,6 @@ class TableRender {
     }
 
     return tbody;
-  }
-
-  setAsideNavActive() {
-
   }
 }
 
