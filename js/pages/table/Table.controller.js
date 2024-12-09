@@ -120,6 +120,7 @@ class Controller {
   }
 
 
+
   /**
    * Применяет фильтры к данным задач.
    * 
@@ -127,7 +128,9 @@ class Controller {
   */
   applyFilters() {
     const dataTaskAll = this.storage.getAllTasksData(); // Получаем все данные
+
     this.updateFilters(); // Обновляем фильтры
+   
     const filteredData = this.filter.doSeveralFilters(dataTaskAll, this.filters); // Применяем фильтры
   
     this.render.resetTable(); // Сбрасываем таблицу
@@ -141,6 +144,9 @@ class Controller {
    * @method updateFilters
   */
   updateFilters() {
+    const params = new URLSearchParams();
+    console.log(params);
+    
     this.filters = [
       {
         method: this.filter.filterSelect,
@@ -167,7 +173,7 @@ class Controller {
    * @param {Object} filterParams - Параметры фильтрации.
   */
   doFilter (filterType, filterParams) {
-    const dataTaskAll = this.storage.getAllTasksData();
+    let dataTaskAll =  this.storage.getAllTasksData();
 
     // Парам-ры для работы фильтра
     let filteredData = filterType({

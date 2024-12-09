@@ -53,7 +53,7 @@ class FormEdit  {
     // Получим данные из полей
     for (let pair of form.entries()) {
       formData[pair[0]] = pair[1];
-    }
+    }    
     
     return formData;
   }
@@ -85,6 +85,7 @@ class FormEdit  {
         status : this.setValidValue(formData.status, validate.status),
         changed : Date.now()
     }
+console.log(updatedTaskData);
 
     // Проверка валидации для знач-ий
     for (const key in updatedTaskData) {

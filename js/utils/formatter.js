@@ -60,17 +60,21 @@ class Formatter {
   formatStatus(incomeStatus) {
     const statusTypes = this.status.data;
 
+    // Если status = null
+    if (incomeStatus === null) {
+      return;
+    }
+
     for (const item in statusTypes) {
       const currentObj = statusTypes[item];
      
       if (typeof incomeStatus === 'string' &&  currentObj.key === incomeStatus.trim()) {
         return currentObj;
-      } else if (incomeStatus.key === statusTypes[item].key) {
+      } else if (incomeStatus.key && incomeStatus.key === statusTypes[item].key) {
         return currentObj;
       }
-      
     }
-    return null;
+
   }
 
   /**

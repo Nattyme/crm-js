@@ -69,6 +69,7 @@ class Controller {
   }
 
 
+
   /**
    * Загружает текущую задачу, используя её ID, и инициирует событие TASKS_LOAD.
    * 
@@ -125,10 +126,17 @@ class Controller {
   */
   saveTask(event) {
     event.preventDefault();
+    let selectedIndex = this.render.formElements.selectStatus;
+
+    // Установим знач-е на случай индекса 0
+    if(selectedIndex.selectedIndex === 0) {
+      selectedIndex.selectedIndex = 1;
+    }
+
 
     //  Получаем данные из формы
     const formData = this.formEditManager.getFormData(this.render.formElements.form);
-
+    
     if(!formData) {
       console.log('Ошибка: форма заполнена не верно');
       return;
